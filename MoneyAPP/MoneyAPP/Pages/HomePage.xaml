@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:MoneyAPP.Controls"
+             x:Class="MoneyAPP.Pages.HomePage"
+             BackgroundImageSource="backgroud.png">
+
+    <VerticalStackLayout VerticalOptions="End" >
+        <!--頁面圖示：貓咪蛋塔-->
+        <Image x:Name="Gemini_cat_Image"
+               Source="gemini_cat.png"
+               HeightRequest="150" />
+        
+        <FlexLayout Direction="Row" 
+                    JustifyContent="SpaceBetween"
+                    Margin="10,0,10,0">
+
+            <!--日期選擇器：MM/dd-->
+            <DatePicker x:Name="RecordDate_DatePicker"
+                        MinimumDate="01/11/2023"
+                        MaximumDate="12/31/2100" 
+                        Format="MM/dd"
+                        FontSize="50"
+                        FontAttributes="Bold"
+                        HeightRequest="75"
+                        HorizontalOptions="Start"
+                        TextColor="#634a40"
+                        DateSelected="RecordDate_DateSelected"/>
+
+            <!--自動計算當日總金額-->
+            <Label     x:Name="TotalAmount_LB"
+                       FontSize="45"
+                       Text=""
+                       HorizontalOptions="End"
+                       TextColor="#634a40"/>
+        </FlexLayout>
+
+        <!--自訂Table：讀取/control/RecordTable設定-->
+        <VerticalStackLayout>
+            <control:RecordTable x:Name="RecordTable" HeightRequest="380"/>
+        </VerticalStackLayout>
+        
+        <!--上傳跑馬燈，當前日期與第一筆日期相差1個月時會出現，同時出現於上傳-->
+        <Label     x:Name="FullMoonTips_LB"
+                   Text="已經滿一個月囉，記得清空我的肚子~" 
+                   FontSize="22"
+                   HorizontalOptions="Center"
+                   HeightRequest="45"
+                   Margin="0,5,0,0" 
+                   TextColor="#6F5849"/>
+        
+        <!--自訂TabBar,讀取/control/CustomTabBar設定-->
+        <VerticalStackLayout Margin="0,45,0,0">
+            <control:CustomTabBar />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

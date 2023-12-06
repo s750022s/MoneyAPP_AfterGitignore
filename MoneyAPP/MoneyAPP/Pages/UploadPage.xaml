@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:MoneyAPP.Controls"
+             x:Class="MoneyAPP.Pages.UploadPage"
+             BackgroundImageSource="backgroud.png">
+    
+    <!--上傳分頁,配合自訂的TabBar,因此以下由上布局-->
+    <VerticalStackLayout VerticalOptions="End" >
+        <VerticalStackLayout HorizontalOptions="Center">
+            <!--頁面圖示：臘腸狗-->
+            <Image x:Name="Hotdog_Image"
+                   Source="hotdog_foot.png"
+                   SemanticProperties.Description="The dachshund walks past you!"
+                   HeightRequest="170"
+                   HorizontalOptions="Center"
+                   />
+
+            <!--上傳跑馬燈，當前日期與第一筆日期相差1個月時會出現，同時出現於首頁-->
+            <Label x:Name="FullMoonTips_LB"
+                   Text="已經滿一個月囉，記得清空我的肚子~" 
+                   FontSize="22"
+                   HorizontalOptions="Center"
+                   HeightRequest="45"
+                   Margin="0,15,0,0" 
+                   TextColor="#6F5849"/>
+            
+            <!--WIFI系統資料，會讀取當前狀態-->
+            <HorizontalStackLayout  HorizontalOptions="Start" 
+                                    Margin="40,10,0,10">
+
+                <Label x:Name="WIFI_SSIDTitle_LB"
+                       Text="WIFI_SSID" 
+                       FontSize="32"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Center" 
+                       HeightRequest="50"/>
+
+                <Label x:Name="GetWIFI_SSID_LB"
+                       Text="MAX_5G" 
+                       FontSize="32"
+                       TextDecorations="Underline"
+                       HorizontalOptions="Center" 
+                       HeightRequest="50"
+                       Margin="15,0,0,0" 
+                       LineBreakMode="MiddleTruncation"
+                       />
+                
+            </HorizontalStackLayout>
+            
+            <!--IP系統資料，會讀取當前狀態-->
+            <HorizontalStackLayout  HorizontalOptions="Center">
+                <Label x:Name="IPTitle_LB"
+                       Text="IP" 
+                       FontSize="40"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Center" 
+                       HeightRequest="50"/>
+
+                <Label x:Name="GetIP_LB"
+                       Text="192.168.13.123" 
+                       FontSize="35"
+                       TextDecorations="Underline"
+                       HorizontalOptions="Center" 
+                       HeightRequest="50"
+                       Margin="15,0,0,0"/>
+                
+            </HorizontalStackLayout>
+
+            <!--該頁說明，因需要腳印圖案於最尾巴，因此使用FlexLayout布局-->
+            <FlexLayout Direction="Column"
+                        JustifyContent="SpaceEvenly"
+                        HeightRequest="200"
+                        Margin="20,0,0,100">
+
+                <Label x:Name="Manual_LB"
+                       Text="請在電腦執行我的雙胞胎程式，&#10;確保連上相同WIFI，&#10;就會送主人可以列印的Excel檔，&#10;還會將我的肚子清空喔~汪~" 
+                       FontSize="25"
+                       HorizontalOptions="Center"
+                       TextColor="#6F5849"/>
+
+                <Image x:Name="Foot_Image"
+                    Source="foot.png"
+                    SemanticProperties.Description="狗狗腳印"
+                    HeightRequest="22"
+                    HorizontalOptions="End"
+                    Margin="0,-30,15,0"/>
+                
+            </FlexLayout>
+        </VerticalStackLayout>
+
+        <!--自訂TabBar,讀取/control/CustomTabBar設定-->
+        <control:CustomTabBar/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,12 @@
+﻿1.  UploadPage 
+    尚缺Getwifi/GetIP兩段邏輯(因牽扯到三種設備，待詳細研究)
+    **考慮拿掉Getwifi
+
+2. HomePage
+   尚缺 
+    i. 從資料庫拿出資料
+    ii. 點集進入編輯頁
+    iii. 點擊日期切換到該天記錄
+    iiii.自動計算該天總和
+
+    **考慮將fullMoonTips拆成獨立Controls

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MoneyAPP.Controls"
+             x:Class="MoneyAPP.Pages.RecordAddPage"
+             BackgroundImageSource="backgroud.png">
+    <VerticalStackLayout VerticalOptions="End" >
+        <!--頁面圖示：貓咪蛋塔-->
+        <Image x:Name="cat_eggtower_Image"
+                   Source="cat_eggtower.png"
+                   HeightRequest="150" />
+
+        <Grid 
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+        ColumnDefinitions="80, 150, 130"
+        Margin="20,0,20,10"
+            >
+
+            <!--(0,0)-->
+            <Label Text="日期" 
+               FontSize="30" 
+
+               />
+
+            <!--(0,1)-->
+            <DatePicker  x:Name="RecordDay"
+                    Grid.Column="1"
+                    MinimumDate="01/11/2023"
+                    MaximumDate="12/31/2100" 
+                    Format="yyyy/MM/dd"
+                    FontSize="25" />
+
+            <!--(0,2)-->
+            <TimePicker x:Name="RecordTime"
+                    Grid.Column="2"
+                    FontSize="25" 
+                    Format="hh:mm tt"/>
+
+            <!--(1,0)-->
+            <RadioButton x:Name="Revenues" Grid.Row="1" Grid.Column="1" Content="收入" GroupName="RevenuesOrExpenses" FontSize="25">
+            </RadioButton>
+
+            <!--(1,1)-->
+            <RadioButton x:Name="Expense" Grid.Row="1" Grid.Column="2" Content="支出" IsChecked="true" GroupName="RevenuesOrExpenses" FontSize="25">
+            </RadioButton>
+
+            <!--(2,0)-->
+            <Label Grid.Row="2" Grid.Column="0"
+               Text="帳戶" 
+               FontSize="30" 
+               />
+
+            <!--(2,1)-->
+            <Picker x:Name="Account" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
+                Title="選擇帳戶" />
+
+
+
+            <!--(3,0)-->
+            <Label Grid.Row="3" Grid.Column="0"
+               Text="類別" 
+               FontSize="30" 
+               />
+
+            <!--(3,1)-->
+            <Picker x:Name="Category"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
+                Title="選擇種類"  />
+
+
+            <!--(4,0)-->
+            <Label Grid.Row="4" Grid.Column="0"
+               Text="項目" 
+               FontSize="30" 
+               />
+
+
+            <!--(4,1)-->
+            <Editor x:Name="Item"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
+            />
+
+
+            <!--(5,0)-->
+            <Label Grid.Row="5" Grid.Column="0"
+               Text="NT$" 
+               FontSize="30" 
+               />
+
+            <!--(5,1)-->
+            <Entry x:Name="Amount_Editor"  Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
+                FontSize="25"
+                Focused="OnEntryFocused"
+                Unfocused="OnEntryUnfocused"
+                Keyboard="Numeric"/>
+
+        </Grid>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
+            <Button Text="儲存" ImageSource="check.png" CornerRadius="14" Clicked="SaveButton_Clicked"/>
+            <Button x:Name="Close_BTN" Text="關閉" ImageSource="close.png" CornerRadius="14" Clicked="CloseButton_Clicked"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout Margin="0,10,0,0">
+            <controls:Calculator  x:Name="Calculator" IsVisible="False" HorizontalOptions="Center"/>
+            
+            <controls:CustomTabBar x:Name="TabBar" IsVisible="True" Margin="0,147,0,0"/>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

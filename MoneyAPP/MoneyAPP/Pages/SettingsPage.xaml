@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:MoneyAPP.Controls"
+             x:Class="MoneyAPP.Pages.SettingsPage"
+             BackgroundImageSource="backgroud.png">
+    <Grid  RowDefinitions="200,500,100" ColumnDefinitions="*">
+        <Image x:Name="chick_cream_Image"
+                   Source="chick_cream.png"
+                   HeightRequest="150" />
+
+        <VerticalStackLayout Grid.Row="1" Spacing="15" Margin="7,0,7,0">
+            <Border  x:Name="Backup_Border"
+                Stroke="#584842"
+                StrokeShape="RoundRectangle 10,10,10,10"
+                Padding="10">
+                <HorizontalStackLayout Spacing="15" >
+                    <Image 
+                            Source="foot.png"
+                            HeightRequest="50" />
+                    <Label x:Name="Backup_BTN" Text="備份還原" FontSize="30" FontAttributes="Bold" />
+                    <Image 
+                           Source="angle_right.png"
+                           Margin="125,0,0,0"
+                           />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Backup_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <Border x:Name="ConvertExcel_Border"
+                Stroke="#584842"
+                StrokeShape="RoundRectangle 10,10,10,10"
+                Padding="10">
+                <HorizontalStackLayout Spacing="15" >
+                    <Image 
+                            Source="foot.png"
+                            HeightRequest="50" />
+                    <Label  Text="轉換Excel" FontSize="30" FontAttributes="Bold" />
+                    <Image 
+                           Source="angle_right.png"
+                           Margin="115,0,0,0"
+                           />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ConvertExcel_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <Border x:Name="SystemInfo_Border"
+                Stroke="#584842"
+                StrokeShape="RoundRectangle 10,10,10,10"
+                Padding="10">
+                <HorizontalStackLayout Spacing="15" >
+                    <Image 
+                            Source="foot.png"
+                            HeightRequest="50" />
+                    <Label  Text="系統資訊" FontSize="30" FontAttributes="Bold" />
+                    <Image 
+                           Source="angle_right.png"
+                           Margin="125,0,0,0"
+                           />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SystemInfo_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+            
+        </VerticalStackLayout>
+        <control:CustomTabBar Grid.Row="2" Grid.ColumnSpan="2" />
+    </Grid>
+</ContentPage>
