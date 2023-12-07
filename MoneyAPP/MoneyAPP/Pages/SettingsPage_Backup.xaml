@@ -29,7 +29,7 @@
                 <TapGestureRecognizer Tapped="CreatBackupFile_Tapped" />
             </Border.GestureRecognizers>
         </Border>
-
+        
         <Border x:Name="ImportBackupFile_Border" 
                 Stroke="Gray"
                 StrokeShape="RoundRectangle 5,5,5,5"

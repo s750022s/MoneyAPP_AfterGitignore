@@ -24,7 +24,7 @@
 
             <VerticalStackLayout >
                 <Label Text="總紀錄時長" FontSize="18"/>
-                    <Label x:Name="DateLength_LB" Text="" FontSize="30"/>
+                <Label x:Name="DateLength_LB" Text="" FontSize="30"/>
             </VerticalStackLayout>
             </HorizontalStackLayout>
         </Border>

@@ -1,6 +1,5 @@
 ﻿using SQLite;
 using MoneyAPP.Models;
-using System.Security.Principal;
 
 
 namespace MoneyAPP.Services
@@ -241,6 +240,10 @@ namespace MoneyAPP.Services
             var firstday = _connection.Table<RecordModel>()
                            .OrderBy(r => r.RecordDay)
                            .FirstOrDefault();
+            if (firstday == null) 
+            {
+                return default(DateTime);
+            }
             return firstday.RecordDay;
         }
     }

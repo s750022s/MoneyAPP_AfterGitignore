@@ -1,3 +1,6 @@
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using MoneyAPP.Services;
+
 namespace MoneyAPP.Pages;
 
 public partial class SettingsPage_Backup : ContentPage
@@ -7,9 +10,14 @@ public partial class SettingsPage_Backup : ContentPage
 		InitializeComponent();
 	}
 
-    private void CreatBackupFile_Tapped(object sender, TappedEventArgs e)
+    private async void CreatBackupFile_Tapped(object sender, TappedEventArgs e)
     {
-        //TOT 利用下載方式建立備份檔於Doanload
+        string filePath = FileAccessHelper.GetLocalFilePath("record.db3");
+        await Share.Default.RequestAsync(new ShareFileRequest
+        {
+            Title = "共享檔案",
+            File = new ShareFile(filePath)
+        });
     }
 
     private void ImportBackupFile_Tapped(object sender, TappedEventArgs e)
@@ -26,11 +34,11 @@ public partial class SettingsPage_Backup : ContentPage
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);
-                DisplayAlert("還原成功", "", "OK");
+                var a = DisplayAlert("還原成功", "", "OK");
             }
             else
             {
-                DisplayAlert("還原失敗", "失敗原因：找不到設定資料", "OK");
+                var a = DisplayAlert("還原失敗", "失敗原因：找不到設定資料", "OK");
             }
         }
     }

@@ -19,7 +19,8 @@ public partial class SettingsPage : ContentPage
 
     private void ConvertExcel_Tapped(object sender, EventArgs e)
     {
-
+        Shell.Current.CurrentItem.CurrentItem.Items.Add(new UploadPage());
+        Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
 
     private void SystemInfo_Tapped(object sender, EventArgs e)

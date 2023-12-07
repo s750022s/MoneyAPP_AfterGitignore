@@ -1,3 +1,4 @@
+
 namespace MoneyAPP.Pages;
 
 public partial class SettingsPage_SystemInfo : ContentPage
@@ -22,10 +23,17 @@ public partial class SettingsPage_SystemInfo : ContentPage
 
         //Get Date length
         //DateLength_LB.Text = ""
-        DateTime firstDay = App.ServiceRepo.GetRecordFirstday().Date;
-        DateTime today = DateTime.Today.Date;
-        DateLength_LB.Text = ((today - firstDay).Days+1).ToString() + "คั";
-
+        var firstDay = App.ServiceRepo.GetRecordFirstday();
+        if (firstDay == DateTime.MinValue) 
+        {
+            DateLength_LB.Text = "0คั";
+        }
+        else
+        {
+            firstDay = firstDay.Date;
+            DateTime today = DateTime.Today.Date;
+            DateLength_LB.Text = ((today - firstDay).Days + 1).ToString() + "คั";
+        }
 
 
         //Read Version
