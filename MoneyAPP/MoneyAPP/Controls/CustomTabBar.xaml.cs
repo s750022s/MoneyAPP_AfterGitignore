@@ -24,7 +24,7 @@ public partial class CustomTabBar : ContentView
         {
             { "HomePage", () => new HomePage() },
             { "RecordAddPage", () => new RecordAddPage() },
-            { "UploadPage", () => new UploadPage() },
+            { "StatisticsPage", () => new StatisticsPage() },
             { "SetCategoryListPage", () => new SetCategoryListPage() }, 
             { "SettingsPage", () => new SettingsPage() }
         };

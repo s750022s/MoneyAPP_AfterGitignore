@@ -82,6 +82,19 @@
 
 	<ItemGroup>
 	  <Compile Remove="Controls\IntToStringConverter.cs" />
+	  <Compile Remove="Pages\StatisticsPage_Accounts.xaml.cs" />
+	  <Compile Remove="Pages\StatisticsPage_AccountsImage.xaml.cs" />
+	  <Compile Remove="Pages\StatisticsPage_Categorys.xaml.cs" />
+	  <Compile Remove="Pages\StatisticsPage_CategorysImage.xaml.cs" />
+	  <Compile Remove="Pages\StatisticsPage_TotalAccounts.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Pages\StatisticsPage_Accounts.xaml" />
+	  <MauiXaml Remove="Pages\StatisticsPage_AccountsImage.xaml" />
+	  <MauiXaml Remove="Pages\StatisticsPage_Categorys.xaml" />
+	  <MauiXaml Remove="Pages\StatisticsPage_CategorysImage.xaml" />
+	  <MauiXaml Remove="Pages\StatisticsPage_TotalAccounts.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -138,6 +151,15 @@
 	  <MauiXaml Update="Controls\RecordTable.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Controls\StatisticsPage_Accounts.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\StatisticsPage_AccountStatus.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\StatisticsPage_Categorys.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -163,6 +185,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage_SystemInfo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\StatisticsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\UploadPage.xaml">

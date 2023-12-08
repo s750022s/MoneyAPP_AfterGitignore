@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:control="clr-namespace:MoneyAPP.Controls"
+            x:Class="MoneyAPP.Pages.StatisticsPage"
+            BackgroundImageSource="backgroud.png">
+
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="RadioButtonTemplate">
+            <Grid RowDefinitions="35,4">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+
+                        <!--選擇標籤-->
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel"
+                                                                Property="Label.TextColor"
+                                                                Value="#FF9959"/>
+                                    <Setter TargetName="TextLabel"
+                                                                Property="Label.FontSize"
+                                                                Value="26"/>
+                                    <Setter TargetName="Indicator"
+                                                                Property="BoxView.Color"
+                                                                Value="#FF9959"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <!--沒選擇標籤-->
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel"
+                                                                Property="Label.TextColor"
+                                                                Value="#634a40"/>
+                                    <Setter TargetName="TextLabel"
+                                                                Property="Label.FontSize"
+                                                                Value="26"/>
+                                    <Setter TargetName="Indicator"
+                                                                Property="BoxView.Color"
+                                                                Value="Transparent"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" />
+                <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="ControlTemplate"
+                    Value="{StaticResource RadioButtonTemplate}" />
+        </Style>
+    </ContentPage.Resources>
+
+    
+    <!--UI內容-->
+    <VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" Spacing="10" Margin="7" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <RadioButton x:Name="CategoryButton" Content="類別統計" IsChecked="true"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
+            <RadioButton x:Name="AccountButton" Content="帳戶統計" IsChecked="False"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
+            <RadioButton x:Name="AccountStatusButton" Content="帳戶當前狀態" IsChecked="False"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
+    </StackLayout>
+
+
+    <control:StatisticsPage_Categorys x:Name="CategorysView" IsVisible="True" HeightRequest="345"/>
+        <control:StatisticsPage_Accounts x:Name="AccountsView" IsVisible="False" HeightRequest="345"/>
+        <control:StatisticsPage_AccountStatus x:Name="AccountStatusView" IsVisible="False" HeightRequest="345"/>
+
+     <control:CustomTabBar Margin="0,300,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

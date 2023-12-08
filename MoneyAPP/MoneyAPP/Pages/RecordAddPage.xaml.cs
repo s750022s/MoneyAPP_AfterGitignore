@@ -10,18 +10,14 @@ public partial class RecordAddPage : ContentPage
     public RecordAddPage()
     {
         InitializeComponent();
+        RecordTime.Time = DateTime.Now.TimeOfDay;
         AccountModelToPicker();
         CategoryModelToPicker();
         Calculator.AlertRequest += Calculator_AlertRequest;
         Calculator.OKButtonClicked += OnOKButtonClicked;
         SetFocus();
     }
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        SetFocus();
-    }
-
+   
     private void SetFocus()
     {
         Category.Focus();

@@ -14,4 +14,5 @@
     <ShellContent ContentTemplate="{DataTemplate local:RecordRevisePage}" />
     <ShellContent ContentTemplate="{DataTemplate local:SetCategoryListPage}" />
     <ShellContent ContentTemplate="{DataTemplate local:SetAccountListPage}" />
+    <ShellContent ContentTemplate="{DataTemplate local:StatisticsPage}" />
 </Shell>

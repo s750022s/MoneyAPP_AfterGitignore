@@ -17,7 +17,6 @@ namespace MoneyAPP.Services
             _connection.CreateTable<RecordModel>();
             _connection.CreateTable<CategoryModel>();
             _connection.CreateTable<AccountModel>();
-            //_connection.CreateTable<IsExpensesModel>();
 
             if (_connection.Table<CategoryModel>().Count() == 0)
             {
@@ -31,13 +30,6 @@ namespace MoneyAPP.Services
                 _connection.Insert(new AccountModel { Name = "現金", Sequence = 0 });
                 _connection.Insert(new AccountModel { Name = "信用卡", Sequence = 1 });
             }
-
-            //if (_connection.Table<IsExpensesModel>().Count() == 0)
-            //{
-            //_connection.Insert(new IsExpensesModel { IsExpenses = false, PlusMinus="+", Style = 1 });
-            //_connection.Insert(new IsExpensesModel { IsExpenses = true, PlusMinus = "-", Style = 1 });
-            //}
-
         }
 
         public void Init()

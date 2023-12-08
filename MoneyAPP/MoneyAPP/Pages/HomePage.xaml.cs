@@ -20,20 +20,6 @@ public partial class HomePage : ContentPage
         TotalAmount_LB.Text = totalAmount.ToString("N0");
     }
 
-    /// <summary>
-    /// 當收到不顯示時，調整fullMoonTips與hotdog_Image的屬性
-    /// </summary>
-    /// <param name="show">是否顯示Tips</param>
-    protected void ISShowFullTips(bool show)
-    {
-        if (show == false)
-        {
-            FullMoonTips_LB.IsEnabled = false;
-            FullMoonTips_LB.IsVisible = false;
-            RecordTable.Margin = new Thickness(0, 0, 0, 50);
-        }
-    }
-
     private void RecordDate_DateSelected(object sender, DateChangedEventArgs e)
     {
         int totalAmount = RecordTable.GetOnedayInfo(e.NewDate);

@@ -33,7 +33,7 @@
                 />
 
             <controls:TabBarButton x:Name="Upload_Tab"
-                Text="上傳"
+                Text="統計"
                 FontSize="22"
                 BackgroundColor="#FEFDF6"
                 HeightRequest="100" 
@@ -41,7 +41,7 @@
                 TextColor="#000000"
                 Padding="0,0,0,-30"
                 Clicked="ToPage_Clicked"
-                PageBind="UploadPage"
+                PageBind="StatisticsPage"
                 />
 
             <controls:TabBarButton x:Name="Setting_Tab"

@@ -37,18 +37,9 @@
 
         <!--自訂Table：讀取/control/RecordTable設定-->
         <VerticalStackLayout>
-            <control:RecordTable x:Name="RecordTable" HeightRequest="380"/>
+            <control:RecordTable x:Name="RecordTable" HeightRequest="430"/>
         </VerticalStackLayout>
-        
-        <!--上傳跑馬燈，當前日期與第一筆日期相差1個月時會出現，同時出現於上傳-->
-        <Label     x:Name="FullMoonTips_LB"
-                   Text="已經滿一個月囉，記得清空我的肚子~" 
-                   FontSize="22"
-                   HorizontalOptions="Center"
-                   HeightRequest="45"
-                   Margin="0,5,0,0" 
-                   TextColor="#6F5849"/>
-        
+
         <!--自訂TabBar,讀取/control/CustomTabBar設定-->
         <VerticalStackLayout Margin="0,45,0,0">
             <control:CustomTabBar />
