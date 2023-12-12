@@ -1,13 +1,33 @@
 namespace MoneyAPP.Controls;
 
+/// <summary>
+/// 計算機元件
+/// </summary>
 public partial class Calculator : ContentView
 {
+    /// <summary>
+    /// 目前公式List
+    /// </summary>
     List<string> formulas = new List<string>();
+
+    /// <summary>
+    /// 未進入公式List的暫存區
+    /// </summary>
     string stagingData = "+";
+
+    /// <summary>
+    /// 總和
+    /// </summary>
     double total = 0;
 
+    /// <summary>
+    /// 提醒視窗
+    /// </summary>
     public event EventHandler<AlertRequestEventArgs> AlertRequest;
 
+    /// <summary>
+    /// OK按鈕事件
+    /// </summary>
     public class OKButtonClickedEventArgs : EventArgs
     {
         public double Total { get; set; }
@@ -15,11 +35,21 @@ public partial class Calculator : ContentView
     public delegate void OKButtonClickedEventHandler(object sender, OKButtonClickedEventArgs e);
     public event OKButtonClickedEventHandler OKButtonClicked;
 
+
+    /// <summary>
+    /// 建構計算機
+    /// </summary>
     public Calculator()
 	{
 		InitializeComponent();
 	}
 
+    /// <summary>
+    /// 計算機按鈕功能;
+    /// 按下數字=> 存進stagingData;
+    /// 按下計算符號 => 將stagingData整理存進公式List;
+    /// 拆成兩個區域方便運算及退回;
+    /// </summary>
     private void CalculatorClick(object sender, EventArgs e)
     {
         Button button = (Button)sender;
@@ -27,6 +57,7 @@ public partial class Calculator : ContentView
 
         switch (newValue)
         {
+            //數字區
             case "0":
             case "1":
             case "2":
@@ -43,6 +74,8 @@ public partial class Calculator : ContentView
                 }
                 stagingData += newValue;
                 break;
+
+            //計算符號區
             case "+":
             case "-":
             case "x":
@@ -55,6 +88,8 @@ public partial class Calculator : ContentView
                 }
                 stagingData = newValue;
                 break;
+
+            //清空
             case "C":
                 Count_LB.Text = "";
                 equal_LB.Text = "";
@@ -62,6 +97,8 @@ public partial class Calculator : ContentView
                 stagingData = "+";
                 total = 0;
                 break;
+
+            //退回一格，先清除stagingData，再由後往前依序取出formulas，直到無法formulas.Count小於3
             case "←":
                 if (formulas.Count < 3)
                 {
@@ -77,6 +114,8 @@ public partial class Calculator : ContentView
                 }
                 stagingData = stagingData.Substring(0, stagingData.Length - 1);
                 break;
+
+            //檢查total，並通知調用頁
             case "OK":
                 if (total % 1 != 0)
                 {
@@ -93,7 +132,7 @@ public partial class Calculator : ContentView
                 break;
         }
 
-
+        //每次變更都計算總和
         if (formulas.Count > 1)
         {
             total = 0;
@@ -102,12 +141,13 @@ public partial class Calculator : ContentView
                 double result = Calculate(total, formulas[i], Convert.ToDouble(formulas[i + 1]));
                 total = result;
             }
-
         }
 
+        //檢查formulas每個元素要不要加千位符
         string shows = "";
         for (int i = 1; i < formulas.Count; i++)
         {
+            //公式區
             if (formulas[i].Length > 3)
             {
                 shows += ThousandSeparator(formulas[i]);
@@ -119,6 +159,8 @@ public partial class Calculator : ContentView
             }
 
             Count_LB.Text = shows + stagingData;
+
+            //總和區
             if (total > 999 || total < -999)
             {
                 equal_LB.Text = "=" + ThousandSeparator(total.ToString());
@@ -127,8 +169,8 @@ public partial class Calculator : ContentView
             {
                 equal_LB.Text = "=" + total.ToString();
             }
-            //equal_LB.Text = "=" + ThousandSeparator(total.ToString());
-
+            
+            //長度超出畫面跳出提醒
             if (Count_LB.Measure(Width, Height).Request.Width > Count_Border.WidthRequest)
             {
                 OnAlertRequested(new AlertRequestEventArgs("長度已超過顯示範圍", "建議分多次計算", "OK"));
@@ -136,14 +178,18 @@ public partial class Calculator : ContentView
         }
     }
 
-
+    /// <summary>
+    /// 計算符Model
+    /// </summary>
     public class Operator
     {
         public Func<double, double, double> Operation { get; set; }
     }
 
 
-
+    /// <summary>
+    /// 計算符Dictionary
+    /// </summary>
     Dictionary<string, Operator> getOperatorDict = new Dictionary<string, Operator>()
         {
             {"+",new Operator { Operation = (a, b) => a + b }},
@@ -152,12 +198,22 @@ public partial class Calculator : ContentView
             {"÷",new Operator { Operation = (a, b) => a / b }}
         };
 
+    /// <summary>
+    /// 計算
+    /// </summary>
+    /// <param name="operand1">被加(減乘除)數</param>
+    /// <param name="operatorSymbol">計算符</param>
+    /// <param name="operand2">加(減乘除)數</param>
+    /// <returns>計算結果</returns>
     private double Calculate(double operand1, string operatorSymbol, double operand2)
     {
         Operator newOperator = getOperatorDict[operatorSymbol];
         return newOperator.Operation(operand1, operand2);
     }
 
+    /// <summary>
+    /// 加上千位符
+    /// </summary>
     private string ThousandSeparator(string number)
     {
         bool isDouble = false;
@@ -189,6 +245,9 @@ public partial class Calculator : ContentView
         return show;
     }
 
+    /// <summary>
+    /// 提醒Model
+    /// </summary>
     public class AlertRequestEventArgs : EventArgs
     {
         public string Title { get; }
@@ -203,6 +262,9 @@ public partial class Calculator : ContentView
         }
     }
 
+    /// <summary>
+    /// 提醒通知
+    /// </summary>
     protected virtual void OnAlertRequested(AlertRequestEventArgs e)
     {
         AlertRequest?.Invoke(this, e);

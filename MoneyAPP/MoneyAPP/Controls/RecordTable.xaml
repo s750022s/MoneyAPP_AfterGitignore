@@ -53,11 +53,6 @@
                                          FontSize="18"
                                          Text="{Binding Item}" 
                                          LineBreakMode="CharacterWrap"/>
-
-                                    <Label x:Name="Id_LB" 
-                                         TextColor="White"
-                                         FontSize="18"
-                                         Text="{Binding RecordID,StringFormat='{}{0:N0}'}" />
                                 </FlexLayout>
                             </VerticalStackLayout>
                             <controls:RecordBorder.GestureRecognizers>

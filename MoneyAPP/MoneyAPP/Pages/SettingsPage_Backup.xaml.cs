@@ -3,6 +3,9 @@ using MoneyAPP.Services;
 
 namespace MoneyAPP.Pages;
 
+/// <summary>
+/// 備份還原頁
+/// </summary>
 public partial class SettingsPage_Backup : ContentPage
 {
 	public SettingsPage_Backup()
@@ -10,6 +13,9 @@ public partial class SettingsPage_Backup : ContentPage
 		InitializeComponent();
 	}
 
+    /// <summary>
+    /// 建立備份檔，使用共享檔案功能
+    /// </summary>
     private async void CreatBackupFile_Tapped(object sender, TappedEventArgs e)
     {
         string filePath = FileAccessHelper.GetLocalFilePath("record.db3");
@@ -20,11 +26,17 @@ public partial class SettingsPage_Backup : ContentPage
         });
     }
 
+    /// <summary>
+    /// 匯入備份檔
+    /// </summary>
     private void ImportBackupFile_Tapped(object sender, TappedEventArgs e)
     {
         //TOT 選擇檔案並將檔案放到指定位置
     }
 
+    /// <summary>
+    /// 還於初始設定，刪除DB檔
+    /// </summary>
     private async void Restore_Tapped(object sender, TappedEventArgs e)
     {
         var ans = await DisplayAlert("還原無法復原，確定要還原嗎?", "", "還原", "取消");
@@ -43,6 +55,9 @@ public partial class SettingsPage_Backup : ContentPage
         }
     }
 
+    /// <summary>
+    /// 返回上一頁
+    /// </summary>
     private void BackButton_Clicked(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SettingsPage());

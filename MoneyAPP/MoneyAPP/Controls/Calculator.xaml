@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoneyAPP.Controls.Calculator">
     <VerticalStackLayout>
+        
+        <!--上方顯示區-->
         <VerticalStackLayout HorizontalOptions="End">
+            
+            <!--公式區-->
             <Border x:Name="Count_Border" 
                     WidthRequest="390" 
                     BackgroundColor="#FFF2CC" 
@@ -11,14 +15,15 @@
                     Stroke="transparent">
 
                 <Label x:Name="Count_LB" 
-               BackgroundColor="#FFF2CC" 
-               FontSize="25" 
-               TextColor="#843C0C"  
-               HeightRequest="30"
-               Text="" 
-               HorizontalTextAlignment="End"/>
+                       BackgroundColor="#FFF2CC" 
+                       FontSize="25" 
+                       TextColor="#843C0C"  
+                       HeightRequest="30"
+                       Text="" 
+                       HorizontalTextAlignment="End"/>
             </Border>
 
+            <!--結果區-->
             <Label x:Name="equal_LB"
                BackgroundColor="#FFF2CC" 
                FontSize="25" 
@@ -29,7 +34,13 @@
                HorizontalTextAlignment="End"/>
 
         </VerticalStackLayout>
-        <HorizontalStackLayout Margin="6" Spacing="10" HorizontalOptions="Center">
+        
+        <!--按鈕區 3*4-->
+        <HorizontalStackLayout Margin="6" 
+                               Spacing="10" 
+                               HorizontalOptions="Center">
+            
+            <!--第一列-->
             <Button x:Name="Button_1" 
                 Text="1" 
                 BackgroundColor="#FFF2CC" 
@@ -98,7 +109,10 @@
                 Clicked="CalculatorClick"/>
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Margin="6" Spacing="10" HorizontalOptions="Center">
+        <!--第二列-->
+        <HorizontalStackLayout Margin="6" 
+                               Spacing="10" 
+                               HorizontalOptions="Center">
             <Button x:Name="Button_4" 
                 Text="4" 
                 BackgroundColor="#FFF2CC" 
@@ -167,7 +181,11 @@
                 Clicked="CalculatorClick"/>
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Margin="6" Spacing="10" HorizontalOptions="Center">
+        <!--第三列-->
+        <HorizontalStackLayout Margin="6" 
+                               Spacing="10" 
+                               HorizontalOptions="Center">
+            
             <Button x:Name="Button_7" 
                 Text="7" 
                 BackgroundColor="#FFF2CC" 

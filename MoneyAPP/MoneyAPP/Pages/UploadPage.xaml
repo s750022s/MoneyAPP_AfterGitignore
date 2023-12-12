@@ -7,36 +7,39 @@
     
     <!--上傳分頁-->
     <VerticalStackLayout HorizontalOptions="Center">
-        <ImageButton Source="arrow_left.png" HorizontalOptions="Start" Margin="0,20,0,20"  HeightRequest="25" Clicked="BackButton_Clicked"/>
+        <ImageButton Source="arrow_left.png" 
+                     HorizontalOptions="Start" 
+                     Margin="0,20,0,20"  
+                     HeightRequest="25" 
+                     Clicked="BackButton_Clicked"/>
         
         <!--頁面圖示：臘腸狗-->
-            <Image x:Name="Hotdog_Image"
-                   Source="hotdog_foot.png"
-                   SemanticProperties.Description="The dachshund walks past you!"
-                   HeightRequest="170"
-                   HorizontalOptions="Center"
-                   />
+        <Image x:Name="Hotdog_Image"
+                Source="hotdog_foot.png"
+                SemanticProperties.Description="The dachshund walks past you!"
+                HeightRequest="170"
+                HorizontalOptions="Center"/>
 
-            <!--IP系統資料，會讀取當前狀態-->
-            <HorizontalStackLayout  HorizontalOptions="Center">
-                <Label x:Name="IPTitle_LB"
-                       Text="IP" 
-                       FontSize="40"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Center" 
-                       HeightRequest="50"/>
+        <!--IP系統資料，會讀取當前狀態-->
+        <HorizontalStackLayout  HorizontalOptions="Center">
+            <Label x:Name="IPTitle_LB"
+                    Text="IP" 
+                    FontSize="40"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" 
+                    HeightRequest="50"/>
 
-                <Label x:Name="GetIP_LB"
-                       Text="192.168.13.123" 
-                       FontSize="35"
-                       TextDecorations="Underline"
-                       HorizontalOptions="Center" 
-                       HeightRequest="50"
-                       Margin="15,0,0,0"/>
+            <Label x:Name="GetIP_LB"
+                    Text="192.168.13.123" 
+                    FontSize="35"
+                    TextDecorations="Underline"
+                    HorizontalOptions="Center" 
+                    HeightRequest="50"
+                    Margin="15,0,0,0"/>
 
-            </HorizontalStackLayout>
+        </HorizontalStackLayout>
 
-            <!--該頁說明，因需要腳印圖案於最尾巴，因此使用FlexLayout布局-->
+        <!--該頁說明，因需要腳印圖案於最尾巴，因此使用FlexLayout布局-->
         <FlexLayout Direction="Column"
                         JustifyContent="SpaceEvenly"
                         HeightRequest="200"

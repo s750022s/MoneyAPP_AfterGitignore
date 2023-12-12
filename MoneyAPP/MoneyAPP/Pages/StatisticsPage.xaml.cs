@@ -7,6 +7,9 @@ public partial class StatisticsPage : ContentPage
 		InitializeComponent();
     }
 
+    /// <summary>
+    /// 選擇菜單，確定選擇跟取消選擇都會觸發。
+    /// </summary>
     private void RadioButton_Clicked(object sender, CheckedChangedEventArgs e)
     {
         RadioButton radioButton = sender as RadioButton;
@@ -23,7 +26,6 @@ public partial class StatisticsPage : ContentPage
             case "帳戶當前狀態":
                 AccountStatusView.IsVisible = radioButton.IsChecked;
                 break;
-
         }
     }
 }

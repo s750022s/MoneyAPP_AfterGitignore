@@ -4,21 +4,29 @@
              xmlns:controls="clr-namespace:MoneyAPP.Controls"
              x:Class="MoneyAPP.Pages.RecordRevisePage"
              BackgroundImageSource="backgroud.png">
+    
     <VerticalStackLayout VerticalOptions="Start" >
-        <ImageButton Source="arrow_left.png" HorizontalOptions="Start" Margin="0,20,0,20"  HeightRequest="25" Clicked="BackButton_Clicked"/>
+        
+        <!-- 返回按鈕 -->
+        <ImageButton x:Name="BackBTN" 
+                     Source="arrow_left.png" 
+                     HorizontalOptions="Start" 
+                     Margin="0,20,0,20"  
+                     HeightRequest="25" 
+                     Clicked="BackButton_Clicked"/>
+
+        <!-- 記錄編輯表格 -->
         <Grid 
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
         ColumnDefinitions="80, 150, 130"
-        Margin="20,0,20,10"
-            >
+        Margin="20,0,20,10">
 
-            <!--(0,0)-->
-            <Label Text="日期" 
-               FontSize="30" 
+            <!--(0,0) 日期Title-->
+            <Label x:Name="RecordDay_Title" 
+               Text="日期" 
+               FontSize="30" />
 
-               />
-
-            <!--(0,1)-->
+            <!--(0,1) 日期選擇器-->
             <DatePicker  x:Name="RecordDay"
                     Grid.Column="1"
                     MinimumDate="01/11/2023"
@@ -26,86 +34,119 @@
                     Format="yyyy/MM/dd"
                     FontSize="25" />
 
-            <!--(0,2)-->
+            <!--(0,2) 時間選擇器 00:00 AM-->
             <TimePicker x:Name="RecordTime"
                     Grid.Column="2"
                     FontSize="25" 
-                    Format="hh:mm tt"
-            />
+                    Format="hh:mm tt"/>
 
-            <!--(1,0)-->
-            <RadioButton x:Name="Revenues" Grid.Row="1" Grid.Column="1" Content="收入" GroupName="RevenuesOrExpenses" FontSize="25">
-            </RadioButton>
-
-            <!--(1,1)-->
-            <RadioButton x:Name="Expense" Grid.Row="1" Grid.Column="2" Content="支出" IsChecked="true" GroupName="RevenuesOrExpenses" FontSize="25">
-            </RadioButton>
-
-            <!--(2,0)-->
-            <Label Grid.Row="2" Grid.Column="0"
-               Text="帳戶" 
-               FontSize="30" 
-               />
-
-            <!--(2,1)-->
-            <Picker x:Name="Account" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
-                Title="選擇帳戶" />
+            <!--(1,0) 收入選項-->
+            <RadioButton x:Name="Revenues" 
+                         Grid.Row="1" Grid.Column="1" 
+                         Content="收入" 
+                         GroupName="RevenuesOrExpenses" 
+                         FontSize="25"/>
 
 
-
-            <!--(3,0)-->
-            <Label Grid.Row="3" Grid.Column="0"
-               Text="類別" 
-               FontSize="30" 
-               />
-
-            <!--(3,1)-->
-            
-            <Picker x:Name="Category"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
-                Title="選擇種類"  />
+            <!--(1,1) 支出選項-->
+            <RadioButton x:Name="Expense" 
+                         Grid.Row="1" Grid.Column="2" 
+                         Content="支出" 
+                         IsChecked="true" 
+                         GroupName="RevenuesOrExpenses" 
+                         FontSize="25"/>
 
 
-            <!--(4,0)-->
-            <Label Grid.Row="4" Grid.Column="0"
-               Text="項目" 
-               FontSize="30" 
-               />
+            <!--(2,0) 帳戶Title-->
+            <Label x:Name="Account_Title" 
+                   Grid.Row="2" Grid.Column="0"
+                   Text="帳戶" 
+                   FontSize="30" />
+
+            <!--(2,1) 帳戶選單-->
+            <Picker x:Name="Account" 
+                    Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
+                    FontSize="25"
+                    Title="選擇帳戶" />
 
 
-            <!--(4,1)-->
-            <Editor x:Name="Item"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25"
-            />
+
+            <!--(3,0) 類別Title-->
+            <Label x:Name="Category_Title"
+                   Grid.Row="3" Grid.Column="0"
+                   Text="類別" 
+                   FontSize="30" />
+
+            <!--(3,1) 類別選單-->
+            <Picker x:Name="Category"  
+                    Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
+                    FontSize="25"
+                    Title="選擇種類"  />
 
 
-            <!--(5,0)-->
-            <Label Grid.Row="5" Grid.Column="0"
-               Text="NT$" 
-               FontSize="30" 
-               />
+            <!--(4,0) 項目Title-->
+            <Label x:Name="Item_Title"
+                   Grid.Row="4" Grid.Column="0"
+                   Text="項目" 
+                   FontSize="30" />
 
-            <!--(5,1)-->
-            <Entry x:Name="Amount_Editor"  Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
-                FontSize="25"
-                Focused="OnEntryFocused"
-                Unfocused="OnEntryUnfocused"
-                Keyboard="Numeric"/>
+
+            <!--(4,1) 項目編輯器-->
+            <Editor x:Name="Item"  
+                    Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" 
+                    FontSize="25"/>
+
+
+            <!--(5,0) 金額Title-->
+            <Label x:Name="Amount_Title" 
+                   Grid.Row="5" Grid.Column="0"
+                   Text="NT$" 
+                   FontSize="30" />
+
+            <!--(5,1) 金額編輯器，限定數字鍵盤-->
+            <Entry x:Name="Amount"  
+                   Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
+                    FontSize="25"
+                    Focused="OnEntryFocused"
+                    Unfocused="OnEntryUnfocused"
+                    Keyboard="Numeric"/>
 
         </Grid>
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
-            <Button Text="儲存" ImageSource="check.png" CornerRadius="14" Clicked="SaveButton_Clicked"/>
-            <Button x:Name="Delete_BTN" Text="刪除" ImageSource="trash.png" CornerRadius="14" Clicked="DeleteButton_Clicked"/>
+
+        <!-- 儲存和刪除按鈕 -->
+        <HorizontalStackLayout HorizontalOptions="Center" 
+                               Spacing="25">
+            
+            <Button x:Name="Save_BTN" 
+                    Text="儲存" 
+                    ImageSource="check.png" 
+                    CornerRadius="14" 
+                    Clicked="SaveButton_Clicked"/>
+            
+            <Button x:Name="Delete_BTN" 
+                    Text="刪除" 
+                    ImageSource="trash.png" 
+                    CornerRadius="14" 
+                    Clicked="DeleteButton_Clicked"/>
+            
         </HorizontalStackLayout>
-
-        <Label x:Name="StateMessage" FontSize="15"/>
-
-        <Image x:Name="creamy_butt_Image"
-                   Source="creamy_butt.png"
-                   HeightRequest="180"
-                   HorizontalOptions="End"
-               Margin="0,140,0,0"/>
         
+        <!-- 刪除狀態信息標籤 -->
+        <Label x:Name="StateMessage" 
+               FontSize="15"/>
+
+        <!-- 圖片 -->
+        <Image x:Name="creamy_butt_Image"
+               Source="creamy_butt.png"
+               HeightRequest="180"
+               HorizontalOptions="End"
+               Margin="0,140,0,0"/>
+
+        <!-- 計算機控制項 -->
         <VerticalStackLayout Margin="0,10,0,0">
-            <controls:Calculator  x:Name="Calculator" IsVisible="False" HorizontalOptions="Center"/>
+            <controls:Calculator  x:Name="Calculator"
+                                  IsVisible="False" 
+                                  HorizontalOptions="Center"/>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

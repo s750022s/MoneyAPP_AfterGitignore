@@ -17,9 +17,9 @@
 
             <!--日期選擇器：MM/dd-->
             <DatePicker x:Name="RecordDate_DatePicker"
+                        Format="MM/dd"
                         MinimumDate="01/11/2023"
                         MaximumDate="12/31/2100" 
-                        Format="MM/dd"
                         FontSize="50"
                         FontAttributes="Bold"
                         HeightRequest="75"

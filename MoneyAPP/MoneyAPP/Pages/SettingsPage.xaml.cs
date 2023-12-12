@@ -11,22 +11,30 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
 	}
 
+    /// <summary>
+    /// ち传称临
+    /// </summary>
     private void Backup_Tapped(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SettingsPage_Backup());
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
 
+    /// <summary>
+    /// ち传蹲EXCEL
+    /// </summary>
     private void ConvertExcel_Tapped(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new UploadPage());
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
 
+    /// <summary>
+    /// ち传╰参戈癟
+    /// </summary>
     private void SystemInfo_Tapped(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SettingsPage_SystemInfo());
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
-
     }
 }

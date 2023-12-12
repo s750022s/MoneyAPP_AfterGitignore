@@ -4,63 +4,105 @@
              x:Class="MoneyAPP.Pages.SettingsPage_SystemInfo"
              Title="SettingsPage_SystemInfo"
              BackgroundImageSource="backgroud.png">
+    
     <VerticalStackLayout>
-        <ImageButton Source="arrow_left.png" HorizontalOptions="Start" Margin="0,20,0,20"  HeightRequest="25" Clicked="BackButton_Clicked"/>
+        <!--返回上一頁-->
+        <ImageButton Source="arrow_left.png" 
+                     HorizontalOptions="Start" 
+                     Margin="0,20,0,20"  
+                     HeightRequest="25" 
+                     Clicked="BackButton_Clicked"/>
+
+        <!--資訊框-->
         <Border x:Name="Info_Border" 
                 Stroke="#584842"
                 StrokeShape="RoundRectangle 10,10,10,10"
                 Margin="15,8,15,8"
                 Padding="0,15,0,15">
 
-            <HorizontalStackLayout Spacing="10" HorizontalOptions="StartAndExpand">
-            <Image x:Name="chick_cream_Image"
-                Source="chick_cream.png"
-                HeightRequest="80" />
-                
-            <VerticalStackLayout>
-                <Label Text="總資料筆數" FontSize="18"/>
-                <Label x:Name="Count_LB"  Text="" FontSize="30"/>
-            </VerticalStackLayout>
+            <HorizontalStackLayout Spacing="10" 
+                                   HorizontalOptions="StartAndExpand">
+            
+                <!--插圖-->
+                <Image x:Name="chick_cream_Image"
+                    Source="chick_cream.png"
+                    HeightRequest="80" />
 
-            <VerticalStackLayout >
-                <Label Text="總紀錄時長" FontSize="18"/>
-                <Label x:Name="DateLength_LB" Text="" FontSize="30"/>
-            </VerticalStackLayout>
+                <!--總資料筆數-->
+                <VerticalStackLayout>
+                    <Label Text="總資料筆數" FontSize="18"/>
+                    <Label x:Name="Count_LB"  Text="" FontSize="30"/>
+                </VerticalStackLayout>
+
+                <!--總紀錄時長-->
+                <VerticalStackLayout >
+                    <Label Text="總紀錄時長" FontSize="18"/>
+                    <Label x:Name="DateLength_LB" Text="" FontSize="30"/>
+                </VerticalStackLayout>
             </HorizontalStackLayout>
         </Border>
-        <Grid RowDefinitions="50,50,90,50,50,50,100" ColumnDefinitions="70,180,100" ColumnSpacing="10" RowSpacing="20" Margin="15">
+        
+        <!--其他資訊-->
+        <Grid RowDefinitions="50,50,90,50,50,50,100" RowSpacing="20" 
+              ColumnDefinitions="70,180,100" ColumnSpacing="10" 
+              Margin="15">
+
+            <!--應用程式版本-->
             <Image Grid.Row="0" Grid.Column="0"
-            Source="foot.png"
-            HeightRequest="40" />
+                   Source="foot.png"
+                   HeightRequest="40" />
 
-            <Label Grid.Row="0" Grid.Column="1" Text="應用程式版本" FontSize="28"/>
+            <Label Grid.Row="0" Grid.Column="1" 
+                   Text="應用程式版本" 
+                   FontSize="28"/>
 
-            <Label x:Name="CurrentVersion" Grid.Row="0" Grid.Column="2" Text="0.0.0.0" FontSize="28"/>
+            <Label x:Name="CurrentVersion" 
+                   Grid.Row="0" Grid.Column="2" 
+                   Text="0.0.0.0" 
+                   FontSize="28"/>
 
+
+            <!--更新內容-->
             <Image Grid.Row="1" Grid.Column="0"
-            Source="foot.png"
-            HeightRequest="40" />
+                   Source="foot.png"
+                   HeightRequest="40" />
 
-            <Label Grid.Row="1" Grid.Column="1" Text="更新內容" FontSize="28"/>
+            <Label Grid.Row="1" Grid.Column="1" 
+                   Text="更新內容" 
+                   FontSize="28"/>
 
             <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
-                   Text="全新的記帳程式，為銀髮族設計的大字體及簡單的操作，更多的功能正在開發中，敬請期待。" FontSize="23" Margin="20,-15,20,0"/>
+                   Text="全新的記帳程式，為銀髮族設計的大字體及簡單的操作，更多的功能正在開發中，敬請期待。" 
+                   FontSize="23" 
+                   Margin="20,-15,20,0"/>
 
+            <!--聲明-->
             <Image Grid.Row="3" Grid.Column="0"
-            Source="foot.png"
-            HeightRequest="40" />
+                   Source="foot.png"
+                   HeightRequest="40" />
 
-            <Label Grid.Row="3" Grid.Column="1" Text="聲明" FontSize="28"/>
+            <Label Grid.Row="3" Grid.Column="1" 
+                   Text="聲明" 
+                   FontSize="28"/>
 
-            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="圖片來自網路(未經授權)，&#10;因此禁止商業使用。" FontSize="23" Margin="20,-15,20,0"/>
+            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" 
+                   Text="圖片來自網路(未經授權)，&#10;因此禁止商業使用。" 
+                   FontSize="23" 
+                   Margin="20,-15,20,0"/>
 
+            <!--開發團隊-->
             <Image Grid.Row="5" Grid.Column="0"
-            Source="foot.png"
-            HeightRequest="40" />
+                   Source="foot.png"
+                   HeightRequest="40" />
 
-            <Label Grid.Row="5" Grid.Column="1" Text="開發團隊" FontSize="28"/>
+            <Label Grid.Row="5" Grid.Column="1" 
+                   Text="開發團隊" 
+                   FontSize="28"/>
 
-            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="開發工程師：Yuning Zheng &#10;圖片繪師：&#10;Sandy Pig(doujin.com)" FontSize="23" Margin="20,-15,20,0"/>
+            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" 
+                   Text="開發工程師：Yuning Zheng &#10;圖片繪師：&#10;Sandy Pig(doujin.com)" 
+                   FontSize="23" 
+                   Margin="20,-15,20,0"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

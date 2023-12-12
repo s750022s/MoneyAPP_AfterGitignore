@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MoneyAPP.Controls
 {
+    /// <summary>
+    /// 客製化Border，新增屬性Id
+    /// </summary>
     public class RecordBorder:Border
     {
         public static readonly BindableProperty RecordIdProperty =

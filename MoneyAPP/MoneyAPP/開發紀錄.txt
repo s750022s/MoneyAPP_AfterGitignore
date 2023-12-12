@@ -1,12 +1,21 @@
-﻿1.  UploadPage 
-    尚缺Getwifi/GetIP兩段邏輯(因牽扯到三種設備，待詳細研究)
-    **考慮拿掉Getwifi
+﻿#待開發功能
 
-2. HomePage
-   尚缺 
-    i. 從資料庫拿出資料
-    ii. 點集進入編輯頁
-    iii. 點擊日期切換到該天記錄
-    iiii.自動計算該天總和
+[SqliteService.cs]
+1. SQLite結果須寫進log
 
-    **考慮將fullMoonTips拆成獨立Controls
+[RecordRevisePage.cs]
+1. 更改資料綁定的模式
+2. 記算機釋放
+
+[StatisticsPage]
+1. 三個對應元件開發
+
+[Setting]
+1. 匯入備份檔
+2. 匯出Excel(包含搭配APP)
+3. 取得當前IP
+
+#問題
+[SqliteService.cs]
+1. 初始化資料不要寫在建構子???
+2. 將SqliteService的物件寫在全域變數，還需要在哪邊關閉連線嗎?

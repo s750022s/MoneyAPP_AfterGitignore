@@ -10,7 +10,6 @@
     <ShellContent ContentTemplate="{DataTemplate local:RecordAddPage}" />
     <ShellContent ContentTemplate="{DataTemplate local:UploadPage}" />
     <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" />
-    <ShellContent ContentTemplate="{DataTemplate local:OtherPage}" />
     <ShellContent ContentTemplate="{DataTemplate local:RecordRevisePage}" />
     <ShellContent ContentTemplate="{DataTemplate local:SetCategoryListPage}" />
     <ShellContent ContentTemplate="{DataTemplate local:SetAccountListPage}" />

@@ -5,6 +5,7 @@
             x:Class="MoneyAPP.Pages.StatisticsPage"
             BackgroundImageSource="backgroud.png">
 
+    <!--RadioButton樣式設定-->
     <ContentPage.Resources>
         <ControlTemplate x:Key="RadioButtonTemplate">
             <Grid RowDefinitions="35,4">
@@ -16,14 +17,14 @@
                             <VisualState x:Name="Checked">
                                 <VisualState.Setters>
                                     <Setter TargetName="TextLabel"
-                                                                Property="Label.TextColor"
-                                                                Value="#FF9959"/>
+                                            Property="Label.TextColor"
+                                            Value="#FF9959"/>
                                     <Setter TargetName="TextLabel"
-                                                                Property="Label.FontSize"
-                                                                Value="26"/>
+                                            Property="Label.FontSize"
+                                            Value="26"/>
                                     <Setter TargetName="Indicator"
-                                                                Property="BoxView.Color"
-                                                                Value="#FF9959"/>
+                                            Property="BoxView.Color"
+                                            Value="#FF9959"/>
                                 </VisualState.Setters>
                             </VisualState>
 
@@ -31,24 +32,32 @@
                             <VisualState x:Name="Unchecked">
                                 <VisualState.Setters>
                                     <Setter TargetName="TextLabel"
-                                                                Property="Label.TextColor"
-                                                                Value="#634a40"/>
+                                            Property="Label.TextColor"
+                                            Value="#634a40"/>
                                     <Setter TargetName="TextLabel"
-                                                                Property="Label.FontSize"
-                                                                Value="26"/>
+                                            Property="Label.FontSize"
+                                            Value="26"/>
                                     <Setter TargetName="Indicator"
-                                                                Property="BoxView.Color"
-                                                                Value="Transparent"/>
+                                            Property="BoxView.Color"
+                                            Value="Transparent"/>
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </VisualStateManager.VisualStateGroups>
-                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" />
-                <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+                
+                <!--選單文字-->
+                <Label x:Name="TextLabel"
+                       Text="{TemplateBinding Content}" />
+
+                <!--選單底線-->
+                <BoxView x:Name="Indicator" 
+                         Grid.Row="1" 
+                         Color="Transparent"/>
             </Grid>
         </ControlTemplate>
 
+        <!--套用樣式-->
         <Style TargetType="RadioButton">
             <Setter Property="ControlTemplate"
                     Value="{StaticResource RadioButtonTemplate}" />
@@ -58,17 +67,47 @@
     
     <!--UI內容-->
     <VerticalStackLayout>
-        <StackLayout Orientation="Horizontal" Spacing="10" Margin="7" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-            <RadioButton x:Name="CategoryButton" Content="類別統計" IsChecked="true"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
-            <RadioButton x:Name="AccountButton" Content="帳戶統計" IsChecked="False"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
-            <RadioButton x:Name="AccountStatusButton" Content="帳戶當前狀態" IsChecked="False"  GroupName="MenuGroup" CheckedChanged="RadioButton_Clicked"/>
-    </StackLayout>
+        <!--選單設計：點選對應選單，下方切換對應內容-->
+        <!--不能使用RadioButton.Group.GroupName，否則預設會是最後一項-->
+        <StackLayout Orientation="Horizontal" 
+                     Spacing="10" 
+                     Margin="7" 
+                     VerticalOptions="CenterAndExpand" 
+                     HorizontalOptions="CenterAndExpand">
 
+            <RadioButton x:Name="CategoryButton" 
+                         Content="類別統計" 
+                         IsChecked="true"  
+                         GroupName="MenuGroup" 
+                         CheckedChanged="RadioButton_Clicked"/>
+            
+            <RadioButton x:Name="AccountButton" 
+                         Content="帳戶統計" 
+                         IsChecked="False"  
+                         GroupName="MenuGroup" 
+                         CheckedChanged="RadioButton_Clicked"/>
+            
+            <RadioButton x:Name="AccountStatusButton" 
+                         Content="帳戶當前狀態" 
+                         IsChecked="False"  
+                         GroupName="MenuGroup" 
+                         CheckedChanged="RadioButton_Clicked"/>
+        </StackLayout>
 
-    <control:StatisticsPage_Categorys x:Name="CategorysView" IsVisible="True" HeightRequest="345"/>
-        <control:StatisticsPage_Accounts x:Name="AccountsView" IsVisible="False" HeightRequest="345"/>
-        <control:StatisticsPage_AccountStatus x:Name="AccountStatusView" IsVisible="False" HeightRequest="345"/>
+        <!--對應內容切換，只會有一個IsVisible="True"-->
+        <control:StatisticsPage_Categorys x:Name="CategorysView" 
+                                          IsVisible="True" 
+                                          HeightRequest="345"/>
+        
+        <control:StatisticsPage_Accounts x:Name="AccountsView" 
+                                         IsVisible="False" 
+                                         HeightRequest="345"/>
 
-     <control:CustomTabBar Margin="0,300,0,0"/>
+        <control:StatisticsPage_AccountStatus x:Name="AccountStatusView" 
+                                              IsVisible="False" 
+                                              HeightRequest="345"/>
+        
+        <!--自訂菜單-->
+        <control:CustomTabBar Margin="0,300,0,0"/>
     </VerticalStackLayout>
 </ContentPage>

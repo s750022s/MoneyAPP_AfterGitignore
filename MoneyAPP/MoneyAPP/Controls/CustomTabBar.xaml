@@ -32,7 +32,7 @@
                 PageBind="RecordAddPage"
                 />
 
-            <controls:TabBarButton x:Name="Upload_Tab"
+            <controls:TabBarButton x:Name="Statistic_Tab"
                 Text="統計"
                 FontSize="22"
                 BackgroundColor="#FEFDF6"
@@ -44,8 +44,8 @@
                 PageBind="StatisticsPage"
                 />
 
-            <controls:TabBarButton x:Name="Setting_Tab"
-                Text="選項"
+            <controls:TabBarButton x:Name="SetList_Tab"
+                Text="選單"
                 FontSize="22"
                 BackgroundColor="#E9D6CD"
                 HeightRequest="100" 
@@ -56,7 +56,7 @@
                 PageBind="SetCategoryListPage"
                 />
 
-            <controls:TabBarButton x:Name="Other_Tab"
+            <controls:TabBarButton x:Name="Setting_Tab"
                 Text="設定"
                 FontSize="22"
                 BackgroundColor="#FEFDF6"
@@ -82,17 +82,17 @@
                 WidthRequest="78"
                 Margin="0,-220,0,0"/>
 
-            <Image x:Name="Upload_Image"
+            <Image x:Name="Statistic_Image"
                 Source="hotdog.png"
                 WidthRequest="78"
                 Margin="0,-180,0,0"/>
 
-            <Image x:Name="Setting_Image"
+            <Image x:Name="SetList_Image"
                 Source="tea_spoon.png"
                 WidthRequest="80"
                 Margin="0,-225,0,0"/>
 
-            <Image x:Name="Other_Image"
+            <Image x:Name="Setting_Image"
                 Source="chick_cream.png"
                 WidthRequest="80"
                 Margin="0,-175,0,0"/>

@@ -9,6 +9,9 @@ public partial class UploadPage : ContentPage
         InitializeComponent();
     }
 
+    /// <summary>
+    /// ªð¦^¤W¤@­¶
+    /// </summary>
     private void BackButton_Clicked(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SettingsPage());

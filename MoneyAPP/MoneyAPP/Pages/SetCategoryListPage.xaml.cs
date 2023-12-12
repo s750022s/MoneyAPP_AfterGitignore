@@ -12,9 +12,11 @@ public partial class SetCategoryListPage : ContentPage
 	{
 		InitializeComponent();
         CategoryModelToPicker();
-
     }
 
+    /// <summary>
+    /// 類別項目生成
+    /// </summary>
     private void CategoryModelToPicker()
     {
         if (App.CachedCategorys == null)
@@ -29,6 +31,9 @@ public partial class SetCategoryListPage : ContentPage
         DatasCollectionView.ItemsSource = categorys;
     }
 
+    /// <summary>
+    /// 點擊Border，會跳出該Border的資料
+    /// </summary>
     private void OnBorderTapped(object sender, TappedEventArgs e) 
     {
         RecordBorder recordBorder = (RecordBorder)sender;
@@ -46,6 +51,11 @@ public partial class SetCategoryListPage : ContentPage
         Sequence_Entry.Text = category.Sequence.ToString();
     }
 
+    /// <summary>
+    /// 當id=99，啟動AddSave;
+    /// 情境1：Sequence大於目前項目總數 => 加在最後，Sequence=項目總數;
+    /// 情境2：項目總數小於Sequence，代表要插在中間 => 將Sequence鎖定項目之後全數Sequence+1
+    /// </summary>
     private void AddSave_Click()
     {
         var input = InputCheck();
@@ -86,6 +96,10 @@ public partial class SetCategoryListPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// 情境1：往前移 => endIndex 大於 startIndex => 修改位置之後所有項目位置-1
+    /// 情境2：往後移 => endIndex 小於 startIndex => 修改位置之後所有項目位置+1
+    /// </summary>
     private void ReviseSave_Click()
     {
         var input = InputCheck();
@@ -144,6 +158,9 @@ public partial class SetCategoryListPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// 檢查輸入資料
+    /// </summary>
     private CategoryModel? InputCheck() 
     {
         string name = Name_Entry.Text;
@@ -174,6 +191,9 @@ public partial class SetCategoryListPage : ContentPage
         return  new CategoryModel { CategoryID = cacheID, Name = name, Sequence = seq };
     }
 
+    /// <summary>
+    /// 切換SaveButten
+    /// </summary>
     private void Save_BTN_Clicked(object sender, EventArgs e)
     {
         if (cacheID == 99) 
@@ -186,6 +206,9 @@ public partial class SetCategoryListPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// 刪除按鈕，Sequence=-1
+    /// </summary>
     private async void Delete_BTN_Clicked(object sender, EventArgs e)
     {
         var ans = await DisplayAlert("刪除無法復原，確定要刪除嗎?", "刪除後歷史資料會繼續顯示，\n但無法在新增/修改中再次選取", "刪除", "取消");
@@ -215,6 +238,9 @@ public partial class SetCategoryListPage : ContentPage
         return;
     }
 
+    /// <summary>
+    /// 切換到帳戶頁面
+    /// </summary>
     private void MenuToggle_BTN_Clicked(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SetAccountListPage());
