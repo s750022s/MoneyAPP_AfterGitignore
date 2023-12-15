@@ -12,6 +12,7 @@ MoneyAPP是一款為銀髮族設計的記帳APP，
 
 ## 開發方式
 以近年興起的跨平臺框架.Net MAUI開發，利用C#及XAML語言打造APP，結合本地資料庫檔Sqlite，並先在Android及Windows進行測試。
+插圖來在Sandy Pig的作品(doujin.com)
 
 ## 專案進度
 1. 初始功能及版面設計圖樣：已完成
