@@ -136,8 +136,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
 	  <MauiIcon Include="Resources\AppIcon\appicon.svg" />
+	  <MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
