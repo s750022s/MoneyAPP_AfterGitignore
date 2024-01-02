@@ -47,6 +47,7 @@ public partial class SetAccountListPage : ContentPage
         RecordBorder recordBorder = (RecordBorder)sender;
         cacheID = recordBorder.RecordId;
         Revise_Grid.IsVisible = true;
+        Blank_BoxView.IsVisible = false;
 
         if (cacheID == 99)
         {
@@ -183,19 +184,26 @@ public partial class SetAccountListPage : ContentPage
             return null;
         }
 
-        try 
+        if (sequence == "")
         {
-            seq = Convert.ToInt32(sequence);
-            if (seq < 0 || seq > 98) 
+            seq = 100;
+        }
+        else
+        {
+            try
+            {
+                seq = Convert.ToInt32(sequence);
+                if (seq < 0 || seq > 98)
+                {
+                    DisplayAlert("請輸入一位到兩位正整數", "", "OK");
+                    return null;
+                }
+            }
+            catch
             {
                 DisplayAlert("請輸入一位到兩位正整數", "", "OK");
                 return null;
             }
-        } 
-        catch 
-        {
-            DisplayAlert("請輸入一位到兩位正整數", "", "OK");
-            return null;
         }
 
         return  new AccountModel { AccountID = cacheID, Name = name, Sequence = seq };

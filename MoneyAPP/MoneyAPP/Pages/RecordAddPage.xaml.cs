@@ -120,7 +120,7 @@ public partial class RecordAddPage : ContentPage
         RecordModel record = SetRecordModel();
         App.ServiceRepo.AddRecord(record);
         Close_BTN.Focus();
-        Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage());
+        Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(record.RecordDay));
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
 

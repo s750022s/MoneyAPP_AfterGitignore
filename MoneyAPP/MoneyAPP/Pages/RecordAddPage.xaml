@@ -13,14 +13,13 @@
 
         <Grid 
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
-        ColumnDefinitions="80, 150, 130"
-        Margin="20,0,20,10"
+        ColumnDefinitions="*, 2*, 1.8*"
+        Margin="10,0,10,10"
             >
 
             <!--(0,0)日期標題-->
             <Label Text="日期" 
                FontSize="30" 
-
                />
 
             <!--(0,1)日期選擇器-->
@@ -133,6 +132,7 @@
             <!--自訂TabBar-->
             <controls:CustomTabBar x:Name="TabBar" 
                                    IsVisible="True" 
+                                   HeightRequest="100"
                                    Margin="0,147,0,0"/>
         </VerticalStackLayout>
     </VerticalStackLayout>

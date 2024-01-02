@@ -6,36 +6,35 @@
              BackgroundImageSource="backgroud.png">
     
     <!--整體布局分 5Rows-->
-    <Grid RowDefinitions="180,100,192,230,*" 
-          ColumnDefinitions="*,*,*,*" 
-          Margin="7">
+    <Grid RowDefinitions="*,1.18*,1.5*,*" 
+          ColumnDefinitions="*,*" 
+          Margin="7"
+          RowSpacing="15"
+          VerticalOptions="FillAndExpand">
         
         <!--選單切換-->
         <Button x:Name="MenuToggle_BTN"
-                Grid.Row="1" Grid.Column="0" 
                 Text="帳戶" 
-                ImageSource="left_right.png" 
                 HeightRequest="60" 
-                WidthRequest="120" 
+                WidthRequest="150"
+                VerticalOptions="End"
+                ImageSource="left_right.png" 
                 ContentLayout="right,2" 
                 BackgroundColor="Transparent" 
                 BorderColor="#584842" 
                 BorderWidth="1" 
                 FontSize="30" 
-                Margin="27,0,0,0" 
                 TextColor="#584842"
                 Clicked="MenuToggle_BTN_Clicked"/>
 
         <Image x:Name="teaSpoon_Image" 
-               Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" 
+               Grid.Row="0" Grid.Column="1"
                Source="tea_spoon.png" 
-               HeightRequest="250" 
-               HorizontalOptions="End" 
-               Margin="10,0,-10,20"/>
+               HorizontalOptions="End" />
         
         <!--資料選單-->
         <CollectionView x:Name="DatasCollectionView" 
-                        Grid.Row="2" Grid.ColumnSpan="4" >
+                        Grid.Row="1" Grid.ColumnSpan="2"  >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <ContentView HeightRequest="96" 
@@ -67,13 +66,14 @@
 
                                         <Label x:Name="AccountName" 
                                                Grid.Row="1" Grid.RowSpan="4"  
-                                               Grid.Column="0" Grid.ColumnSpan="4" 
+                                               Grid.Column="0" Grid.ColumnSpan="5" 
                                                TextColor="#FFF" 
                                                Text="{Binding Name}" 
+                                               LineBreakMode="CharacterWrap"
                                                HorizontalOptions="Center" 
                                                VerticalOptions="Center" 
                                                FontSize="22" 
-                                               Padding="8,0,0,0">
+                                               Padding="8,0,0,0" >
                                             <Label.Triggers>
                                                 <DataTrigger TargetType="Label" Binding="{Binding AccountID}" Value="99">
                                                     <Setter Property="FontSize" Value="70" />
@@ -101,11 +101,17 @@
                                  Span="4" />
             </CollectionView.ItemsLayout>
         </CollectionView>
-        
+
+        <BoxView x:Name="Blank_BoxView"
+            Grid.Row="2" Grid.ColumnSpan="2"
+            IsVisible="true"
+            BackgroundColor="Transparent" 
+            Color="Transparent"/>
+
         <!--點擊格子，跳出修改欄位-->
         <Grid x:Name="Revise_Grid" 
-              Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="4" 
-              RowDefinitions="57,57,45" ColumnDefinitions="70,220,*" 
+              Grid.Row="2" Grid.ColumnSpan="2" 
+              RowDefinitions="*,*,*" ColumnDefinitions="*,3*,*" 
               Padding="7" 
               RowSpacing="7" 
               IsVisible="false">
@@ -160,8 +166,9 @@
         </Grid>
         
         <!--Menu-->
-        <controls:CustomTabBar Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="4" 
-                               Margin="-7,0"/>
-        
+        <controls:CustomTabBar Grid.Row="3" Grid.ColumnSpan="2" 
+                               Margin="-7,30,-7,-7"
+                               HeightRequest="100"
+                               VerticalOptions="End"/>
     </Grid>
     </ContentPage>

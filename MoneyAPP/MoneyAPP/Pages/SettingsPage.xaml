@@ -5,7 +5,7 @@
              x:Class="MoneyAPP.Pages.SettingsPage"
              BackgroundImageSource="backgroud.png">
     
-    <Grid  RowDefinitions="200,500,100" ColumnDefinitions="*">
+    <Grid  RowDefinitions="200,500,100" ColumnDefinitions="*" VerticalOptions="End">
         
         <!--圖片-->
         <Image x:Name="chick_cream_Image"
@@ -79,6 +79,7 @@
         
         <!--自訂菜單-->
         <control:CustomTabBar Grid.Row="2" 
-                              Grid.ColumnSpan="2" />
+                              Grid.ColumnSpan="2" 
+                              HeightRequest="100"/>
     </Grid>
 </ContentPage>

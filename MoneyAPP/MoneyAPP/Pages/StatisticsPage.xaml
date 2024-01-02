@@ -21,7 +21,7 @@
                                             Value="#FF9959"/>
                                     <Setter TargetName="TextLabel"
                                             Property="Label.FontSize"
-                                            Value="26"/>
+                                            Value="24"/>
                                     <Setter TargetName="Indicator"
                                             Property="BoxView.Color"
                                             Value="#FF9959"/>
@@ -36,7 +36,7 @@
                                             Value="#634a40"/>
                                     <Setter TargetName="TextLabel"
                                             Property="Label.FontSize"
-                                            Value="26"/>
+                                            Value="24"/>
                                     <Setter TargetName="Indicator"
                                             Property="BoxView.Color"
                                             Value="Transparent"/>
@@ -66,11 +66,11 @@
 
     
     <!--UI內容-->
-    <VerticalStackLayout>
+    <Grid  RowDefinitions="*,6*,*" HorizontalOptions="EndAndExpand" >
         <!--選單設計：點選對應選單，下方切換對應內容-->
         <!--不能使用RadioButton.Group.GroupName，否則預設會是最後一項-->
         <StackLayout Orientation="Horizontal" 
-                     Spacing="10" 
+                     Spacing="8" 
                      Margin="7" 
                      VerticalOptions="CenterAndExpand" 
                      HorizontalOptions="CenterAndExpand">
@@ -96,18 +96,23 @@
 
         <!--對應內容切換，只會有一個IsVisible="True"-->
         <control:StatisticsPage_Categorys x:Name="CategorysView" 
+                                          Grid.Row="1"
                                           IsVisible="True" 
-                                          HeightRequest="345"/>
+                                          />
         
         <control:StatisticsPage_Accounts x:Name="AccountsView" 
+                                         Grid.Row="1"
                                          IsVisible="False" 
-                                         HeightRequest="345"/>
+                                         />
 
         <control:StatisticsPage_AccountStatus x:Name="AccountStatusView" 
+                                              Grid.Row="1"
                                               IsVisible="False" 
-                                              HeightRequest="345"/>
+                                              />
         
         <!--自訂菜單-->
-        <control:CustomTabBar Margin="0,300,0,0"/>
-    </VerticalStackLayout>
+        <control:CustomTabBar HeightRequest="100"
+                              Grid.Row="2"
+                              VerticalOptions="End"/>
+    </Grid>
 </ContentPage>

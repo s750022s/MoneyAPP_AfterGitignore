@@ -246,12 +246,13 @@
                 Text="OK" 
                 BackgroundColor="#FFF2CC" 
                 TextColor="#843C0C" 
-                FontSize="15" 
+                FontSize="13" 
                 FontAttributes="Bold"
                 WidthRequest="50" 
                 HeightRequest="50"
                 CornerRadius="25"
-                Clicked="CalculatorClick"/>
+                Clicked="CalculatorClick" 
+                LineBreakMode="CharacterWrap"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentView>

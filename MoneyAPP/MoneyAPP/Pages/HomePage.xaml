@@ -22,7 +22,7 @@
                         MaximumDate="12/31/2100" 
                         FontSize="50"
                         FontAttributes="Bold"
-                        HeightRequest="75"
+                        HeightRequest="80"
                         HorizontalOptions="Start"
                         TextColor="#634a40"
                         DateSelected="RecordDate_DateSelected"/>
@@ -41,8 +41,8 @@
         </VerticalStackLayout>
 
         <!--自訂TabBar,讀取/control/CustomTabBar設定-->
-        <VerticalStackLayout Margin="0,45,0,0">
-            <control:CustomTabBar />
+        <VerticalStackLayout HeightRequest="100">
+            <control:CustomTabBar/>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

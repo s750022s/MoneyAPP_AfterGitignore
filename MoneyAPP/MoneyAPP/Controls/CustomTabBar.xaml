@@ -5,98 +5,107 @@
              x:Class="MoneyAPP.Controls.CustomTabBar">
 
     <!--客製化TabBar-->
-    <VerticalStackLayout>
-        <!--Butten-->
-        <HorizontalStackLayout>
+    <Grid ColumnDefinitions="*,*,*,*,*" >
+        <VerticalStackLayout Grid.Column="0" >
             <controls:TabBarButton x:Name="History_Tab"
                 Text="歷史"
                 FontSize="22"
                 BackgroundColor="#FEFDF6"
-                HeightRequest="100" 
-                WidthRequest="78" 
                 TextColor="#000000" 
-                Padding="0,0,0,-40" 
+                LineBreakMode="CharacterWrap"
+                Padding="0,0,0,-40"
+                HeightRequest="100"
                 CornerRadius="0"
                 Clicked="ToPage_Clicked" 
-                PageBind="HomePage"
-                />
+                PageBind="HomePage"/>
 
-            <controls:TabBarButton x:Name="Record_Tab"
+            <Image x:Name="History_Image"
+               Source="gemini_cat.png"
+               WidthRequest="78"
+               Margin="0,-130,0,0"/>
+            
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Grid.Column="1"  >
+            <controls:TabBarButton x:Name="Record_Tab"      
                 Text="紀錄"
                 FontSize="22"
+                HeightRequest="100"
                 BackgroundColor="#D3C6BD"
-                HeightRequest="100" 
-                WidthRequest="78" 
                 TextColor="#000000"
+                LineBreakMode="CharacterWrap"
+                Padding="0,0,0,10"
                 Clicked="ToPage_Clicked"
-                PageBind="RecordAddPage"
+                PageBind="RecordAddPage" 
                 />
 
+            <Image x:Name="Record_Image"
+               Source="cat_eggtower.png"
+               WidthRequest="78"
+               Margin="0,-145,0,0"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="2">
             <controls:TabBarButton x:Name="Statistic_Tab"
                 Text="統計"
                 FontSize="22"
+                HeightRequest="100"
                 BackgroundColor="#FEFDF6"
-                HeightRequest="100" 
-                WidthRequest="78" 
                 TextColor="#000000"
+                LineBreakMode="CharacterWrap"
                 Padding="0,0,0,-30"
                 Clicked="ToPage_Clicked"
                 PageBind="StatisticsPage"
                 />
 
+            <Image x:Name="Statistic_Image"
+               Source="hotdog.png"
+                WidthRequest="78"
+                Margin="0,-110,0,0"/>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="3">
             <controls:TabBarButton x:Name="SetList_Tab"
                 Text="選單"
                 FontSize="22"
+                HeightRequest="100"
                 BackgroundColor="#E9D6CD"
-                HeightRequest="100" 
-                WidthRequest="78" 
                 TextColor="#000000" 
+                LineBreakMode="CharacterWrap"
                 Padding="0,0,0,10"
                 Clicked="ToPage_Clicked"
                 PageBind="SetCategoryListPage"
                 />
 
+            <Image x:Name="SetList_Image"
+               Source="tea_spoon.png"
+               WidthRequest="80"
+               Margin="0,-150,0,0"/>
+            
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="4">
             <controls:TabBarButton x:Name="Setting_Tab"
                 Text="設定"
                 FontSize="22"
+                HeightRequest="100"
                 BackgroundColor="#FEFDF6"
-                HeightRequest="100" 
-                WidthRequest="78" 
                 TextColor="#000000"
+                LineBreakMode="CharacterWrap"
                 Padding="0,0,0,-35"
                 Clicked="ToPage_Clicked"
                 PageBind="SettingsPage"
                 />
-            
-        </HorizontalStackLayout>
-        
-        <!--Icon-->
-        <HorizontalStackLayout>
-            <Image x:Name="History_Image"
-                Source="gemini_cat.png"
-                WidthRequest="76"
-                Margin="0,-185,0,0"/>
-
-            <Image x:Name="Record_Image"
-                Source="cat_eggtower.png"
-                WidthRequest="78"
-                Margin="0,-220,0,0"/>
-
-            <Image x:Name="Statistic_Image"
-                Source="hotdog.png"
-                WidthRequest="78"
-                Margin="0,-180,0,0"/>
-
-            <Image x:Name="SetList_Image"
-                Source="tea_spoon.png"
-                WidthRequest="80"
-                Margin="0,-225,0,0"/>
 
             <Image x:Name="Setting_Image"
                 Source="chick_cream.png"
                 WidthRequest="80"
-                Margin="0,-175,0,0"/>
+                Margin="0,-115,0,0"/>
 
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+
+    </Grid>
 </ContentView>
+
