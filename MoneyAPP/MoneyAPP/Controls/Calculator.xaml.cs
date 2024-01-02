@@ -173,7 +173,7 @@ public partial class Calculator : ContentView
             //長度超出畫面跳出提醒
             if (Count_LB.Measure(Width, Height).Request.Width > Count_Border.WidthRequest)
             {
-                OnAlertRequested(new AlertRequestEventArgs("長度已超過顯示範圍", "建議分多次計算", "OK"));
+                OnAlertRequested(new AlertRequestEventArgs("長度超過顯示範圍部分不顯示", "建議分多次計算", "OK"));
             }
         }
     }

@@ -9,12 +9,12 @@ namespace MoneyAPP.Pages;
 /// </summary>
 public partial class RecordAddPage : ContentPage
 {
+    private RecordByContent _record;
+
     public RecordAddPage()
     {
         InitializeComponent();
-
-        //TimePicker為當下時間
-        RecordTime.Time = DateTime.Now.TimeOfDay;
+        _record = (RecordByContent)BindingContext;
 
         //製作選單
         AccountModelToPicker();
@@ -24,8 +24,16 @@ public partial class RecordAddPage : ContentPage
         Calculator.AlertRequest += Calculator_AlertRequest;
         Calculator.OKButtonClicked += OnOKButtonClicked;
 
-        //設定Focus於類別選擇器
-        Category.Focus();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        _record.AddDefault();
+
+
+
     }
 
     /// <summary>
@@ -59,57 +67,6 @@ public partial class RecordAddPage : ContentPage
 
     //資料處理程序
 
-
-
-    /// <summary>
-    /// 整理紀錄資料，按下儲存鍵後觸發
-    /// </summary>
-    /// <returns>紀錄資料結構</returns>
-    private RecordModel SetRecordModel()
-    {
-        RecordModel record = new RecordModel();
-        record.RecordDay = RecordDay.Date;
-        record.RecordTime = RecordTime.Time;
-        record.IsExpenses = Expense.IsChecked;
-        record.Item = Item.Text;
-        record.LastUpdatedTime = DateTime.Now;
-        record.IsDelete = false;
-
-        try
-        {
-            int amount = Convert.ToInt32(Amount_Editor.Text);
-            if (Expense.IsChecked == true)
-            {
-                record.Amount = amount * -1;
-            }
-            else
-            {
-                record.Amount = amount;
-            }
-        }
-        catch
-        {
-            DisplayAlert("輸入不正確", "請不要輸入小數或文字，Money是不會有小數的喔!", "OK");
-        }
-
-        foreach (var a in App.CachedAccounts)
-        {
-            if (Account.SelectedIndex == a.Sequence)
-            {
-                record.AccountID = a.AccountID;
-            }
-        }
-
-        foreach (var c in App.CachedCategorys)
-        {
-            if (Category.SelectedIndex == c.Sequence)
-            {
-                record.CategoryID = c.CategoryID;
-            }
-        }
-        return record;
-    }
-
     /// <summary>
     /// 按下儲存鍵，資料庫新增一筆資料，並返回首頁
     /// </summary>
@@ -117,19 +74,30 @@ public partial class RecordAddPage : ContentPage
     /// <param name="e"></param>
     private void SaveButton_Clicked(object sender, EventArgs e)
     {
-        RecordModel record = SetRecordModel();
-        App.ServiceRepo.AddRecord(record);
-        Close_BTN.Focus();
-        Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(record.RecordDay));
-        Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
+        var message = _record.FiledCheck();
+
+        if (message == true)
+        {
+            RecordModel recordModel = _record.SetRecordToRecordModel();
+            App.ServiceRepo.AddRecord(recordModel);
+            Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(recordModel.RecordDay));
+            Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
+        }
+        else
+        {
+            MessagingCenter.Subscribe<object, string>(_record, "Error", (sender, arg) =>
+            {
+                DisplayAlert("輸入錯誤", arg, "OK");
+            });
+        };
     }
 
-    /// <summary>
-    /// 不儲存，返回首頁
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void CloseButton_Clicked(object sender, EventArgs e)
+        /// <summary>
+        /// 不儲存，返回首頁
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseButton_Clicked(object sender, EventArgs e)
     {
         Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage());
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);

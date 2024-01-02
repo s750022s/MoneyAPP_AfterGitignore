@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MoneyAPP.Controls"
+             xmlns:model="clr-namespace:MoneyAPP.Models"
              x:Class="MoneyAPP.Pages.RecordAddPage"
              BackgroundImageSource="backgroud.png">
     
+    <ContentPage.BindingContext>
+        <model:RecordByContent/>
+    </ContentPage.BindingContext>
+
     <VerticalStackLayout VerticalOptions="End" >
         <!--頁面圖示：貓咪蛋塔-->
         <Image x:Name="cat_eggtower_Image"
@@ -14,13 +19,11 @@
         <Grid 
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
         ColumnDefinitions="*, 2*, 1.8*"
-        Margin="10,0,10,10"
-            >
+        Margin="10,0,10,10">
 
             <!--(0,0)日期標題-->
             <Label Text="日期" 
-               FontSize="30" 
-               />
+               FontSize="30" />
 
             <!--(0,1)日期選擇器-->
             <DatePicker  x:Name="RecordDay"
@@ -28,18 +31,21 @@
                     MinimumDate="01/11/2023"
                     MaximumDate="12/31/2100" 
                     Format="yyyy/MM/dd"
-                    FontSize="25" />
+                    FontSize="25" 
+                    Date="{Binding RecordDay,Mode=TwoWay}"/>
 
             <!--(0,2)時間選擇器-->
             <TimePicker x:Name="RecordTime"
                     Grid.Column="2"
                     FontSize="25" 
-                    Format="hh:mm tt"/>
+                    Format="hh:mm tt"
+                    Time="{Binding RecordTime,Mode=TwoWay}"/>
 
             <!--(1,0)單選選項:收入-->
             <RadioButton x:Name="Revenues" 
                          Grid.Row="1" Grid.Column="1" 
                          Content="收入" 
+                         IsChecked="{Binding IsIncome,Mode=TwoWay}"
                          GroupName="RevenuesOrExpenses" 
                          FontSize="25"/>
 
@@ -48,7 +54,7 @@
             <RadioButton x:Name="Expense" 
                          Grid.Row="1" Grid.Column="2" 
                          Content="支出" 
-                         IsChecked="true" 
+                         IsChecked="{Binding IsExpense,Mode=TwoWay}"
                          GroupName="RevenuesOrExpenses" 
                          FontSize="25"/>
 
@@ -62,7 +68,8 @@
             <Picker x:Name="Account" 
                     Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
                     FontSize="25"
-                    Title="選擇帳戶" />
+                    Title="選擇帳戶" 
+                    SelectedIndex ="{Binding AccountIndex,Mode=TwoWay}"/>
 
 
 
@@ -75,7 +82,8 @@
             <Picker x:Name="Category"  
                     Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
                     FontSize="25"
-                    Title="選擇種類"/>
+                    Title="選擇種類"
+                    SelectedIndex ="{Binding CategoryIndex,Mode=TwoWay}"/>
 
 
             <!--(4,0)項目標題-->
@@ -89,7 +97,7 @@
             <Editor x:Name="Item"  
                     Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" 
                     FontSize="25"
-            />
+                    Text ="{Binding Item,Mode=TwoWay}"/>
 
 
             <!--(5,0)金額標題-->
@@ -103,7 +111,8 @@
                    FontSize="25"
                    Focused="OnEntryFocused"
                    Unfocused="OnEntryUnfocused"
-                   Keyboard="Numeric"/>
+                   Keyboard="Numeric"
+                   Text ="{Binding Amount,Mode=TwoWay}"/>
 
         </Grid>
         <!--按鈕-->
@@ -127,7 +136,7 @@
             <!--計算機元件，只有在點擊金額欄時會出現-->
             <controls:Calculator  x:Name="Calculator" 
                                   IsVisible="False" 
-                                  HorizontalOptions="Center"/>
+                                  HorizontalOptions="End"/>
             
             <!--自訂TabBar-->
             <controls:CustomTabBar x:Name="TabBar" 
