@@ -15,25 +15,21 @@ public partial class RecordAddPage : ContentPage
     {
         InitializeComponent();
         _record = (RecordByContent)BindingContext;
-
-        //製作選單
-        AccountModelToPicker();
-        CategoryModelToPicker();
-
-        //套用計算機提醒視窗及OK鍵
-        Calculator.AlertRequest += Calculator_AlertRequest;
-        Calculator.OKButtonClicked += OnOKButtonClicked;
-
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
+        //製作選單
+        AccountModelToPicker();
+        CategoryModelToPicker();
+
         _record.AddDefault();
 
-
-
+        //套用計算機提醒視窗及OK鍵
+        Calculator.AlertRequest += Calculator_AlertRequest;
+        Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
     /// <summary>

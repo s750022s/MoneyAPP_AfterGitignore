@@ -46,7 +46,7 @@ public partial class SettingsPage_Backup : ContentPage
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);
-                var a = DisplayAlert("還原成功", "", "OK");
+                var a = DisplayAlert("還原成功", "請重新啟動應用程式", "OK");
             }
             else
             {

@@ -26,22 +26,20 @@ public partial class RecordRevisePage : ContentPage
         InitializeComponent();
         _record = (RecordByContent)BindingContext;
         cachedId = id;
-
-        //選單
-        AccountModelToPicker();
-        CategoryModelToPicker();
-
-        //計算機
-        Calculator.AlertRequest += Calculator_AlertRequest;
-        Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        //選單
+        AccountModelToPicker();
+        CategoryModelToPicker();
+
         _record.GetRecordByRecordModel(App.ServiceRepo.GetRecordById(cachedId));
 
-
+        //計算機
+        Calculator.AlertRequest += Calculator_AlertRequest;
+        Calculator.OKButtonClicked += OnOKButtonClicked;
 
     }
 

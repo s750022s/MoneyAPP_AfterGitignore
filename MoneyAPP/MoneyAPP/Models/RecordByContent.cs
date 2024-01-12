@@ -3,7 +3,7 @@
 namespace MoneyAPP.Models
 {
     /// <summary>
-    /// 中繼資料結構；綁定Add/Revise Pages提供的資訊且進行逐項檢查；
+    /// 中繼資料結構；綁定Add/Revise Pages提供的資訊且進行檢查；
     /// </summary>
     public class RecordByContent:INotifyPropertyChanged
     {
