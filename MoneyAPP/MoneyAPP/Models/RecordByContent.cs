@@ -76,15 +76,21 @@ namespace MoneyAPP.Models
                 return false;
             };
 
-            if (Amount == "") 
+            Amount = Amount.Replace(",", "");
+
+            if (Amount == "")
             {
                 MessagingCenter.Send<object, string>(this, "Error", "金額請不要空白");
                 return false;
-            };
+            }
+            else if (Amount[0] == '-') 
+            {
+                MessagingCenter.Send<object, string>(this, "Error", "金額請填正數，支出將自動換算");
+                return false;
+            }
 
             try
             {
-                Amount = Amount.Replace(",", "");
                 int amount = Convert.ToInt32(Amount);
                 return true;
             }
