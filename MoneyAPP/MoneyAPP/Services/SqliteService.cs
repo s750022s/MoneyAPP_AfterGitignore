@@ -315,7 +315,54 @@ namespace MoneyAPP.Services
             return firstday.RecordDay;
         }
 
+        public int GetTotalByMonth(DateTime start,DateTime end) 
+        {
+            Init();
+            var total = (from r in _connection.Table<RecordModel>()
+                        where ((r.RecordDay >= start) && (r.RecordDay <= end) && (r.IsDelete == false))
+                        select r.Amount).Sum();
+            return total;
+        }
 
+        public List<GroupdataModel> GetCategoryTotal(DateTime start, DateTime end) 
+        {
+            var categoryTotals = from category in _connection.Table<CategoryModel>()
+                                 join recordWhere in 
+                                     (from record in _connection.Table<RecordModel>()
+                                      where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
+                                      select record)
+                                 on category.CategoryID equals recordWhere.CategoryID into originaltable
+                                 from subamount in originaltable.DefaultIfEmpty()
+                                 select new
+                                 {
+                                     name = category.Name,
+                                     amount = subamount?.Amount ?? 0
+                                 } into recordwithname
+                                 group recordwithname by recordwithname.name into categorygroup
+                                 select new
+                                 {
+                                     name = categorygroup.Key,
+                                     categoryTotal = categorygroup.Sum(x => x.amount)
+                                 };
+            var totalAmount = categoryTotals.Sum(x => x.categoryTotal);
+            var result1 = from categoryTotal in categoryTotals
+                          select new
+                          {
+                              Name = categoryTotal.name,
+                              GroupTatalAmount = categoryTotal.categoryTotal,
+                              Percent = categoryTotal.categoryTotal / (totalAmount * 1.00)
+                          } into result
+                          orderby result.Percent descending
+                          select new GroupdataModel
+                          {
+                              Name = result.Name,
+                              GroupTatalAmount = result.GroupTatalAmount,
+                              Percent = result.Percent
+                          };
+
+            return result1.ToList();
+
+        }
 
 
         /// <summary>

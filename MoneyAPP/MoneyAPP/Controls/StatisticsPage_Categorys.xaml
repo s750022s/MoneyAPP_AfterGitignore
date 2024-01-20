@@ -2,9 +2,71 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoneyAPP.Controls.StatisticsPage_Categorys">
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="30">
-        <Label 
-            Text="功能開發中，敬請期待！"
-            FontSize="55"/>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*,8*" ColumnDefinitions="*,0.2*,*,*,*">
+        <Picker x:Name="Year_Picker" FontSize="25" Title="選擇年份" />
+        <Label Text="/" Grid.Column="1" FontSize="25"/>
+        <Picker x:Name="Month_Picker" Grid.Column="2" FontSize="25" Title="選擇月份" />
+        <ImageButton x:Name="Search_BTN" 
+                    Grid.Row="0" Grid.Column="3" 
+                    BackgroundColor="#584842" 
+                    BorderColor="#584842" 
+                    BorderWidth="1" 
+                    Source="search.png"
+                    WidthRequest="30"
+                    HeightRequest="30"
+                     />
+        <Label x:Name="TotalAmount_Lebel"
+               Grid.Column="4"
+               FontSize="25"
+               Text="0"
+               HorizontalOptions="End"/>
+
+        <CollectionView x:Name="DatasCollectionView" 
+                        ItemsSource="{Binding GroupdataModels}"
+                        Grid.Row="1" Grid.ColumnSpan="5" >
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <!--一筆記錄樣式-->
+                        <Border x:Name="Data_Border"
+                                BackgroundColor="#584842"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                HeightRequest="50"
+                                VerticalOptions="CenterAndExpand"
+                                Padding="15,12,15,0">
+                            <Grid ColumnDefinitions="*,*,*">
+                                <!--百分比-->
+                                <Label x:Name="Percent_LB"
+                                       Grid.Column="0" 
+                                           TextColor="White"
+                                           FontSize="25"
+                                           HorizontalOptions="Start"
+                                           LineBreakMode="WordWrap"
+                                           Text="{Binding Percent,StringFormat='{}{0:0%;0%;0%}'}"/>
+
+                                <!--種類-->
+                                <Label x:Name="Name_LB"
+                                       Grid.Column="1" 
+                                           TextColor="White"
+                                           FontSize="25"
+                                           LineBreakMode="WordWrap"
+                                           Text="{Binding Name}"/>
+
+                                <!--金額-->
+                                <Label x:Name="Amount_LB" 
+                                       Grid.Column="2" 
+                                           TextColor="White"
+                                           FontSize="25"
+                                           HorizontalOptions="End"
+                                           Text="{Binding GroupTatalAmount,StringFormat='{}{0:N0}'}"/>
+                            </Grid>
+                        </Border>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentView>
+
