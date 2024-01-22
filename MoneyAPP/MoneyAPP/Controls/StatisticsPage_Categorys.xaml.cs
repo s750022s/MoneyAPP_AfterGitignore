@@ -5,6 +5,10 @@ public partial class StatisticsPage_Categorys : ContentView
     public StatisticsPage_Categorys()
     {
         InitializeComponent();
+    }
+
+    public void SetDataInPage() 
+    {
         YearToPicker();
         MonthToPicker();
         GetCategorysGroup();
@@ -32,7 +36,7 @@ public partial class StatisticsPage_Categorys : ContentView
         Month_Picker.SelectedItem = nowMonth.ToString("00");
     }
 
-    private void GetCategorysGroup() 
+    private (DateTime start, DateTime end) GetDateRange() 
     {
         int year = Convert.ToInt32(Year_Picker.SelectedItem);
         int month = Month_Picker.SelectedIndex;
@@ -41,11 +45,23 @@ public partial class StatisticsPage_Categorys : ContentView
 
         DateTime start = new DateTime(year, month == 0 ? 1 : month, 1);
         DateTime end = new DateTime(year, month == 0 ? 12 : month, daysInMonth);
+        return (start, end);
+    }
+
+
+    private void GetCategorysGroup() 
+    {
+        (DateTime start, DateTime end) = GetDateRange();
+
+        var info = App.ServiceRepo.GetTotalByMonth(start, end);
+        Total_Label.Text = "$"+ info.Total.ToString("N0");
+        TotalIncome_Label.Text = "$" + info.TotalIncome.ToString("N0");
+        TotalExpense_Label.Text = "$" + info.TotalExpense.ToString("N0");
 
         DatasCollectionView.ItemsSource = App.ServiceRepo.GetCategoryTotal(start, end);
     }
 
-    private void OnPickerSelectedIndexChanged(object sender, EventArgs e) 
+    private void Button_Clicked(object sender, EventArgs e)
     {
         GetCategorysGroup();
     }

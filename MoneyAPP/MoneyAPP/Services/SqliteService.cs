@@ -315,17 +315,30 @@ namespace MoneyAPP.Services
             return firstday.RecordDay;
         }
 
-        public int GetTotalByMonth(DateTime start,DateTime end) 
+        public GroupdataInfo GetTotalByMonth(DateTime start,DateTime end) 
         {
             Init();
-            var total = (from r in _connection.Table<RecordModel>()
-                        where ((r.RecordDay >= start) && (r.RecordDay <= end) && (r.IsDelete == false))
-                        select r.Amount).Sum();
-            return total;
+            GroupdataInfo info = new GroupdataInfo();
+            var recordGroup = from record in _connection.Table<RecordModel>()
+                    where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
+                    group record by record.IsExpenses into recordGroupByIsExpenses
+                    select new 
+                    {
+                        recordGroupByIsExpenses.Key,
+                        total = recordGroupByIsExpenses.Sum(x => x.Amount)
+                    };
+
+            foreach (var record in recordGroup) 
+            {
+                var result = record.Key == true ? info.TotalExpense = record.total : info.TotalIncome = record.total;
+            }
+            info.Total = info.TotalExpense+info.TotalIncome;
+            return info;
         }
 
         public List<GroupdataModel> GetCategoryTotal(DateTime start, DateTime end) 
         {
+            Init();
             var categoryTotals = from category in _connection.Table<CategoryModel>()
                                  join recordWhere in 
                                      (from record in _connection.Table<RecordModel>()

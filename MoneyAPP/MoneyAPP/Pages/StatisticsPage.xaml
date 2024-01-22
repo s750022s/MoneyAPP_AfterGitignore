@@ -66,7 +66,7 @@
 
     
     <!--UI內容-->
-    <Grid  RowDefinitions="*,6*,*" HorizontalOptions="EndAndExpand" >
+    <Grid  RowDefinitions="*,6*,0.5*,*" HorizontalOptions="EndAndExpand" >
         <!--選單設計：點選對應選單，下方切換對應內容-->
         <!--不能使用RadioButton.Group.GroupName，否則預設會是最後一項-->
         <StackLayout Orientation="Horizontal" 
@@ -98,6 +98,7 @@
         <control:StatisticsPage_Categorys x:Name="CategorysView" 
                                           Grid.Row="1"
                                           IsVisible="True" 
+                                          Margin="7,0,7,0"
                                           />
         
         <control:StatisticsPage_Accounts x:Name="AccountsView" 
@@ -112,7 +113,7 @@
         
         <!--自訂菜單-->
         <control:CustomTabBar HeightRequest="100"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               VerticalOptions="End"/>
     </Grid>
 </ContentPage>

@@ -2,28 +2,45 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoneyAPP.Controls.StatisticsPage_Categorys">
-    <Grid RowDefinitions="*,8*" ColumnDefinitions="*,0.2*,*,*,*">
-        <Picker x:Name="Year_Picker" FontSize="25" Title="選擇年份" />
-        <Label Text="/" Grid.Column="1" FontSize="25"/>
-        <Picker x:Name="Month_Picker" Grid.Column="2" FontSize="25" Title="選擇月份" />
-        <ImageButton x:Name="Search_BTN" 
-                    Grid.Row="0" Grid.Column="3" 
-                    BackgroundColor="#584842" 
-                    BorderColor="#584842" 
-                    BorderWidth="1" 
-                    Source="search.png"
-                    WidthRequest="30"
-                    HeightRequest="30"
-                     />
-        <Label x:Name="TotalAmount_Lebel"
-               Grid.Column="4"
-               FontSize="25"
-               Text="0"
-               HorizontalOptions="End"/>
+    <Grid RowDefinitions="*,1.5*,8*" 
+          ColumnDefinitions="*,0.2*,*,0.5*,*" 
+          RowSpacing="10">
+        <Picker x:Name="Year_Picker" 
+                FontSize="28" 
+                Title="選擇年份" />
+        <Label Text="/" 
+               Grid.Column="1" 
+               FontSize="30"/>
+        <Picker x:Name="Month_Picker" 
+                Grid.Column="2" 
+                FontSize="28" 
+                Title="選擇月份" />
+        <Button ImageSource="search.png" 
+                Grid.Column="4" 
+                BackgroundColor="#584842" 
+                BorderColor="#584842" 
+                FontSize="20"
+                Clicked="Button_Clicked"/>
 
+        <Border x:Name="Info_Border" 
+                Grid.Row="1" Grid.ColumnSpan="5"
+                Stroke="#584842"
+                StrokeShape="RoundRectangle 10,10,10,10"
+                Padding="7">
+            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*" ColumnSpacing ="5" RowSpacing="5">
+                <Label Text="總金額" Grid.Row="0" Grid.Column="0"  FontSize="20" TextColor="#584842"/>
+                <Label x:Name="Total_Label" Text="$0"  Grid.Row="1" Grid.Column="0" FontSize="20" HorizontalOptions="Center" />
+                <Label Text="總收入" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="#584842"/>
+                <Label x:Name="TotalIncome_Label" Text="$0"  Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalOptions="Center"/>
+                <Label Text="總支出" Grid.Row="0" Grid.Column="2"  FontSize="20" TextColor="#584842"/>
+                <Label x:Name="TotalExpense_Label" Text="$0"  Grid.Row="1" Grid.Column="2" FontSize="20" HorizontalOptions="Center"/>
+            </Grid>
+        </Border>
+        
+        
         <CollectionView x:Name="DatasCollectionView" 
                         ItemsSource="{Binding GroupdataModels}"
-                        Grid.Row="1" Grid.ColumnSpan="5" >
+                        Grid.Row="2" Grid.ColumnSpan="5" >
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -33,7 +50,7 @@
                                 BackgroundColor="#584842"
                                 StrokeShape="RoundRectangle 17,17,17,17"
                                 StrokeThickness="0"
-                                HeightRequest="50"
+                                HeightRequest="70"
                                 VerticalOptions="CenterAndExpand"
                                 Padding="15,12,15,0">
                             <Grid ColumnDefinitions="*,*,*">
