@@ -127,6 +127,8 @@
 	  <None Remove="Resources\Images\close.svg" />
 	  <None Remove="Resources\Images\creamy_butt.svg" />
 	  <None Remove="Resources\Images\Editor.svg" />
+	  <None Remove="Resources\Images\eye.svg" />
+	  <None Remove="Resources\Images\eye_close.svg" />
 	  <None Remove="Resources\Images\foot.svg" />
 	  <None Remove="Resources\Images\gemini_cat.png" />
 	  <None Remove="Resources\Images\hotdog.svg" />
@@ -213,6 +215,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\UploadPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\StatisticsPage_SelectByCategory.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

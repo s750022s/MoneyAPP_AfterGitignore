@@ -58,6 +58,7 @@ public partial class RecordAddPage : ContentPage
         Account.ItemsSource = App.CachedAccounts;
         Account.ItemDisplayBinding = new Binding("Name");
         Account.SelectedIndex = 0;
+        Account.Unfocus();
     }
 
 

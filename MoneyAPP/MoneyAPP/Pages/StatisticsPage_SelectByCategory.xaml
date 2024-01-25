@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:MoneyAPP.Controls"
+             x:Class="MoneyAPP.Pages.StatisticsPage_SelectByCategory"
+             BackgroundImageSource="backgroud.png">
+    <Grid RowDefinitions="*,9*" RowSpacing="5">
+        <HorizontalStackLayout Grid.Row="0" 
+                         Spacing="10">
+            <!-- 返回按鈕 -->
+            <ImageButton x:Name="BackBTN" 
+                         Source="arrow_left.png" 
+                         HorizontalOptions="Start" 
+                         Margin="0,20,0,20"  
+                         HeightRequest="25" 
+                         Clicked="BackButton_Clicked"/>
+
+            <Label x:Name="CategoryName_Label" 
+                   FontSize="30" 
+                   FontAttributes="Bold"
+                   Text=""
+                   VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <CollectionView x:Name="DatasCollectionView" 
+                        Grid.Row="1" 
+                        ItemsSource="{Binding DataByCategory}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <!--一筆記錄樣式-->
+                        <control:RecordBorder x:Name="Record_Border"
+                                BackgroundColor="#584842"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                HeightRequest="85"
+                                VerticalOptions="CenterAndExpand"
+                                Padding="15,12,15,0"
+                                RecordId="{Binding RecordID}">
+                            <VerticalStackLayout>
+                                <FlexLayout Direction="Row" 
+                                            JustifyContent="SpaceBetween"
+                                            HeightRequest="29">
+
+                                    <!--日期(第一行靠左)-->
+                                    <Label x:Name="RecordDate_LB"
+                                           TextColor="White"
+                                           FontSize="22"
+                                           HorizontalOptions="Start"
+                                           LineBreakMode="WordWrap"
+                                           Text="{Binding RecordDate,StringFormat='{0:yyyy/MM/dd}'}"/>
+
+                                    <!--金額(第一行靠右)-->
+                                    <Label x:Name="Amount_LB" 
+                                           TextColor="White"
+                                           FontSize="24"
+                                           HorizontalOptions="End"
+                                           Text="{Binding Amount,StringFormat='{}{0:N0}'}"/>
+
+                                </FlexLayout>
+                                <FlexLayout x:Name="ItemAndID_Flex"
+                                    Direction="Row" 
+                                            JustifyContent="SpaceBetween"
+                                            HeightRequest="29">
+
+                                    <!--時間(第一行中間)-->
+                                    <Label x:Name="RecordTime_LB"
+                                           TextColor="White"
+                                           FontSize="22"
+                                           HorizontalOptions="Start"
+                                           LineBreakMode="WordWrap"
+                                           Text="{Binding RecordTime_str}"/>
+
+                                    <!--項目說明(第二行靠左)-->
+                                    <Label x:Name="Item_LB" 
+                                         TextColor="White"
+                                         FontSize="18"
+                                         Text="{Binding Item}" 
+                                         LineBreakMode="MiddleTruncation"/>
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                            <control:RecordBorder.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBorderTapped" />
+                            </control:RecordBorder.GestureRecognizers>
+                        </control:RecordBorder>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Border x:Name="NoRecord"
+                Grid.Row="1"
+                HeightRequest="80"
+                StrokeThickness="0" 
+                BackgroundColor="#B2726563"
+                IsVisible="False"
+                >
+            <Label FontSize="30"
+               Text="  還沒有記錄喔！&#10;快去增加紀錄吧！" 
+               HorizontalOptions="Center"
+               TextColor="#FFFFFF"/>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,10 +1,66 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MoneyAPP.Controls"
              x:Class="MoneyAPP.Controls.StatisticsPage_AccountStatus">
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="30">
-        <Label 
-            Text="功能開發中，敬請期待！"
-            FontSize="55"/>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*,*,10*">
+        <Border StrokeThickness="0" 
+                BackgroundColor="#BFFFFFFF">
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="總資產" FontSize="30" Margin="0,0,10,0"/>
+                <ImageButton x:Name="eyeClose_ImageBTN" Source="eye_close.png" HorizontalOptions="Start" HeightRequest="30" WidthRequest="30" Clicked="EyeClose_Clicked"/>
+                <ImageButton x:Name="eye_ImageBTN" Source="eye.png" HorizontalOptions="Start" IsVisible="false" HeightRequest="30" WidthRequest="30" Clicked="Eye_Clicked"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border Grid.Row="1"
+                StrokeThickness="0" 
+                BackgroundColor="#BFFFFFFF">
+            <Label x:Name="Total_LB"  Text="$ ------" Grid.Row="1"  Grid.ColumnSpan="2" FontSize="30" HorizontalOptions="Center"/>
+        </Border>
+        <CollectionView x:Name="DatasCollectionView" 
+                        ItemsSource="{Binding GroupdataModels}"
+                        Grid.Row="2">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <!--一筆記錄樣式-->
+                        <controls:RecordBorder x:Name="Data_Border"
+                                BackgroundColor="#584842"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                HeightRequest="70"
+                                VerticalOptions="CenterAndExpand"
+                                Padding="15,12,15,0"
+                                RecordId="{Binding AccountID}">
+                            <Grid ColumnDefinitions="2*,2*,30">
+                                <!--帳戶-->
+                                <Label x:Name="Name_LB"
+                                       Grid.Column="0" 
+                                           TextColor="White"
+                                           FontSize="28"
+                                           LineBreakMode="WordWrap"
+                                           Text="{Binding Name}"
+                                       VerticalOptions="Center"/>
+
+                                <!--金額-->
+                                <Entry x:Name="Amount_Entry"
+                                       Grid.Column="1"
+                                       TextColor="White"
+                                       FontSize="28"
+                                       Text="{Binding UserDefault,StringFormat='{}{0:N0}'}" 
+                                       IsReadOnly="True"
+                                       Keyboard="Numeric"
+                                       HorizontalTextAlignment="End"/>
+
+                                <ImageButton x:Name="pencil_ImageBTN" Grid.Column="2" Source="pencil.png" HorizontalOptions="End" Clicked="PencilButton_Clicked"/>
+                                <ImageButton x:Name="check_ImageBTN" Grid.Column="2" Source="check.png" HorizontalOptions="End" IsVisible="false" Clicked="CheckButton_Clicked"/>
+                                
+                            </Grid>
+                        </controls:RecordBorder>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentView>

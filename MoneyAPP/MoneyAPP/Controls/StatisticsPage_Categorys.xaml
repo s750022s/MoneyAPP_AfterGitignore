@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MoneyAPP.Controls"
              x:Class="MoneyAPP.Controls.StatisticsPage_Categorys">
     <Grid RowDefinitions="*,1.5*,8*" 
           ColumnDefinitions="*,0.2*,*,0.5*,*" 
@@ -46,13 +47,14 @@
                 <DataTemplate>
                     <ContentView>
                         <!--一筆記錄樣式-->
-                        <Border x:Name="Data_Border"
+                        <controls:RecordBorder x:Name="Data_Border"
                                 BackgroundColor="#584842"
                                 StrokeShape="RoundRectangle 17,17,17,17"
                                 StrokeThickness="0"
                                 HeightRequest="70"
                                 VerticalOptions="CenterAndExpand"
-                                Padding="15,12,15,0">
+                                Padding="15,12,15,0"
+                                RecordId="{Binding ID}">
                             <Grid ColumnDefinitions="*,*,*">
                                 <!--百分比-->
                                 <Label x:Name="Percent_LB"
@@ -79,7 +81,10 @@
                                            HorizontalOptions="End"
                                            Text="{Binding GroupTatalAmount,StringFormat='{}{0:N0}'}"/>
                             </Grid>
-                        </Border>
+                            <controls:RecordBorder.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBorderTapped" />
+                            </controls:RecordBorder.GestureRecognizers>
+                        </controls:RecordBorder>
                     </ContentView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

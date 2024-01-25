@@ -2,6 +2,7 @@ namespace MoneyAPP.Controls;
 
 public partial class StatisticsPage_Categorys : ContentView
 {
+    DateTime start, end;
     public StatisticsPage_Categorys()
     {
         InitializeComponent();
@@ -43,15 +44,15 @@ public partial class StatisticsPage_Categorys : ContentView
 
         int daysInMonth = DateTime.DaysInMonth(year, month == 0 ? 12 : month);
 
-        DateTime start = new DateTime(year, month == 0 ? 1 : month, 1);
-        DateTime end = new DateTime(year, month == 0 ? 12 : month, daysInMonth);
+        start = new DateTime(year, month == 0 ? 1 : month, 1);
+        end = new DateTime(year, month == 0 ? 12 : month, daysInMonth);
         return (start, end);
     }
 
 
     private void GetCategorysGroup() 
     {
-        (DateTime start, DateTime end) = GetDateRange();
+        GetDateRange();
 
         var info = App.ServiceRepo.GetTotalByMonth(start, end);
         Total_Label.Text = "$"+ info.Total.ToString("N0");
@@ -64,5 +65,18 @@ public partial class StatisticsPage_Categorys : ContentView
     private void Button_Clicked(object sender, EventArgs e)
     {
         GetCategorysGroup();
+    }
+
+    /// <summary>
+    /// 每個類別都可被點擊，進入該類別紀錄清單
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OnBorderTapped(object sender, TappedEventArgs e)
+    {
+        RecordBorder recordBorder = (RecordBorder)sender;
+        int id = recordBorder.RecordId;
+        Shell.Current.CurrentItem.CurrentItem.Items.Add(new Pages.StatisticsPage_SelectByCategory(start, end, id));
+        Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
 }

@@ -349,12 +349,14 @@ namespace MoneyAPP.Services
                                  select new
                                  {
                                      name = category.Name,
+                                     id = category.CategoryID,
                                      amount = subamount?.Amount ?? 0
                                  } into recordwithname
                                  group recordwithname by recordwithname.name into categorygroup
                                  select new
                                  {
                                      name = categorygroup.Key,
+                                     id = categorygroup.First().id,
                                      categoryTotal = categorygroup.Sum(x => x.amount)
                                  };
             var totalAmount = categoryTotals.Sum(x => x.categoryTotal);
@@ -362,6 +364,7 @@ namespace MoneyAPP.Services
                           select new
                           {
                               Name = categoryTotal.name,
+                              ID = categoryTotal.id,
                               GroupTatalAmount = categoryTotal.categoryTotal,
                               Percent = categoryTotal.categoryTotal / (totalAmount * 1.00)
                           } into result
@@ -369,12 +372,45 @@ namespace MoneyAPP.Services
                           select new GroupdataModel
                           {
                               Name = result.Name,
+                              ID = result.ID,
                               GroupTatalAmount = result.GroupTatalAmount,
                               Percent = result.Percent
                           };
 
             return result1.ToList();
 
+        }
+
+        public List<DataByCategory> GetDataByCategory(DateTime start, DateTime end,int categoryId) 
+        {
+            Init();
+            var dataByCategory = from record in _connection.Table<RecordModel>()
+                                 where (record.RecordDay >= start) && (record.RecordDay <= end)
+                                    && (record.IsDelete == false) && (record.CategoryID == categoryId)
+                                 orderby record.RecordDay descending, record.RecordTime descending
+                                 select new DataByCategory
+                                 {
+                                     RecordID = record.RecordID,
+                                     RecordDate = record.RecordDay,
+                                     RecordTime = record.RecordTime,
+                                     Item = record.Item,
+                                     Amount = record.Amount,
+                                     RecordTime_str = ""
+                                 };
+            return dataByCategory.ToList();
+        }
+
+   
+
+        public void UpdateAccountStatus(int id, int newvalue) 
+        {
+            var account =  _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == id);
+            if  (account != null) 
+            {
+                account.UserDefault = newvalue;
+                account.UserDefault_DateTime = DateTime.Now;
+            }
+            _connection.Update(account);
         }
 
 

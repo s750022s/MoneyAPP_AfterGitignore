@@ -4,11 +4,12 @@
 1. SQLite結果須寫進log
 
 [RecordRevisePage.cs]
-1. 更改資料綁定的模式
-2. 記算機釋放
+1. 更改資料綁定的模式 -OK
+2. 記算機釋放 -OK
 
 [StatisticsPage]
 1. 三個對應元件開發
+2. 回上一頁需保留原資訊(兩層皆是)
 
 [Setting]
 1. 匯入備份檔

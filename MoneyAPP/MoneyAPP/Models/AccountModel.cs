@@ -32,6 +32,6 @@ namespace MoneyAPP.Models
         /// <summary>
         /// 使用者自訂總額輸入時間
         /// </summary>
-        public int UserDefault_DateTime { get; set; }
+        public DateTime UserDefault_DateTime { get; set; }
     }
 }
