@@ -1,5 +1,7 @@
 ﻿using SQLite;
 using MoneyAPP.Models;
+using System.Xml.Linq;
+using static SQLite.SQLite3;
 
 
 namespace MoneyAPP.Services
@@ -378,6 +380,64 @@ namespace MoneyAPP.Services
                           };
 
             return result1.ToList();
+
+        }
+
+        public List<GroupdataModel> GetCategoryTotal_New(DateTime start, DateTime end)
+        {
+            Init();
+            var recordGroups = from recordWhere in (from record in _connection.Table<RecordModel>()
+                                                    where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
+                                                    select record)
+                               join category in _connection.Table<CategoryModel>()
+                               on recordWhere.CategoryID equals category.CategoryID
+                               select new
+                               {
+                                   name = category.Name,
+                                   id = recordWhere.CategoryID,
+                                   amount = recordWhere.Amount
+                               } into recordwithname
+                               group recordwithname by recordwithname.name into categorygroup
+                               select new
+                               {
+                                   name = categorygroup.Key,
+                                   id = categorygroup.First().id,
+                                   categoryTotal = categorygroup.Sum(x => x.amount)
+                               };
+            var totalAmount = recordGroups.Sum(x => x.categoryTotal);
+            var categoryJoinRecord = from categoryTotal in recordGroups
+                          select new
+                          {
+                              Name = categoryTotal.name,
+                              ID = categoryTotal.id,
+                              GroupTatalAmount = categoryTotal.categoryTotal,
+                              Percent = categoryTotal.categoryTotal / (totalAmount * 1.00)
+                          } into result
+                          orderby result.Percent descending
+                          select new GroupdataModel
+                          {
+                              Name = result.Name,
+                              ID = result.ID,
+                              GroupTatalAmount = result.GroupTatalAmount,
+                              Percent = result.Percent
+                          };
+
+            var categoryExcept_ID = (from category in _connection.Table<CategoryModel>()
+                                  where category.Sequence > -1
+                                  select category.CategoryID).Except(categoryJoinRecord.Select(x => x.ID));
+            var categoryExcept = from categoryExceptID in categoryExcept_ID
+                                 join category in _connection.Table<CategoryModel>()
+                                 on categoryExceptID equals category.CategoryID
+                                 select new GroupdataModel
+                                 {
+                                     Name = category.Name,
+                                     ID = category.CategoryID,
+                                     GroupTatalAmount = 0,
+                                     Percent = 0.0
+                                 };
+            var results = categoryJoinRecord.Concat(categoryExcept);
+
+            return results.ToList();
 
         }
 

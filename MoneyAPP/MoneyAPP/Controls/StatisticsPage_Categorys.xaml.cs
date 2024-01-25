@@ -59,7 +59,7 @@ public partial class StatisticsPage_Categorys : ContentView
         TotalIncome_Label.Text = "$" + info.TotalIncome.ToString("N0");
         TotalExpense_Label.Text = "$" + info.TotalExpense.ToString("N0");
 
-        DatasCollectionView.ItemsSource = App.ServiceRepo.GetCategoryTotal(start, end);
+        DatasCollectionView.ItemsSource = App.ServiceRepo.GetCategoryTotal_New(start, end);
     }
 
     private void Button_Clicked(object sender, EventArgs e)
