@@ -244,21 +244,29 @@ namespace MoneyAPP.Services
         /// <param name="account">要更新的完整資料</param>
         public void UpdateAccount(AccountModel account)
         {
-            int result = 0;
             Init();
-            try
+            var rawData = _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == account.AccountID);
+            if (rawData != null) 
             {
-                result += _connection.Update(new AccountModel
-                {
-                    AccountID = account.AccountID,
-                    Name = account.Name,
-                    Sequence = account.Sequence
-                });
-                StatusMessage = string.Format("{0} 筆已修改 (Name: {1})", result, account.Name);
-                return;
-
+                rawData.Name = account.Name;
+                rawData.Sequence = account.Sequence;
             }
-            catch (Exception ex) { Console.WriteLine(ex); return; }
+            _connection.Update(rawData);
+        }
+
+        /// <summary>
+        /// 修改帳戶當前狀態
+        /// </summary>
+        /// <param name="account">要更新的完整資料</param>
+        public void UpdateCurrentStatus(int id, int difference)
+        {
+            Init();
+            var rawData = _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == id);
+            if (rawData != null)
+            {
+                rawData.CurrentStatus += difference;
+            }
+            _connection.Update(rawData);
         }
 
         /// <summary>
@@ -338,52 +346,7 @@ namespace MoneyAPP.Services
             return info;
         }
 
-        public List<GroupdataModel> GetCategoryTotal(DateTime start, DateTime end) 
-        {
-            Init();
-            var categoryTotals = from category in _connection.Table<CategoryModel>()
-                                 join recordWhere in 
-                                     (from record in _connection.Table<RecordModel>()
-                                      where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
-                                      select record)
-                                 on category.CategoryID equals recordWhere.CategoryID into originaltable
-                                 from subamount in originaltable.DefaultIfEmpty()
-                                 select new
-                                 {
-                                     name = category.Name,
-                                     id = category.CategoryID,
-                                     amount = subamount?.Amount ?? 0
-                                 } into recordwithname
-                                 group recordwithname by recordwithname.name into categorygroup
-                                 select new
-                                 {
-                                     name = categorygroup.Key,
-                                     id = categorygroup.First().id,
-                                     categoryTotal = categorygroup.Sum(x => x.amount)
-                                 };
-            var totalAmount = categoryTotals.Sum(x => x.categoryTotal);
-            var result1 = from categoryTotal in categoryTotals
-                          select new
-                          {
-                              Name = categoryTotal.name,
-                              ID = categoryTotal.id,
-                              GroupTatalAmount = categoryTotal.categoryTotal,
-                              Percent = categoryTotal.categoryTotal / (totalAmount * 1.00)
-                          } into result
-                          orderby result.Percent descending
-                          select new GroupdataModel
-                          {
-                              Name = result.Name,
-                              ID = result.ID,
-                              GroupTatalAmount = result.GroupTatalAmount,
-                              Percent = result.Percent
-                          };
-
-            return result1.ToList();
-
-        }
-
-        public List<GroupdataModel> GetCategoryTotal_New(DateTime start, DateTime end)
+        public List<GroupdataModel> GetCategoryTotal(DateTime start, DateTime end)
         {
             Init();
             var recordGroups = from recordWhere in (from record in _connection.Table<RecordModel>()
@@ -464,13 +427,6 @@ namespace MoneyAPP.Services
 
         public void UpdateAccountStatus(int id, int newvalue) 
         {
-            var account =  _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == id);
-            if  (account != null) 
-            {
-                account.UserDefault = newvalue;
-                account.UserDefault_DateTime = DateTime.Now;
-            }
-            _connection.Update(account);
         }
 
 

@@ -18,7 +18,7 @@
             <Label x:Name="Total_LB"  Text="$ ------" Grid.Row="1"  Grid.ColumnSpan="2" FontSize="30" HorizontalOptions="Center"/>
         </Border>
         <CollectionView x:Name="DatasCollectionView" 
-                        ItemsSource="{Binding GroupdataModels}"
+                        ItemsSource="{Binding AccountStatusCount}"
                         Grid.Row="2">
 
             <CollectionView.ItemTemplate>
@@ -32,7 +32,7 @@
                                 HeightRequest="70"
                                 VerticalOptions="CenterAndExpand"
                                 Padding="15,12,15,0"
-                                RecordId="{Binding AccountID}">
+                                RecordId="{Binding Id}">
                             <Grid ColumnDefinitions="2*,2*,30">
                                 <!--帳戶-->
                                 <Label x:Name="Name_LB"
@@ -48,7 +48,7 @@
                                        Grid.Column="1"
                                        TextColor="White"
                                        FontSize="28"
-                                       Text="{Binding UserDefault,StringFormat='{}{0:N0}'}" 
+                                       Text="{Binding CurrentStatus,StringFormat='{}{0:N0}'}"                                        
                                        IsReadOnly="True"
                                        Keyboard="Numeric"
                                        HorizontalTextAlignment="End"/>

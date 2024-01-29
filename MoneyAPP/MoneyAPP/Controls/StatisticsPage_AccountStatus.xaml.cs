@@ -1,25 +1,40 @@
+using MoneyAPP.Models;
+
 
 namespace MoneyAPP.Controls;
 
 public partial class StatisticsPage_AccountStatus : ContentView
 {
-	public StatisticsPage_AccountStatus()
+    int originalValue;
+    private List<AccountStatusCount> statusList;
+
+    public StatisticsPage_AccountStatus()
 	{
 		InitializeComponent();
         GetAccountStatus();
-
     }
 
     private void GetAccountStatus()
     {
-        DatasCollectionView.ItemsSource = App.ServiceRepo.GetAccountOrderBySequence();
+        statusList = (from account in App.CachedAccounts
+                     select new AccountStatusCount(account.AccountID, account.Name, account.CurrentStatus.ToString("N0"))
+                     ).ToList();
+        DatasCollectionView.ItemsSource = statusList;
     }
 
     private void EyeClose_Clicked(object sender, EventArgs e)
     {
         eyeClose_ImageBTN.IsVisible = false;
         eye_ImageBTN.IsVisible = true;
-        Total_LB.Text = "$ 0";
+        try
+        {
+            var total = statusList.Sum(x => x.CurrentStatus);
+            Total_LB.Text = "$ " + total.ToString("N0");
+        }
+        catch(ArgumentException ex)
+        {
+            MessagingCenter.Send<object, string>(this, "Error", ex.Message);
+        }
     }
 
     private void Eye_Clicked(object sender, EventArgs e)
@@ -38,6 +53,7 @@ public partial class StatisticsPage_AccountStatus : ContentView
         if (amountEntry != null)
         {
             // 修改 Amount_Entry 的屬性
+            originalValue = Convert.ToInt32(amountEntry.Text.Replace(",", ""));
             amountEntry.IsReadOnly = false;
             amountEntry.Focus();
         }
@@ -56,16 +72,11 @@ public partial class StatisticsPage_AccountStatus : ContentView
         // 檢查是否找到 Amount_Entry 控件
         if (amountEntry != null)
         {
+            AccountStatusCount statusItem = statusList.Where(x => x.Id == parentBorder.RecordId).First();
             // 修改 Amount_Entry 的屬性
             amountEntry.IsReadOnly = true;
-            string input = amountEntry.Text;
-
-            bool check = Checkinput(input);
-            if (check == true) 
-            {
-                App.ServiceRepo.UpdateAccountStatus(parentBorder.RecordId, Convert.ToInt32(input));
-                GetAccountStatus();
-            }
+            App.ServiceRepo.UpdateCurrentStatus(statusItem.Id, statusItem.CurrentStatus -originalValue);
+            App.CachedAccounts = App.ServiceRepo.GetAccountOrderBySequence();
         }
 
         ImageButton pencilButton = parentGrid.FindByName<ImageButton>("pencil_ImageBTN");
@@ -75,30 +86,5 @@ public partial class StatisticsPage_AccountStatus : ContentView
 
     }
 
-    private bool Checkinput(string input) 
-    {
-        input = input.Replace(",", "");
-
-        if (input == "")
-        {
-            MessagingCenter.Send<object, string>(this, "Error", "金額請不要空白");
-            return false;
-        }
-
-        try
-        {
-            int amount = Convert.ToInt32(input);
-            return true;
-        }
-        catch (OverflowException)
-        {
-            MessagingCenter.Send<object, string>(this, "Error", "想要輸入的金額已超過20億上限。");
-            return false;
-        }
-        catch (Exception)
-        {
-            MessagingCenter.Send<object, string>(this, "Error", "請不要輸入小數或文字，Money是不會有小數的喔!");
-            return false;
-        }
-    }
+    
 }

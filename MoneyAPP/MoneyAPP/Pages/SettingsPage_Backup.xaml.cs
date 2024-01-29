@@ -1,5 +1,5 @@
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using MoneyAPP.Services;
+
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MoneyAPP.Pages;
 
@@ -18,7 +18,7 @@ public partial class SettingsPage_Backup : ContentPage
     /// </summary>
     private async void CreatBackupFile_Tapped(object sender, TappedEventArgs e)
     {
-        string filePath = FileAccessHelper.GetLocalFilePath("record.db3");
+        string filePath = FileAccessHelper.GetLocalFilePath("DB.db3");
         await Share.Default.RequestAsync(new ShareFileRequest
         {
             Title = "共享檔案",
@@ -29,15 +29,17 @@ public partial class SettingsPage_Backup : ContentPage
     /// <summary>
     /// 匯入備份檔
     /// </summary>
-    private void ImportBackupFile_Tapped(object sender, TappedEventArgs e)
+    private  void ImportBackupFile_Tapped(object sender, TappedEventArgs e)
     {
-        //TOT 選擇檔案並將檔案放到指定位置
+       
     }
 
-    /// <summary>
-    /// 還於初始設定，刪除DB檔
-    /// </summary>
-    private async void Restore_Tapped(object sender, TappedEventArgs e)
+   
+
+            /// <summary>
+            /// 還於初始設定，刪除DB檔
+            /// </summary>
+            private async void Restore_Tapped(object sender, TappedEventArgs e)
     {
         var ans = await DisplayAlert("還原無法復原，確定要還原嗎?", "", "還原", "取消");
         if (ans == true) 

@@ -25,13 +25,8 @@ namespace MoneyAPP.Models
         public int Sequence { get; set; }
 
         /// <summary>
-        /// 使用者自訂總額
+        /// 當前總額
         /// </summary>
-        public int UserDefault { get; set; }
-
-        /// <summary>
-        /// 使用者自訂總額輸入時間
-        /// </summary>
-        public DateTime UserDefault_DateTime { get; set; }
+        public int CurrentStatus { get; set; }
     }
 }

@@ -57,7 +57,10 @@ public partial class RecordRevisePage : ContentPage
         {
             RecordModel recordModel = _record.SetRecordToRecordModel();
             recordModel.RecordID = cachedId;
+            var originalRecord = App.ServiceRepo.GetRecordById(cachedId);
             App.ServiceRepo.UpdateRecord(recordModel);
+            App.ServiceRepo.UpdateCurrentStatus(originalRecord.AccountID, recordModel.Amount - originalRecord.Amount);
+            App.CachedAccounts = App.ServiceRepo.GetAccountOrderBySequence();
             Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(recordModel.RecordDay));
             Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
         }
@@ -83,6 +86,7 @@ public partial class RecordRevisePage : ContentPage
             RecordModel record = App.ServiceRepo.GetRecordById(cachedId);
             record.IsDelete = true;
             App.ServiceRepo.UpdateRecord(record);
+            App.ServiceRepo.UpdateCurrentStatus(record.AccountID, record.Amount*-1);
             Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(record.RecordDay));
             Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
         }
