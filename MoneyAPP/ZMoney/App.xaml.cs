@@ -1,17 +1,13 @@
-﻿using ZMoney.Services;
-
-namespace ZMoney
+﻿namespace ZMoney
 {
     public partial class App : Application
     {
-        public static IDbServices DbServices { get; private set; }
 
-        public App(IDbServices sqlite)
+        public App()
         {
             InitializeComponent();
 
             MainPage = new AppShell();
-            DbServices = sqlite;
         }
     }
 }

@@ -17,11 +17,9 @@ namespace ZMoney.Services
             try
             {
                 _connection.Insert(category);
-                LocalFileLogger.Log(string.Format("1 category added(Name: {0}).", category.Name));
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 
@@ -35,12 +33,10 @@ namespace ZMoney.Services
             try
             {
                 _connection.Update(category);
-                LocalFileLogger.Log(string.Format("1 category updated(Name: {0}).", category.Name));
                 return;
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 

@@ -6,12 +6,14 @@ namespace ZMoney.Services
     /// <summary>
     /// 實作一個連接資料庫的服務，該檔案存放初始化之方法。
     /// </summary>
-    public partial class SqliteServices: IDbServices
+    public partial class SqliteServices : IDbServices
     {
         /// <summary>
         /// 初始化Sqlite
         /// </summary>
         private SQLiteConnection _connection;
+
+        private LocalFileLogger _logger;
 
         /// <summary>
         /// DB檔的路徑(/storage/emulated/0/Android/data/com.companyname.Zmoney/files/ZMoney.db)
@@ -23,7 +25,7 @@ namespace ZMoney.Services
         /// 初始化服務，如果路徑下無檔案，將創建預設值。
         /// </summary>
         /// <param name="dbPath">DB檔的存放位置：外部專屬目錄</param>
-        public SqliteServices(string dbPath)
+        public SqliteServices(string dbPath, LocalFileLogger localFileLogger)
         {
             _dbPath = dbPath;
 
@@ -32,7 +34,8 @@ namespace ZMoney.Services
                 SQLiteDbInitializationData();
                 return;
             }
-                _connection = new SQLiteConnection(_dbPath);
+            _connection = new SQLiteConnection(_dbPath);
+            _logger = localFileLogger;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace ZMoney.Services
 
                 //創建Table_categories
                 _connection.CreateTable<CategoryModel>();
-                if (_connection.Table<CategoryModel>().Count() == 0) 
+                if (_connection.Table<CategoryModel>().Count() == 0)
                 {
                     List<string> categoriesInitializationData = new List<string>()
                     {
@@ -62,7 +65,7 @@ namespace ZMoney.Services
                         _connection.Insert(new CategoryModel { Name = categoriesInitializationData[i], Sequence = i });
                     }
                 }
-                 
+
 
                 //創建Table_account
                 _connection.CreateTable<AccountModel>();
@@ -75,11 +78,9 @@ namespace ZMoney.Services
                     }
                 }
 
-                LocalFileLogger.Log("初始化資料庫成功。");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Join("Error，錯誤訊息：",ex.ToString()));
             }
         }
 

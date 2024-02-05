@@ -17,13 +17,11 @@ namespace ZMoney.Services
             try
             {
                 _connection.Insert(account);
-                LocalFileLogger.Log(string.Format("1 account added(Name: {0}).", account.Name));
                 return;
 
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 
@@ -43,11 +41,9 @@ namespace ZMoney.Services
                     rawData.Sequence = account.Sequence;
                 }
                 _connection.Update(rawData);
-                LocalFileLogger.Log(string.Format("1 account updated(Name: {0}).", account.Name));
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 
@@ -66,7 +62,6 @@ namespace ZMoney.Services
                 {
                     rawData.CurrentTotal += difference;
                     _connection.Update(rawData);
-                    LocalFileLogger.Log(string.Format("1 currentTotal of account update(Name: {0}).", rawData.Name));
                 }
                 else 
                 {
@@ -75,7 +70,6 @@ namespace ZMoney.Services
             }
             catch(Exception ex) 
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 

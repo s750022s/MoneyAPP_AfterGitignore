@@ -1,17 +1,22 @@
-﻿namespace ZMoney
+﻿using ZMoney.Services;
+
+namespace ZMoney
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        private IDbServices _dbServices;
 
-        public MainPage()
+        public MainPage(IDbServices dbServices)
         {
             InitializeComponent();
+
+            _dbServices = dbServices;
         }
 
         protected override void OnAppearing() 
         {
-            var categary = App.DbServices.GetCategoryOrderBySequence();
+            var categary = _dbServices.GetCategoryOrderBySequence();
             LB.Text = categary.ToString();
         }
 

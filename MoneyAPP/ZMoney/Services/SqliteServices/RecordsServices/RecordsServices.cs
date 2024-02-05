@@ -17,11 +17,9 @@ namespace ZMoney.Services
             try
             {
                 _connection.Insert(record);
-                LocalFileLogger.Log(string.Format("1 record added(AmountOfMoney: {0}).", record.AmountOfMoney));
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 
@@ -35,11 +33,9 @@ namespace ZMoney.Services
             try
             {
                 _connection.Update(record);
-                LocalFileLogger.Log(string.Format("1 record updated(AmountOfMoney: {0}).", record.AmountOfMoney));
             }
             catch (Exception ex)
             {
-                LocalFileLogger.Log(string.Format("Error，錯誤訊息：{0}", ex));
             }
         }
 
