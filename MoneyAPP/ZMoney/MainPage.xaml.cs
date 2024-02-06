@@ -1,35 +1,68 @@
 ﻿using ZMoney.Services;
+using ZMoney.Models;
+
 
 namespace ZMoney
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-        private IDbServices _dbServices;
+        private DbManager _dbManager;
 
-        public MainPage(IDbServices dbServices)
+        public MainPage(DbManager dbManager)
         {
             InitializeComponent();
 
-            _dbServices = dbServices;
+            _dbManager = dbManager;
         }
 
         protected override void OnAppearing() 
         {
-            var categary = _dbServices.GetCategoryOrderBySequence();
-            LB.Text = categary.ToString();
+            changePage();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
-            count++;
+            var test = new RecordModel()
+            {
+                Id = 10,
+                RecordDateTime = DateTime.Now,
+                IsExpenses = true,
+                AccountId = 2,
+                CategoryId = 1,
+                Description = "AAA",
+                AmountOfMoney = 1000,
+                IsDelete = false
+            };
+            _dbManager.AddRecord(test);
+            changePage();
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        private void changePage() 
+        {
+            var tests = _dbManager.GetTotalByIsExpenses(new DateTime(2024,2,6,0,0,0), new DateTime(2024, 2, 7, 0, 0, 0));
+            //foreach (var test in tests)
+            //{
+            //    string lb = string.Join
+            //    (
+            //        "\n",
+            //        test.RecordDateTime.ToString("yyyy-MM-dd hh:mm tt"),
+            //        test.IsExpenses.ToString(),
+            //        test.AccountId.ToString(),
+            //        test.CategoryId.ToString(),
+            //        test.Description,
+            //        test.AmountOfMoney.ToString(),
+            //        test.IsDelete.ToString()
+            //    );
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            //}
+
+
+            string lb = "";
+            foreach (var item in tests)
+            {
+                lb += string.Join("\n", item.ToString());
+            }
+            LB.Text = lb;
         }
     }
 

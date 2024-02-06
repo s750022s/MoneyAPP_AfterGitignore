@@ -20,10 +20,16 @@ namespace ZMoney
             //依賴注入
             string dbPath = FileAccessHelper.GetLocalFilePath("ZMoney.db");
             builder.Services.AddSingleton<LocalFileLogger>();
-            builder.Services.AddSingleton<IDbServices>(s =>
+            builder.Services.AddSingleton<IDbService>(s =>
             {
                 var logger = s.GetService<LocalFileLogger>();
-                return new SqliteServices(dbPath, logger);
+                return new SqliteService(dbPath, logger);
+            });
+
+            builder.Services.AddSingleton<DbManager>(s =>
+            {
+                var dbService = s.GetService<IDbService>();
+                return new DbManager(dbService);
             });
 
             //有用到的page都需要註冊

@@ -3,40 +3,46 @@
 namespace ZMoney.Services
 {
     /// <summary>
-    /// 實作一個連接資料庫的服務，該檔案存放與類別Table相關之方法。
+    /// 與AccountManager、RecordManager共同實作處理資料的邏輯，本檔案存放與類別Table相關之方法。
     /// </summary>
-    public partial class SqliteServices : IDbServices
+    public partial class DbManager
     {
+        private IDbService _dbService;
+
+        public DbManager(IDbService dbService) 
+        {
+            _dbService = dbService;
+        }
+
         /// <summary>
         /// 新增類別
         /// </summary>
         /// <param name="category">要新增的完整資料</param>
         public void AddCategory(CategoryModel category)
         {
-            Init();
-            try
-            {
-                _connection.Insert(category);
-            }
-            catch (Exception ex)
-            {
-            }
+            _dbService.AddCategory(category);
         }
 
         /// <summary>
         /// 修改類別
         /// </summary>
         /// <param name="category">要更新的完整資料</param>
-        public void UpdateCategory(CategoryModel category)
+        public void UpdateCategory(CategoryModel category) 
         {
-            Init();
-            try
+            _dbService.UpdateCategory(category);
+        }
+
+        /// <summary>
+        /// 刪除類別
+        /// </summary>
+        /// <param name="id">要刪除的資料id</param>
+        public void DeleteCategory(int id)
+        {
+            var category = _dbService.GetCategories().FirstOrDefault(a => a.Id == id);
+            if (category != null)
             {
-                _connection.Update(category);
-                return;
-            }
-            catch (Exception ex)
-            {
+                category.Sequence = -1;
+                _dbService.UpdateCategory(category, true);
             }
         }
 
@@ -44,14 +50,13 @@ namespace ZMoney.Services
         /// 取得以順序排序的類別清單，以製作類別選單
         /// </summary>
         /// <returns>類別List</returns>
-        public List<CategoryModel> GetCategoryOrderBySequence()
+        public List<CategoryModel> GetCategoryOrderBySequence() 
         {
-            Init();
-            var categoryOrderBySequence = from category in _connection.Table<CategoryModel>()
-                                          where category.Sequence > -1
-                                          orderby category.Sequence
-                                          select category;
-            return categoryOrderBySequence.ToList();
+            var categories = from category in _dbService.GetCategories()
+                             where category.Sequence > -1
+                             orderby category.Sequence ascending
+                             select category;
+            return categories.ToList();
         }
 
         /// <summary>
@@ -62,15 +67,13 @@ namespace ZMoney.Services
         /// <returns>分組總額List</returns>
         public List<TotalAndPercentFromGroup> GetToatlFromCategoryGroup(DateTime startDate, DateTime endDate)
         {
-            Init();
-
             //取得[有紀錄]的類別分組及總額
-            var recordGroups = from recordWhere in (from record in _connection.Table<RecordModel>()
+            var recordGroups = from recordWhere in (from record in _dbService.GetRecords()
                                                     where (record.RecordDateTime.Date >= startDate)
                                                        && (record.RecordDateTime.Date <= endDate)
                                                        && (record.IsDelete == false)
                                                     select record)
-                               join category in _connection.Table<CategoryModel>()
+                               join category in _dbService.GetCategories()
                                on recordWhere.CategoryId equals category.Id
                                select new
                                {
@@ -108,13 +111,13 @@ namespace ZMoney.Services
                                      };
 
             //取得未被刪除的種類Id清單
-            var categoryExcept_ID = (from category in _connection.Table<CategoryModel>()
+            var categoryExcept_ID = (from category in _dbService.GetCategories()
                                      where category.Sequence > -1
                                      select category.Id).Except(categoryJoinRecord.Select(x => x.Id));
 
             //種類Id清單中，剩餘種類代入預設值
             var categoryExcept = from categoryExceptID in categoryExcept_ID
-                                 join category in _connection.Table<CategoryModel>()
+                                 join category in _dbService.GetCategories()
                                  on categoryExceptID equals category.Id
                                  select new TotalAndPercentFromGroup
                                  {
@@ -128,32 +131,5 @@ namespace ZMoney.Services
 
             return results.ToList();
         }
-
-        /// <summary>
-        /// 取得指定日期區間的類別分組的紀錄清單，並以日期時間為標準由新到舊排列。
-        /// </summary>
-        /// <param name="startDate">起始日</param>
-        /// <param name="endDate">截止日</param>
-        /// <param name="categoryId">類別Id</param>
-        /// <returns></returns>
-        public List<RecordsFromGroup> GetRecordsFromCategoryGroup(DateTime startDate, DateTime endDate, int categoryId)
-        {
-            Init();
-            var recordsFromGroups = from record in _connection.Table<RecordModel>()
-                                 where (record.RecordDateTime.Date >= startDate) 
-                                    && (record.RecordDateTime.Date <= endDate)
-                                    && (record.IsDelete == false) 
-                                    && (record.CategoryId == categoryId)
-                                 orderby record.RecordDateTime.Date descending, record.RecordDateTime.TimeOfDay descending
-                                 select new RecordsFromGroup
-                                 {
-                                     Id = record.Id,
-                                     RecordDateTime = record.RecordDateTime,
-                                     Description = record.Description == null ? "" : record.Description,
-                                     AmountOfMoney = record.AmountOfMoney,
-                                 };
-            return recordsFromGroups.ToList();
-        }
-
     }
 }
