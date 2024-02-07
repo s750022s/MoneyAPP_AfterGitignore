@@ -33,7 +33,7 @@ namespace ZMoney
             });
 
             //有用到的page都需要註冊
-            builder.Services.AddSingleton<MainPage>();
+            //builder.Services.AddSingleton<MainPage>();
 
 
 #if DEBUG
