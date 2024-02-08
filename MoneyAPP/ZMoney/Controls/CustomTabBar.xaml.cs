@@ -25,8 +25,9 @@ public partial class CustomTabBar : ContentView
 
         var currectRouteList = Shell.Current.CurrentState.Location.ToString().Split("/");
         var currectRoute = currectRouteList[currectRouteList.Length - 1];
+        var currectRouteMain = currectRoute == "MainPage" ? "Home" : currectRoute;
 
-        if (route != currectRoute)
+        if (route != currectRouteMain)
         {
             Shell.Current.GoToAsync(route);
         }

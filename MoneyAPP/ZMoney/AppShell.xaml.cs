@@ -15,7 +15,7 @@ namespace ZMoney
             //===主線頁面(TabBar)===
 
             //首頁
-            //Routing.RegisterRoute("HomeClick", typeof(HomePage));
+            Routing.RegisterRoute("Home", typeof(HomePage));
 
             //紀錄新增頁
             Routing.RegisterRoute("RecordAdd", typeof(RecordAddPage));
