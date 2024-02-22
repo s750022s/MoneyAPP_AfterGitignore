@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ZMoney.Services;
+using ZMoney.Pages;
 
 namespace ZMoney
 {
@@ -33,7 +34,9 @@ namespace ZMoney
             });
 
             //有用到的page都需要註冊
-            //builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<RecordAddPage>();
+            builder.Services.AddSingleton<RecordUpdatePage>();
 
 
 #if DEBUG

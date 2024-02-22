@@ -7,6 +7,7 @@
     Style="{StaticResource mainPageStyle}">
     <VerticalStackLayout VerticalOptions="End">
         <Label Text="這是設定首頁" />
+        <Button Clicked="Button_Clicked" Text="共享" />
         <controls:CustomTabBar />
     </VerticalStackLayout>
 </ContentPage>

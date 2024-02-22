@@ -1,119 +1,111 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:control="clr-namespace:MoneyAPP.Controls"
-            x:Class="MoneyAPP.Pages.StatisticsPage"
-            BackgroundImageSource="backgroud.png">
+<ContentPage
+    x:Class="MoneyAPP.Pages.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:MoneyAPP.Controls"
+    BackgroundImageSource="backgroud.png">
 
-    <!--RadioButton樣式設定-->
+    <!--  RadioButton樣式設定  -->
     <ContentPage.Resources>
         <ControlTemplate x:Key="RadioButtonTemplate">
             <Grid RowDefinitions="35,4">
+                <!--  選單文字  -->
+                <Label x:Name="TextLabel" Text="{TemplateBinding Content}" />
+
+                <!--  選單底線  -->
+                <BoxView
+                    x:Name="Indicator"
+                    Grid.Row="1"
+                    Color="Transparent" />
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroupList>
 
-                        <!--選擇標籤-->
+                        <!--  選擇標籤  -->
                         <VisualStateGroup x:Name="CheckedStates">
                             <VisualState x:Name="Checked">
                                 <VisualState.Setters>
-                                    <Setter TargetName="TextLabel"
-                                            Property="Label.TextColor"
-                                            Value="#FF9959"/>
-                                    <Setter TargetName="TextLabel"
-                                            Property="Label.FontSize"
-                                            Value="24"/>
-                                    <Setter TargetName="Indicator"
-                                            Property="BoxView.Color"
-                                            Value="#FF9959"/>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="#FF9959" />
+                                    <Setter TargetName="TextLabel" Property="Label.FontSize" Value="24" />
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="#FF9959" />
                                 </VisualState.Setters>
                             </VisualState>
 
-                            <!--沒選擇標籤-->
+                            <!--  沒選擇標籤  -->
                             <VisualState x:Name="Unchecked">
                                 <VisualState.Setters>
-                                    <Setter TargetName="TextLabel"
-                                            Property="Label.TextColor"
-                                            Value="#634a40"/>
-                                    <Setter TargetName="TextLabel"
-                                            Property="Label.FontSize"
-                                            Value="24"/>
-                                    <Setter TargetName="Indicator"
-                                            Property="BoxView.Color"
-                                            Value="Transparent"/>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="#634a40" />
+                                    <Setter TargetName="TextLabel" Property="Label.FontSize" Value="24" />
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="Transparent" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </VisualStateManager.VisualStateGroups>
-                
-                <!--選單文字-->
-                <Label x:Name="TextLabel"
-                       Text="{TemplateBinding Content}" />
-
-                <!--選單底線-->
-                <BoxView x:Name="Indicator" 
-                         Grid.Row="1" 
-                         Color="Transparent"/>
             </Grid>
         </ControlTemplate>
 
-        <!--套用樣式-->
+        <!--  套用樣式  -->
         <Style TargetType="RadioButton">
-            <Setter Property="ControlTemplate"
-                    Value="{StaticResource RadioButtonTemplate}" />
+            <Setter Property="ControlTemplate" Value="{StaticResource RadioButtonTemplate}" />
         </Style>
     </ContentPage.Resources>
 
-    
-    <!--UI內容-->
-    <Grid  RowDefinitions="*,6*,0.5*,*" HorizontalOptions="EndAndExpand" >
-        <!--選單設計：點選對應選單，下方切換對應內容-->
-        <!--不能使用RadioButton.Group.GroupName，否則預設會是最後一項-->
-        <StackLayout Orientation="Horizontal" 
-                     Spacing="8" 
-                     Margin="7" 
-                     VerticalOptions="CenterAndExpand" 
-                     HorizontalOptions="CenterAndExpand">
 
-            <RadioButton x:Name="CategoryButton" 
-                         Content="類別統計" 
-                         IsChecked="true"  
-                         GroupName="MenuGroup" 
-                         CheckedChanged="RadioButton_Clicked"/>
-            
-            <RadioButton x:Name="AccountButton" 
-                         Content="帳戶統計" 
-                         IsChecked="False"  
-                         GroupName="MenuGroup" 
-                         CheckedChanged="RadioButton_Clicked"/>
-            
-            <RadioButton x:Name="AccountStatusButton" 
-                         Content="帳戶當前狀態" 
-                         IsChecked="False"  
-                         GroupName="MenuGroup" 
-                         CheckedChanged="RadioButton_Clicked"/>
+    <!--  UI內容  -->
+    <Grid HorizontalOptions="EndAndExpand" RowDefinitions="*,6*,0.5*,*">
+        <!--  選單設計：點選對應選單，下方切換對應內容  -->
+        <!--  不能使用RadioButton.Group.GroupName，否則預設會是最後一項  -->
+        <StackLayout
+            Margin="7"
+            HorizontalOptions="CenterAndExpand"
+            Orientation="Horizontal"
+            Spacing="8"
+            VerticalOptions="CenterAndExpand">
+
+            <RadioButton
+                x:Name="CategoryButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="類別統計"
+                GroupName="MenuGroup"
+                IsChecked="true" />
+
+            <RadioButton
+                x:Name="AccountButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="帳戶統計"
+                GroupName="MenuGroup"
+                IsChecked="False" />
+
+            <RadioButton
+                x:Name="AccountStatusButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="帳戶當前狀態"
+                GroupName="MenuGroup"
+                IsChecked="False" />
         </StackLayout>
 
-        <!--對應內容切換，只會有一個IsVisible="True"-->
-        <control:StatisticsPage_Categorys x:Name="CategorysView" 
-                                          Grid.Row="1"
-                                          IsVisible="True" 
-                                          Margin="7,0,7,0"
-                                          />
-        
-        <control:StatisticsPage_Accounts x:Name="AccountsView" 
-                                         Grid.Row="1"
-                                         IsVisible="False" 
-                                         />
+        <!--  對應內容切換，只會有一個IsVisible="True"  -->
+        <control:StatisticsPage_Categorys
+            x:Name="CategorysView"
+            Grid.Row="1"
+            Margin="7,0,7,0"
+            IsVisible="True" />
 
-        <control:StatisticsPage_AccountStatus x:Name="AccountStatusView" 
-                                              Grid.Row="1"
-                                              IsVisible="False" 
-                                              />
-        
-        <!--自訂菜單-->
-        <control:CustomTabBar HeightRequest="100"
-                              Grid.Row="3"
-                              VerticalOptions="End"/>
+        <control:StatisticsPage_Accounts
+            x:Name="AccountsView"
+            Grid.Row="1"
+            IsVisible="False" />
+
+        <control:StatisticsPage_AccountStatus
+            x:Name="AccountStatusView"
+            Grid.Row="1"
+            IsVisible="False" />
+
+        <!--  自訂菜單  -->
+        <control:CustomTabBar
+            Grid.Row="3"
+            HeightRequest="100"
+            VerticalOptions="End" />
     </Grid>
 </ContentPage>

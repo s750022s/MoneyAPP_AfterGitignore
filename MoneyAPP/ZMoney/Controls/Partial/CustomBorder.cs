@@ -5,7 +5,7 @@ namespace ZMoney.Controls;
 /// </summary>
 public class CustomBorder : Border
 {
-    public static readonly BindableProperty IdProperty =
+    public static readonly BindableProperty DataIdProperty =
         BindableProperty.Create(nameof(Id), typeof(int), typeof(CustomBorder), null);
 
     /// <summary>
@@ -13,7 +13,7 @@ public class CustomBorder : Border
     /// </summary>
     public int DataId
     {
-        get { return (int)GetValue(IdProperty); }
-        set { SetValue(IdProperty, value); }
+        get { return (int)GetValue(DataIdProperty); }
+        set { SetValue(DataIdProperty, value); }
     }
 }

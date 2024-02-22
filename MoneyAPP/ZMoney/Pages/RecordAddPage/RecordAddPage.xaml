@@ -4,9 +4,172 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ZMoney.Controls"
+    xmlns:viewModels="clr-namespace:ZMoney.ViewModels"
     Style="{StaticResource mainPageStyle}">
+    <ContentPage.BindingContext>
+        <viewModels:RecordBindingModel />
+    </ContentPage.BindingContext>
+
     <VerticalStackLayout VerticalOptions="End">
-        <Label Text="這是新增紀錄" />
-        <controls:CustomTabBar />
+        <!--  頁面圖示：貓咪蛋塔  -->
+        <Image
+            x:Name="cat_eggtower_Image"
+            HeightRequest="150"
+            Source="cat_eggtower.png" />
+
+        <Grid
+            Margin="10,0,10,10"
+            ColumnDefinitions="*, 2*, 1.8*"
+            RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+
+            <!--  (0,0)日期標題  -->
+            <Label Style="{StaticResource titleText}" Text="日期" />
+
+            <!--  (0,1)日期選擇器  -->
+            <DatePicker
+                x:Name="RecordDay"
+                Grid.Column="1"
+                Date="{Binding RecordDay, Mode=TwoWay}"
+                FontSize="25"
+                Format="yyyy/MM/dd"
+                MaximumDate="12/31/2100"
+                MinimumDate="01/01/2023" />
+
+            <!--  (0,2)時間選擇器  -->
+            <TimePicker
+                x:Name="RecordTime"
+                Grid.Column="2"
+                FontSize="25"
+                Format="hh:mm tt"
+                Time="{Binding RecordTime, Mode=TwoWay}" />
+
+            <!--  (1,0)單選選項:收入  -->
+            <RadioButton
+                x:Name="Revenues"
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="收入"
+                FontSize="25"
+                GroupName="RevenuesOrExpenses"
+                IsChecked="{Binding IsIncome, Mode=TwoWay}"
+                Style="{StaticResource radioButton}" />
+
+
+            <!--  (1,1)預設單選選項:支出  -->
+            <RadioButton
+                x:Name="Expense"
+                Grid.Row="1"
+                Grid.Column="2"
+                Content="支出"
+                FontSize="25"
+                GroupName="RevenuesOrExpenses"
+                IsChecked="{Binding IsExpense, Mode=TwoWay}"
+                Style="{StaticResource radioButton}" />
+
+            <!--  (4,0)帳戶標題  -->
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="帳戶" />
+
+            <!--  (4,1)帳戶選擇器  -->
+            <Picker
+                x:Name="Account"
+                Title="選擇帳戶"
+                Grid.Row="4"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                SelectedIndex="{Binding AccountIndex, Mode=TwoWay}" />
+
+
+
+            <!--  (5,0)類別標題  -->
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="類別" />
+
+            <!--  (5,1)類別選擇器  -->
+            <Picker
+                x:Name="Category"
+                Title="選擇種類"
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                SelectedIndex="{Binding CategoryIndex, Mode=TwoWay}" />
+
+
+            <!--  (2,0)項目標題  -->
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="項目" />
+
+
+            <!--  (2,1)項目編輯  -->
+            <Editor
+                x:Name="Item"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                Text="{Binding Description, Mode=TwoWay}" />
+
+
+            <!--  (3,0)金額標題  -->
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="NT$" />
+
+            <!--  (3,1)金額編輯  -->
+            <Entry
+                x:Name="Amount_Editor"
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Focused="OnEntryFocused"
+                FontSize="25"
+                Keyboard="Numeric"
+                Text="{Binding StrAmountOfMoney, Mode=TwoWay}"
+                Unfocused="OnEntryUnfocused" />
+
+        </Grid>
+        <!--  按鈕  -->
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
+            <!--  儲存按鈕  -->
+            <Button
+                Clicked="SaveButton_Clicked"
+                ImageSource="check.png"
+                Style="{StaticResource checkButten}"
+                Text="儲存" />
+
+            <!--  關閉按鈕  -->
+            <Button
+                Clicked="CloseButton_Clicked"
+                ImageSource="close.png"
+                Style="{StaticResource checkButten}"
+                Text="關閉" />
+
+        </HorizontalStackLayout>
+        <VerticalStackLayout Margin="0,10,0,0">
+            <!--  計算機元件，只有在點擊金額欄時會出現  -->
+            <controls:Calculator
+                x:Name="Calculator"
+                HorizontalOptions="End"
+                IsVisible="False" />
+
+            <!--  自訂TabBar  -->
+            <controls:CustomTabBar
+                x:Name="TabBar"
+                Margin="0,36,0,0"
+                IsVisible="True" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

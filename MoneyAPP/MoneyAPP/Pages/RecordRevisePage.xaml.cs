@@ -151,7 +151,7 @@ public partial class RecordRevisePage : ContentPage
     private void OnEntryFocused(object sender, FocusEventArgs e)
     {
         Calculator.IsVisible = true;
-        creamy_butt_Image.IsVisible = false;
+        Creamy_butt_Image.IsVisible = false;
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public partial class RecordRevisePage : ContentPage
     private void OnEntryUnfocused(object sender, FocusEventArgs e)
     {
         Calculator.IsVisible = false;
-        creamy_butt_Image.IsVisible = true;
+        Creamy_butt_Image.IsVisible = true;
     }
 
     /// <summary>

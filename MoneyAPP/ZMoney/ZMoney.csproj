@@ -56,11 +56,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\arrow_left.svg" />
+	  <MauiImage Remove="Resources\Images\check.svg" />
+	  <MauiImage Remove="Resources\Images\close.svg" />
+	  <MauiImage Remove="Resources\Images\trash.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\arrow_left.svg" />
 	  <None Remove="Resources\Images\backgroud.svg" />
 	  <None Remove="Resources\Images\cat_eggtower.svg" />
+	  <None Remove="Resources\Images\check.svg" />
 	  <None Remove="Resources\Images\chick_cream.svg" />
+	  <None Remove="Resources\Images\close.svg" />
 	  <None Remove="Resources\Images\gemini_cat.svg" />
 	  <None Remove="Resources\Images\hotdog.svg" />
+	  <None Remove="Resources\Images\PageIcon\creamy_butt.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\arrow_left.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\check.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\close.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\trash.svg" />
+	  <None Remove="Resources\Images\trash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -75,6 +91,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\Complete\Calculator.xaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\HomePages\RecordUpdatePage.xaml.cs">
 	    <DependentUpon>RecordUpdatePage.xaml</DependentUpon>
 	  </Compile>
@@ -102,7 +121,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Controls\CustomTabBar.xaml">
+	  <MauiXaml Update="Controls\Complete\Calculator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\Complete\CustomTabBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\HomePages\RecordUpdatePage.xaml">
@@ -137,8 +159,13 @@
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\PageIcon\cat_eggtower.svg" />
 	  <MauiImage Include="Resources\Images\PageIcon\chick_cream.svg" />
+	  <MauiImage Include="Resources\Images\PageIcon\creamy_butt.svg" />
 	  <MauiImage Include="Resources\Images\PageIcon\gemini_cat.svg" />
 	  <MauiImage Include="Resources\Images\PageIcon\hotdog.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\arrow_left.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\check.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\close.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\trash.svg" />
 	</ItemGroup>
 
 </Project>

@@ -16,5 +16,11 @@ namespace ZMoney.Services
             App.CachedCategorys = dbManager.GetCategoryOrderBySequence();
             App.CachedAccounts = dbManager.GetAccountOrderBySequence();
         }
+
+        public static void BackCommand(DateTime date)
+        {
+            var navParam = new Dictionary<string, object>() { { "Date", date } };
+            Shell.Current.GoToAsync($"Home", navParam);
+        }
     }
 }

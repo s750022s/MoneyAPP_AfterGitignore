@@ -7,7 +7,7 @@ namespace ZMoney.Services
     /// </summary>
     public partial class DbManager
     {
-        //前情提要 private IDbService _dbService;
+        //前情提要 private IDbService _dbManager;
 
         /// <summary>
         /// 新增帳戶

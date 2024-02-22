@@ -24,5 +24,14 @@
         /// 紀錄金額(收入正數，支出負數)
         /// </summary>
         public int AmountOfMoney { get; set; }
+
+        public HomePageData(int id, string categoryName, string description, int amountOfMoney) 
+        {
+           Id = id;
+            CategoryName = categoryName;
+            Description = description;
+            AmountOfMoney = amountOfMoney;
+        }
     }
+
 }

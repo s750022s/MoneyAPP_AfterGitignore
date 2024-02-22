@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ZMoney.Controls.Calculator"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout>
+
+        <!--  上方顯示區  -->
+        <VerticalStackLayout HorizontalOptions="End">
+
+            <!--  公式區  -->
+            <Border
+                x:Name="Count_Border"
+                BackgroundColor="#FFF2CC"
+                Stroke="transparent"
+                StrokeThickness="0"
+                Padding="0,0,20,0"
+                WidthRequest="390">
+
+                <Label
+                    x:Name="Count_LB"
+                    BackgroundColor="#FFF2CC"
+                    FontSize="25"
+                    HeightRequest="30"
+                    HorizontalTextAlignment="End"
+                    Text=""
+                    TextColor="#843C0C" />
+            </Border>
+
+            <!--  結果區  -->
+            <Label
+                x:Name="equal_LB"
+                BackgroundColor="#FFF2CC"
+                FontSize="25"
+                HeightRequest="30"
+                HorizontalTextAlignment="End"
+                Text="="
+                TextColor="#843C0C"
+                WidthRequest="390" />
+
+        </VerticalStackLayout>
+
+        <!--  按鈕區 3*4  -->
+        <HorizontalStackLayout
+            Margin="6"
+            HorizontalOptions="Center"
+            Spacing="10">
+
+            <!--  第一列  -->
+            <Button
+                x:Name="Button_1"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="1"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_2"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="2"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_3"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="3"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_plus"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="+"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+
+            <Button
+                x:Name="Button_minus"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="-"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_clear"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="C"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+        </HorizontalStackLayout>
+
+        <!--  第二列  -->
+        <HorizontalStackLayout
+            Margin="6"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Button
+                x:Name="Button_4"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="4"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_5"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="5"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_6"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="6"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_multiplied"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="x"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+
+            <Button
+                x:Name="Button_divided"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="÷"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_delect"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="←"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+        </HorizontalStackLayout>
+
+        <!--  第三列  -->
+        <HorizontalStackLayout
+            Margin="6"
+            HorizontalOptions="Center"
+            Spacing="10">
+
+            <Button
+                x:Name="Button_7"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="7"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_8"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="8"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_9"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="9"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_0"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="0"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+
+            <Button
+                x:Name="Button_equal"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="25"
+                HeightRequest="50"
+                Text="="
+                TextColor="#843C0C"
+                WidthRequest="50" />
+
+            <Button
+                x:Name="Button_ok"
+                BackgroundColor="#FFF2CC"
+                Clicked="CalculatorClick"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                FontSize="13"
+                HeightRequest="50"
+                LineBreakMode="CharacterWrap"
+                Text="OK"
+                TextColor="#843C0C"
+                WidthRequest="50" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

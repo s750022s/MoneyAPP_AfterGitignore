@@ -1,91 +1,110 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MoneyAPP.Controls"
-             x:Class="MoneyAPP.Pages.SetAccountListPage"
-             BackgroundImageSource="backgroud.png">
-    
-    <!--整體布局分 5Rows-->
-    <Grid RowDefinitions="*,1.18*,1.5*,*" 
-          ColumnDefinitions="*,*" 
-          Margin="7"
-          RowSpacing="15"
-          VerticalOptions="FillAndExpand">
-        
-        <!--選單切換-->
-        <Button x:Name="MenuToggle_BTN"
-                Text="帳戶" 
-                HeightRequest="60" 
-                WidthRequest="150"
-                VerticalOptions="End"
-                ImageSource="left_right.png" 
-                ContentLayout="right,2" 
-                BackgroundColor="Transparent" 
-                BorderColor="#584842" 
-                BorderWidth="1" 
-                FontSize="30" 
-                TextColor="#584842"
-                Clicked="MenuToggle_BTN_Clicked"/>
+<ContentPage
+    x:Class="MoneyAPP.Pages.SetAccountListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MoneyAPP.Controls"
+    BackgroundImageSource="backgroud.png">
 
-        <Image x:Name="teaSpoon_Image" 
-               Grid.Row="0" Grid.Column="1"
-               Source="tea_spoon.png" 
-               HorizontalOptions="End" />
-        
-        <!--資料選單-->
-        <CollectionView x:Name="DatasCollectionView" 
-                        Grid.Row="1" Grid.ColumnSpan="2"  >
+    <!--  整體布局分 5Rows  -->
+    <Grid
+        Margin="7"
+        ColumnDefinitions="*,*"
+        RowDefinitions="*,1.18*,1.5*,*"
+        RowSpacing="15"
+        VerticalOptions="FillAndExpand">
+
+        <!--  選單切換  -->
+        <Button
+            x:Name="MenuToggle_BTN"
+            BackgroundColor="Transparent"
+            BorderColor="#584842"
+            BorderWidth="1"
+            Clicked="MenuToggle_BTN_Clicked"
+            ContentLayout="right,2"
+            FontSize="30"
+            HeightRequest="60"
+            ImageSource="left_right.png"
+            Text="帳戶"
+            TextColor="#584842"
+            VerticalOptions="End"
+            WidthRequest="150" />
+
+        <Image
+            x:Name="teaSpoon_Image"
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalOptions="End"
+            Source="tea_spoon.png" />
+
+        <!--  資料選單  -->
+        <CollectionView
+            x:Name="DatasCollectionView"
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ContentView HeightRequest="96" 
-                                 WidthRequest="92" 
-                                 HorizontalOptions="Start" 
-                                 VerticalOptions="Start">
+                    <ContentView
+                        HeightRequest="96"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        WidthRequest="92">
                         <StackLayout>
-                            <!--帶有ID的容器-->
-                            <controls:RecordBorder x:Name="Record_Border"
-                                                   BackgroundColor="#584842"
-                                                   StrokeShape="RoundRectangle 17,17,17,17"
-                                                   StrokeThickness="0"
-                                                   HeightRequest="92"
-                                                   VerticalOptions="Center"
-                                                   RecordId="{Binding AccountID}">
+                            <!--  帶有ID的容器  -->
+                            <controls:RecordBorder
+                                x:Name="Record_Border"
+                                BackgroundColor="#584842"
+                                HeightRequest="92"
+                                RecordId="{Binding AccountID}"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                VerticalOptions="Center">
                                 <Grid>
-                                    <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
-                                        <Label x:Name="AccountSequence" 
-                                               Grid.Column="3" 
-                                               TextColor="#FFF" 
-                                               Text="{Binding Sequence}" 
-                                               HorizontalOptions="End" >
+                                    <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*">
+                                        <Label
+                                            x:Name="AccountSequence"
+                                            Grid.Column="3"
+                                            HorizontalOptions="End"
+                                            Text="{Binding Sequence}"
+                                            TextColor="#FFF">
                                             <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AccountID}" Value="99">
+                                                <DataTrigger
+                                                    Binding="{Binding AccountID}"
+                                                    TargetType="Label"
+                                                    Value="99">
                                                     <Setter Property="IsVisible" Value="False" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
 
-                                        <Label x:Name="AccountName" 
-                                               Grid.Row="1" Grid.RowSpan="4"  
-                                               Grid.Column="0" Grid.ColumnSpan="5" 
-                                               TextColor="#FFF" 
-                                               Text="{Binding Name}" 
-                                               LineBreakMode="CharacterWrap"
-                                               HorizontalOptions="Center" 
-                                               VerticalOptions="Center" 
-                                               FontSize="22" 
-                                               Padding="8,0,0,0" >
+                                        <Label
+                                            x:Name="AccountName"
+                                            Grid.Row="1"
+                                            Grid.RowSpan="4"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="5"
+                                            Padding="8,0,0,0"
+                                            FontSize="22"
+                                            HorizontalOptions="Center"
+                                            LineBreakMode="CharacterWrap"
+                                            Text="{Binding Name}"
+                                            TextColor="#FFF"
+                                            VerticalOptions="Center">
                                             <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AccountID}" Value="99">
+                                                <DataTrigger
+                                                    Binding="{Binding AccountID}"
+                                                    TargetType="Label"
+                                                    Value="99">
                                                     <Setter Property="FontSize" Value="70" />
-                                                    <Setter Property="Grid.Row" Value="0"/>
+                                                    <Setter Property="Grid.Row" Value="0" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
 
                                     </Grid>
                                 </Grid>
-                                
-                                <!--點擊格子-->
+
+                                <!--  點擊格子  -->
                                 <controls:RecordBorder.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnBorderTapped" />
                                 </controls:RecordBorder.GestureRecognizers>
@@ -94,81 +113,102 @@
                     </ContentView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            
-            <!--垂直網格，由左往右增加，4格一列-->
+
+            <!--  垂直網格，由左往右增加，4格一列  -->
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" 
-                                 Span="4" />
+                <GridItemsLayout Orientation="Vertical" Span="4" />
             </CollectionView.ItemsLayout>
         </CollectionView>
 
-        <BoxView x:Name="Blank_BoxView"
-            Grid.Row="2" Grid.ColumnSpan="2"
+        <BoxView
+            x:Name="Blank_BoxView"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            BackgroundColor="Transparent"
             IsVisible="true"
-            BackgroundColor="Transparent" 
-            Color="Transparent"/>
+            Color="Transparent" />
 
-        <!--點擊格子，跳出修改欄位-->
-        <Grid x:Name="Revise_Grid" 
-              Grid.Row="2" Grid.ColumnSpan="2" 
-              RowDefinitions="*,*,*" ColumnDefinitions="*,3*,*" 
-              Padding="7" 
-              RowSpacing="7" 
-              IsVisible="false">
-            
-            <!--名稱欄位-->
-            <Label x:Name="NameTitle_LB"  
-                   Grid.Row="0" Grid.Column="0" 
-                   Text="名稱" 
-                   FontSize="32"/>
-            
-            <Entry x:Name="Name_Entry" 
-                   Grid.Row="0" Grid.Column="1" 
-                   Text="{Binding Name}" 
-                   FontSize="32"/>
-            
-            <Button x:Name="Save_BTN" 
-                    Grid.Row="0" Grid.Column="3" 
-                    Text="儲存" 
-                    BackgroundColor="Transparent" 
-                    BorderColor="#584842" 
-                    BorderWidth="1" 
-                    TextColor="#584842"
-                    Clicked="Save_BTN_Clicked"/>
-            
-            
-            <Label x:Name="SequenceTitle_LB" 
-                   Grid.Row="1" Grid.Column="0" 
-                   Text="順序" 
-                   FontSize="32"/>
-            
-            <Entry x:Name="Sequence_Entry" 
-                   Grid.Row="1" Grid.Column="1" 
-                   Text="{Binding Sequence}" 
-                   FontSize="32" 
-                   Keyboard="Numeric"/>
-            
-            <Button x:Name="Delete_BTN" 
-                    Grid.Row="1" Grid.Column="3" 
-                    Text="刪除" 
-                    BackgroundColor="Transparent" 
-                    BorderColor="#584842" 
-                    BorderWidth="1" 
-                    TextColor="#584842"
-                    Clicked="Delete_BTN_Clicked"/>
-            
-            <Label x:Name="Directions_LB" 
-                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
-                   Text="請輸入想要移動到的位置，若超過目前格數將會默認加至最後；順序為0，為紀錄選單中的預設選項。" 
-                   FontSize="15.5"/>
-            
-            
+        <!--  點擊格子，跳出修改欄位  -->
+        <Grid
+            x:Name="Revise_Grid"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Padding="7"
+            ColumnDefinitions="*,3*,*"
+            IsVisible="false"
+            RowDefinitions="*,*,*"
+            RowSpacing="7">
+
+            <!--  名稱欄位  -->
+            <Label
+                x:Name="NameTitle_LB"
+                Grid.Row="0"
+                Grid.Column="0"
+                FontSize="32"
+                Text="名稱" />
+
+            <Entry
+                x:Name="Name_Entry"
+                Grid.Row="0"
+                Grid.Column="1"
+                FontSize="32"
+                Text="{Binding Name}" />
+
+            <Button
+                x:Name="Save_BTN"
+                Grid.Row="0"
+                Grid.Column="3"
+                BackgroundColor="Transparent"
+                BorderColor="#584842"
+                BorderWidth="1"
+                Clicked="Save_BTN_Clicked"
+                Text="儲存"
+                TextColor="#584842" />
+
+
+            <Label
+                x:Name="SequenceTitle_LB"
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="32"
+                Text="順序" />
+
+            <Entry
+                x:Name="Sequence_Entry"
+                Grid.Row="1"
+                Grid.Column="1"
+                FontSize="32"
+                Keyboard="Numeric"
+                Text="{Binding Sequence}" />
+
+            <Button
+                x:Name="Delete_BTN"
+                Grid.Row="1"
+                Grid.Column="3"
+                BackgroundColor="Transparent"
+                BorderColor="#584842"
+                BorderWidth="1"
+                Clicked="Delete_BTN_Clicked"
+                Text="刪除"
+                TextColor="#584842" />
+
+            <Label
+                x:Name="Directions_LB"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                FontSize="15.5"
+                Text="請輸入想要移動到的位置，若超過目前格數將會默認加至最後；順序為0，為紀錄選單中的預設選項。" />
+
+
         </Grid>
-        
-        <!--Menu-->
-        <controls:CustomTabBar Grid.Row="3" Grid.ColumnSpan="2" 
-                               Margin="-7,30,-7,-7"
-                               HeightRequest="100"
-                               VerticalOptions="End"/>
+
+        <!--  Menu  -->
+        <controls:CustomTabBar
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="-7,30,-7,-7"
+            HeightRequest="100"
+            VerticalOptions="End" />
     </Grid>
-    </ContentPage>
+</ContentPage>

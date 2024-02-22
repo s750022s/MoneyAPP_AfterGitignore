@@ -8,7 +8,7 @@ namespace ZMoney.Services
     /// </summary>
     public partial class DbManager
     {
-        //前情提要 private IDbService _dbService;
+        //前情提要 private IDbService _dbManager;
 
         /// <summary>
         /// 增加Record表的一筆資料
@@ -77,13 +77,12 @@ namespace ZMoney.Services
                                join category in _dbService.GetCategories() on record.CategoryId equals category.Id
                                where record.RecordDateTime.Date == recordday.Date && record.IsDelete == false
                                orderby record.RecordDateTime.TimeOfDay descending
-                               select new HomePageData
-                               {
-                                   Id = record.Id,
-                                   CategoryName = category.Name,
-                                   Description = record.Description == null ? "" : record.Description,
-                                   AmountOfMoney = record.AmountOfMoney,
-                               };
+                               select new HomePageData(
+                                   record.Id, 
+                                   category.Name, 
+                                   record.Description == null ? "" : record.Description, 
+                                   record.AmountOfMoney
+                                   );
             return homePageData.ToList();
         }
 
@@ -143,7 +142,7 @@ namespace ZMoney.Services
         
         //public DateTime GetRecordFirstday()
         //{
-        //    var firstday = _dbService.GetRecords()
+        //    var firstday = _dbManager.GetRecords()
         //                   .OrderBy(record => record.RecordDateTime)
         //                   .FirstOrDefault();
         //    if (firstday == null)
