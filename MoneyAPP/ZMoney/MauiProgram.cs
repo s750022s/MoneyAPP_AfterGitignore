@@ -37,6 +37,7 @@ namespace ZMoney
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<RecordAddPage>();
             builder.Services.AddSingleton<RecordUpdatePage>();
+            builder.Services.AddSingleton<BackupAndReset>();
 
 
 #if DEBUG

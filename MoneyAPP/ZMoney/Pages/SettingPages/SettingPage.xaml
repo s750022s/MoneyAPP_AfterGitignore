@@ -5,9 +5,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ZMoney.Controls"
     Style="{StaticResource mainPageStyle}">
-    <VerticalStackLayout VerticalOptions="End">
-        <Label Text="這是設定首頁" />
-        <Button Clicked="Button_Clicked" Text="共享" />
-        <controls:CustomTabBar />
-    </VerticalStackLayout>
+
+    <!--  UI  -->
+    <Grid RowDefinitions="*,2*,*">
+        <!--  圖片  -->
+        <Image
+            x:Name="chick_cream_Image"
+            HeightRequest="150"
+            Source="chick_cream.png" />
+        <VerticalStackLayout
+            Grid.Row="1"
+            Margin="7,0,7,0"
+            Spacing="15">
+
+            <controls:SettingBorder
+                Title="[類別/帳戶]設定"
+                Clicked="ListSetting_Clicked"
+                Description="新增、修改[類別]與[帳戶]選單的個別名稱及順序。" />
+
+            <controls:SettingBorder
+                Title="備份還原"
+                Clicked="Backup_Clicked"
+                Description="匯出、匯入資料，或恢復初始設定。" />
+
+            <controls:SettingBorder
+                Title="系統資訊"
+                Clicked="SystemInfo_Clicked"
+                Description="關於APP的更新資訊、聲明、開發團隊資訊。" />
+
+
+        </VerticalStackLayout>
+        <!--  自訂菜單  -->
+        <controls:CustomTabBar Grid.Row="2" />
+
+    </Grid>
 </ContentPage>

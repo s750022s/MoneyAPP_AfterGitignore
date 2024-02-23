@@ -9,11 +9,6 @@
         <Setter Property="BackgroundImageSource" Value="backgroud.png" />
         <Setter Property="Shell.NavBarIsVisible" Value="False" />
     </Style>
-    <Style x:Key="sidePageStyle" TargetType="ContentPage">
-        <Setter Property="BackgroundImageSource" Value="backgroud.png" />
-        <Setter Property="Shell.BackgroundColor" Value="#4C511507" />
-        <Setter Property="Shell.TitleColor" Value="Transparent" />
-    </Style>
     <Style x:Key="customBorder" TargetType="controls:CustomBorder">
         <Setter Property="BackgroundColor" Value="#584842" />
         <Setter Property="StrokeShape" Value="RoundRectangle 17,17,17,17" />
@@ -40,8 +35,4 @@
         <Setter Property="TextColor" Value="#584842" />
         <Setter Property="CornerRadius" Value="14" />
     </Style>
-
-
-
-
 </ResourceDictionary>
