@@ -10,7 +10,7 @@
         BindingContext="{x:Reference this}"
         Stroke="#584842"
         StrokeShape="RoundRectangle 5,5,5,5">
-        <StackLayout Spacing="10">
+        <StackLayout Spacing="7">
             <Grid ColumnDefinitions="*,4*,*">
                 <Image
                     HeightRequest="30"

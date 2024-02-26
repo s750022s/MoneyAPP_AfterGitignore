@@ -98,6 +98,7 @@ public partial class Calculator : ContentView
                 if (formulas.Count < 3)
                 {
                     throw new ArgumentException("已無法刪除，請直接使用C清除功能");
+                    
                 }
                 if (stagingData == "")
                 {

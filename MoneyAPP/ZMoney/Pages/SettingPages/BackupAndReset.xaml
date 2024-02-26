@@ -7,8 +7,8 @@
     Style="{StaticResource mainPageStyle}">
     <Grid
         ColumnDefinitions="*,2*"
-        RowDefinitions="0.3*,*,*,*,0.8*,1.5*"
-        RowSpacing="15">
+        RowDefinitions="0.5*,*,*,*,0.8*,0.8*,*"
+        RowSpacing="10">
         <!--  返回按鈕  -->
         <ImageButton
             x:Name="BackBTN"
@@ -24,14 +24,22 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Clicked="Button_Clicked"
-            Description="建立一個包含選項資料、記帳紀錄的備份檔，方便在各設備中轉移。" />
+            Description="建立包含選項資料、記帳紀錄的備份檔，方便在各設備中轉移。" />
 
         <controls:SettingBorder
             Title="匯入備份檔"
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Clicked="ImportBackupFile_Clicked"
-            Description="匯入備份檔來還原所有資料，請注意還原時會覆蓋手機中現有的資料。" />
+            Description="匯入備份檔來還原所有資料，還原時將覆蓋手機中現有的資料。" />
+
+        <controls:SettingBorder
+            Title="匯出Excel"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Description="根據說明匯出Excel。"
+            IsEnabled="False"
+            IsVisible="False" />
 
         <controls:SettingBorder
             Title="恢復初始設定"
@@ -50,9 +58,9 @@
         <!--  插圖  -->
         <Image
             x:Name="bakingdog_Image"
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="1"
-            HeightRequest="250"
+            HeightRequest="180"
             Source="bakingdog.png" />
     </Grid>
 </ContentPage>

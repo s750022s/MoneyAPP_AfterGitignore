@@ -77,6 +77,7 @@
 	  <None Remove="Resources\Images\hotdog.svg" />
 	  <None Remove="Resources\Images\PageIcon\bakingdog.svg" />
 	  <None Remove="Resources\Images\PageIcon\creamy_butt.svg" />
+	  <None Remove="Resources\Images\PageIcon\tea_spoon.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\angle_right.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\arrow_left.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\check.svg" />
@@ -173,6 +174,7 @@
 	  <MauiImage Include="Resources\Images\PageIcon\creamy_butt.svg" />
 	  <MauiImage Include="Resources\Images\PageIcon\gemini_cat.svg" />
 	  <MauiImage Include="Resources\Images\PageIcon\hotdog.svg" />
+	  <MauiImage Include="Resources\Images\PageIcon\tea_spoon.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\angle_right.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\arrow_left.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\check.svg" />

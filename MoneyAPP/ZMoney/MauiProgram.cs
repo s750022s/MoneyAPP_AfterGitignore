@@ -38,6 +38,8 @@ namespace ZMoney
             builder.Services.AddSingleton<RecordAddPage>();
             builder.Services.AddSingleton<RecordUpdatePage>();
             builder.Services.AddSingleton<BackupAndReset>();
+            builder.Services.AddSingleton<ZmoneyInfo>();
+            builder.Services.AddSingleton<ListSetting>();
 
 
 #if DEBUG
