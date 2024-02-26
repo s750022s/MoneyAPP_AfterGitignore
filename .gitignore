@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/MoneyAPP/MoneyAPP/Controls/StatisticsPage_AccountStatus.xaml
+/MoneyAPP/MoneyAPP/Pages/SettingsPage.xaml
+/MoneyAPP/MoneyAPP/Pages/SettingsPage_Backup.xaml
+/MoneyAPP/MoneyAPP/Pages/SettingsPage_SystemInfo.xaml
