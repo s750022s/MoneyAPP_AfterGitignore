@@ -83,6 +83,7 @@
 	  <None Remove="Resources\Images\SimpleIcon\check.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\close.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\foot.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\refresh.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\trash.svg" />
 	  <None Remove="Resources\Images\trash.svg" />
 	</ItemGroup>
@@ -180,6 +181,7 @@
 	  <MauiImage Include="Resources\Images\SimpleIcon\check.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\close.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\foot.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\refresh.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\trash.svg" />
 	</ItemGroup>
 

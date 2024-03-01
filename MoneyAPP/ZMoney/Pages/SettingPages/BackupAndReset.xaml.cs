@@ -48,7 +48,7 @@ public partial class BackupAndReset : ContentPage
         {
             try
             {
-                string FilePath = FileAccessHelper.GetLocalFilePath("record.db3");
+                string FilePath = FileAccessHelper.GetLocalFilePath("ZMoney.db");
                 if (File.Exists(FilePath))
                 {
                     File.Delete(FilePath);

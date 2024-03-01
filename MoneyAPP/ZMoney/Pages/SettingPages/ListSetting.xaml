@@ -6,13 +6,15 @@
     xmlns:controls="clr-namespace:ZMoney.Controls"
     xmlns:viewModels="clr-namespace:ZMoney.ViewModels"
     Style="{StaticResource mainPageStyle}">
+
     <!--  整體布局分 5Rows  -->
     <Grid
-        Margin="7"
+        Margin="7,0,7,0"
         ColumnDefinitions="*,*"
-        RowDefinitions="*,*,1.18*,1.5*"
+        RowDefinitions="*,1.1*,1.25*,*"
         RowSpacing="15"
         VerticalOptions="FillAndExpand">
+
         <!--  返回按鈕  -->
         <ImageButton
             x:Name="BackBTN"
@@ -21,18 +23,19 @@
             Clicked="BackBTN_Clicked"
             HeightRequest="25"
             HorizontalOptions="Start"
-            Source="arrow_left.png" />
+            Source="arrow_left.png"
+            VerticalOptions="StartAndExpand" />
 
         <Button
             x:Name="MenuToggle_BTN"
             BackgroundColor="Transparent"
             BorderColor="#584842"
             BorderWidth="1"
-            Clicked="CategoryChangeAccount_Clicked"
+            Clicked="CategoryOrAccount_Clicked"
             ContentLayout="right,2"
             FontSize="30"
             HeightRequest="60"
-            ImageSource="left_right.png"
+            ImageSource="refresh.png"
             Text="類別"
             TextColor="#584842"
             VerticalOptions="End"
@@ -60,11 +63,9 @@
                         <StackLayout>
                             <!--  帶有ID的容器  -->
                             <controls:CustomBorder
-                                BackgroundColor="#584842"
                                 DataId="{Binding Id}"
                                 HeightRequest="92"
-                                StrokeShape="RoundRectangle 17,17,17,17"
-                                StrokeThickness="0"
+                                Style="{StaticResource customBorder}"
                                 VerticalOptions="Center">
                                 <Grid>
                                     <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*">
@@ -150,6 +151,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 FontSize="32"
+                Style="{StaticResource titleText}"
                 Text="名稱" />
 
             <Entry
@@ -163,12 +165,9 @@
                 x:Name="Save_BTN"
                 Grid.Row="0"
                 Grid.Column="3"
-                BackgroundColor="Transparent"
-                BorderColor="#584842"
-                BorderWidth="1"
                 Clicked="Save_BTN_Clicked"
-                Text="儲存"
-                TextColor="#584842" />
+                Style="{StaticResource checkButten}"
+                Text="儲存" />
 
 
             <Label
@@ -176,6 +175,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 FontSize="32"
+                Style="{StaticResource titleText}"
                 Text="順序" />
 
             <Entry
@@ -190,12 +190,10 @@
                 x:Name="Delete_BTN"
                 Grid.Row="1"
                 Grid.Column="3"
-                BackgroundColor="Transparent"
-                BorderColor="#584842"
-                BorderWidth="1"
                 Clicked="Delete_BTN_Clicked"
+                Style="{StaticResource checkButten}"
                 Text="刪除"
-                TextColor="#584842" />
+                 />
 
             <Label
                 x:Name="Directions_LB"
