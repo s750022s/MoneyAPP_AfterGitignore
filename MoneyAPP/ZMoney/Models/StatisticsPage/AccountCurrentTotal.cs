@@ -4,13 +4,16 @@ namespace ZMoney.Models
 {
     public class AccountCurrentTotal: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         public int Id { get; set; }
-        public string Name { get; set; } = "";
-        public int CurrentStatus { get; set; }
+        public string Name { get; set; }
+        public int CurrentTotal { get; set; }
 
-        public void CheckEntry(string currentTotalStr) 
+        public AccountCurrentTotal(int id, string name, string currentTotalStr) 
         {
+            Id = id;
+            Name = name;
+
             string currentTotalClear = currentTotalStr.Replace(",", "");
             if (currentTotalClear == "")
             {
@@ -23,7 +26,7 @@ namespace ZMoney.Models
                 {
                     throw new ArgumentException("請不要輸入小數或文字，Money是不會有小數的喔!");
                 }
-                CurrentStatus = currentTotal;
+                CurrentTotal = currentTotal;
             }
             catch (OverflowException)
             {

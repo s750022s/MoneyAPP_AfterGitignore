@@ -4,9 +4,345 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ZMoney.Controls"
+    xmlns:local="clr-namespace:ZMoney.Pages"
     Style="{StaticResource mainPageStyle}">
-    <VerticalStackLayout VerticalOptions="End">
-        <Label Text="這是統計首頁" />
-        <controls:CustomTabBar />
-    </VerticalStackLayout>
+    <!--  RadioButton樣式設定  -->
+    <ContentPage.Resources>
+        <local:StringLengthToBoolConverter x:Key="StringLengthToBoolConverter" />
+        <ControlTemplate x:Key="RadioButtonTemplate">
+            <Grid RowDefinitions="35,4">
+                <!--  選單文字  -->
+                <Label x:Name="TextLabel" Text="{TemplateBinding Content}" />
+
+                <!--  選單底線  -->
+                <BoxView
+                    x:Name="Indicator"
+                    Grid.Row="1"
+                    Color="Transparent" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+
+                        <!--  選擇標籤  -->
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="#FF9959" />
+                                    <Setter TargetName="TextLabel" Property="Label.FontSize" Value="24" />
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="#FF9959" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <!--  沒選擇標籤  -->
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="#634a40" />
+                                    <Setter TargetName="TextLabel" Property="Label.FontSize" Value="24" />
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+        </ControlTemplate>
+
+        <!--  套用樣式  -->
+        <Style TargetType="RadioButton">
+            <Setter Property="ControlTemplate" Value="{StaticResource RadioButtonTemplate}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <!--  UI內容  -->
+    <Grid RowDefinitions="0.8*,5*,2*">
+        <!--  選單設計：點選對應選單，下方切換對應內容  -->
+        <!--  不能使用RadioButton.Group.GroupName，否則預設會是最後一項  -->
+        <StackLayout
+            Margin="7"
+            Orientation="Horizontal"
+            Spacing="8">
+
+            <RadioButton
+                x:Name="CategoryButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="類別統計"
+                GroupName="MenuGroup" />
+
+            <RadioButton
+                x:Name="AccountButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="帳戶統計"
+                GroupName="MenuGroup" />
+
+            <RadioButton
+                x:Name="AccountStatusButton"
+                CheckedChanged="RadioButton_Clicked"
+                Content="帳戶當前狀態"
+                GroupName="MenuGroup" />
+        </StackLayout>
+
+        <!--  帳戶與類別  -->
+        <Grid
+            x:Name="CategoryOrAccount"
+            Grid.Row="1"
+            Margin="7,0,7,0"
+            RowDefinitions="0.5*,0.8*,0.8*,*,4*"
+            RowSpacing="5"
+            VerticalOptions="Start">
+            <Label Style="{StaticResource titleText}" Text="搜尋範圍" />
+            <HorizontalStackLayout Grid.Row="1">
+                <DatePicker
+                    x:Name="StartDate"
+                    FontSize="25"
+                    Format="yyyy/MM/dd"
+                    MaximumDate="12/31/2100"
+                    MinimumDate="01/01/2024" />
+                <Label Style="{StaticResource titleText}" Text=" 到 " />
+                <DatePicker
+                    x:Name="EndDate"
+                    FontSize="25"
+                    Format="yyyy/MM/dd"
+                    MaximumDate="12/31/2100"
+                    MinimumDate="01/01/2024" />
+            </HorizontalStackLayout>
+            <Button
+                Grid.Row="2"
+                BackgroundColor="#584842"
+                BorderColor="#584842"
+                Clicked="Button_Clicked"
+                FontSize="20"
+                Text="搜尋" />
+            <Border
+                x:Name="Info_Border"
+                Grid.Row="3"
+                Padding="7"
+                Stroke="#584842"
+                StrokeShape="RoundRectangle 10,10,10,10">
+                <Grid
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="5"
+                    RowDefinitions="*,*"
+                    RowSpacing="5">
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="20"
+                        Text="總金額"
+                        TextColor="#584842" />
+                    <Label
+                        x:Name="Total_Label"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="$0" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="20"
+                        Text="總收入"
+                        TextColor="#584842" />
+                    <Label
+                        x:Name="TotalIncome_Label"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="$0" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        FontSize="20"
+                        Text="總支出"
+                        TextColor="#584842" />
+                    <Label
+                        x:Name="TotalExpense_Label"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="$0" />
+
+
+                </Grid>
+            </Border>
+            <CollectionView
+                x:Name="DatasCollectionView"
+                Grid.Row="4"
+                ItemsSource="{Binding GroupdataModels}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <!--  一筆記錄樣式  -->
+                            <controls:CustomBorder
+                                x:Name="Data_Border"
+                                Padding="15,12,15,0"
+                                BackgroundColor="#584842"
+                                DataId="{Binding Id}"
+                                HeightRequest="70"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                VerticalOptions="CenterAndExpand">
+                                <Grid ColumnDefinitions="0.7*,1.2*,*">
+                                    <!--  百分比  -->
+                                    <Label
+                                        x:Name="Percent_LB"
+                                        Grid.Column="0"
+                                        FontSize="25"
+                                        HorizontalOptions="Start"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Percent, StringFormat='{}{0:0%;0%;0%}'}"
+                                        TextColor="White" />
+                                    <!--  種類  -->
+                                    <Label
+                                        x:Name="Name_LB"
+                                        Grid.Column="1"
+                                        FontSize="25"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Name}"
+                                        TextColor="White">
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding Source={x:Reference Name_LB}, Path=Text.Length, Converter={StaticResource StringLengthToBoolConverter}}"
+                                                TargetType="Label"
+                                                Value="True">
+                                                <Setter Property="FontSize" Value="21" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <!--  金額  -->
+                                    <Label
+                                        x:Name="Amount_LB"
+                                        Grid.Column="2"
+                                        FontSize="25"
+                                        HorizontalOptions="End"
+                                        Text="{Binding GroupTatalAmount, StringFormat='{}{0:N0}'}"
+                                        TextColor="White" />
+                                </Grid>
+                                <controls:CustomBorder.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnBorderTapped" />
+                                </controls:CustomBorder.GestureRecognizers>
+                            </controls:CustomBorder>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <!--  帳戶當前狀態  -->
+        <Grid
+            x:Name="AccountCurrentTotal"
+            Grid.Row="1"
+            Margin="7,0,7,0"
+            IsVisible="false"
+            RowDefinitions="*,*,10*">
+            <Border BackgroundColor="#BFFFFFFF" StrokeThickness="0">
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label
+                        Margin="0,0,10,0"
+                        FontSize="30"
+                        Text="總資產" />
+                    <ImageButton
+                        x:Name="eyeClose_ImageBTN"
+                        Clicked="EyeClose_Clicked"
+                        HeightRequest="30"
+                        HorizontalOptions="Start"
+                        Source="eye_close.png"
+                        WidthRequest="30" />
+                    <ImageButton
+                        x:Name="eye_ImageBTN"
+                        Clicked="Eye_Clicked"
+                        HeightRequest="30"
+                        HorizontalOptions="Start"
+                        IsVisible="false"
+                        Source="eye.png"
+                        WidthRequest="30" />
+                </HorizontalStackLayout>
+            </Border>
+            <Border
+                Grid.Row="1"
+                BackgroundColor="#BFFFFFFF"
+                StrokeThickness="0">
+                <Label
+                    x:Name="Total_LB"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Text="$ ------" />
+            </Border>
+            <CollectionView
+                x:Name="AccountCurrentTotalCollectionView"
+                Grid.Row="2"
+                Margin="0,10,0,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <!--  一筆記錄樣式  -->
+                            <controls:CustomBorder
+                                x:Name="Data_Border"
+                                Padding="15,12,15,0"
+                                BackgroundColor="#584842"
+                                DataId="{Binding Id}"
+                                HeightRequest="70"
+                                StrokeShape="RoundRectangle 17,17,17,17"
+                                StrokeThickness="0"
+                                VerticalOptions="CenterAndExpand">
+                                <Grid ColumnDefinitions="2*,2*,30">
+                                    <!--  帳戶  -->
+                                    <Label
+                                        x:Name="Name_LB"
+                                        Grid.Column="0"
+                                        FontSize="28"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Name}"
+                                        TextColor="White"
+                                        VerticalOptions="Center" />
+
+                                    <!--  金額  -->
+                                    <Entry
+                                        x:Name="Amount_Entry"
+                                        Grid.Column="1"
+                                        FontSize="28"
+                                        HorizontalTextAlignment="End"
+                                        IsReadOnly="True"
+                                        Keyboard="Numeric"
+                                        Text="{Binding CurrentTotal, StringFormat='{}{0:N0}'}"
+                                        TextColor="White" />
+
+                                    <ImageButton
+                                        x:Name="pencil_ImageBTN"
+                                        Grid.Column="2"
+                                        Clicked="PencilButton_Clicked"
+                                        HorizontalOptions="End"
+                                        Source="pencil.png" />
+
+                                    <ImageButton
+                                        x:Name="check_ImageBTN"
+                                        Grid.Column="2"
+                                        Clicked="CheckButton_Clicked"
+                                        HorizontalOptions="End"
+                                        IsVisible="false"
+                                        Source="check.png" />
+
+                                </Grid>
+                            </controls:CustomBorder>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <!--  自訂菜單  -->
+        <controls:CustomTabBar Grid.Row="2" />
+    </Grid>
+
+
 </ContentPage>

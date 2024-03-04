@@ -104,7 +104,7 @@
             x:Name="DatasCollectionView"
             HeightRequest="360"
             ItemTemplate="{StaticResource CollectionViewTemplate}"
-            ItemsSource="{Binding HomePageData}" >
+            ItemsSource="{Binding HomePageData}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="1" Orientation="Vertical" />
             </CollectionView.ItemsLayout>

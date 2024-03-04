@@ -40,7 +40,8 @@ namespace ZMoney
             builder.Services.AddSingleton<BackupAndReset>();
             builder.Services.AddSingleton<ZmoneyInfo>();
             builder.Services.AddSingleton<ListSetting>();
-
+            builder.Services.AddSingleton<StatisticsPage>();
+            builder.Services.AddSingleton<RecordsByClass>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -49,7 +49,7 @@ public partial class HomePage : ContentPage
     private void OnBorderTapped(object sender, TappedEventArgs e)
     {
         CustomBorder customBorder = (CustomBorder)sender;
-        var navParam = new Dictionary<string, Object>() { { "DataId", customBorder.DataId } };
+        var navParam = new Dictionary<string, Object>() { { "DataId", customBorder.DataId },{ "IsFromHome", true } };
         Shell.Current.GoToAsync("Home/RecordUpdate", navParam);
     }
 

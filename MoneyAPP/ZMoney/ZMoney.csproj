@@ -82,7 +82,10 @@
 	  <None Remove="Resources\Images\SimpleIcon\arrow_left.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\check.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\close.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\eye.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\eye_close.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\foot.svg" />
+	  <None Remove="Resources\Images\SimpleIcon\pencil.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\refresh.svg" />
 	  <None Remove="Resources\Images\SimpleIcon\trash.svg" />
 	  <None Remove="Resources\Images\trash.svg" />
@@ -100,6 +103,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\Complete\AccountCurrentTotalControls.xaml.cs">
+	    <DependentUpon>AccountCurrentTotalControls.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Controls\Complete\Calculator.xaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
@@ -160,6 +166,9 @@
 	  <MauiXaml Update="Pages\SettingPages\SettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Controls\Complete\AccountCurrentTotalControls.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\StatisticsPages\RecordsByClass.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -180,7 +189,10 @@
 	  <MauiImage Include="Resources\Images\SimpleIcon\arrow_left.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\check.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\close.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\eye.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\eye_close.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\foot.svg" />
+	  <MauiImage Include="Resources\Images\SimpleIcon\pencil.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\refresh.svg" />
 	  <MauiImage Include="Resources\Images\SimpleIcon\trash.svg" />
 	</ItemGroup>

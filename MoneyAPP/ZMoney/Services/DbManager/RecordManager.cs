@@ -93,7 +93,7 @@ namespace ZMoney.Services
         /// <param name="endDate">截止日</param>
         /// <param name="Id">類別Id</param>
         /// <returns></returns>
-        public List<RecordsFromGroup> GetRecordsFromCategoryGroup(DateTime startDate, DateTime endDate, int Id, bool IsCategory)
+        public List<RecordsFromGroup> GetRecordsFromGroup(DateTime startDate, DateTime endDate, int Id, bool IsCategory)
         {
             var recordsFromGroups = from record in _dbService.GetRecords()
                                     where (record.RecordDateTime.Date >= startDate)
@@ -118,7 +118,7 @@ namespace ZMoney.Services
         /// <param name="startDate">起始日</param>
         /// <param name="endDate">截止日</param>
         /// <returns>[總收入,總支出,總金額]</returns>
-        public Array GetTotalByIsExpenses(DateTime startDate, DateTime endDate)
+        public int[] GetTotalByIsExpenses(DateTime startDate, DateTime endDate)
         {
             var recordGroup = from record in _dbService.GetRecords()
                               where (record.RecordDateTime.Date >= startDate)

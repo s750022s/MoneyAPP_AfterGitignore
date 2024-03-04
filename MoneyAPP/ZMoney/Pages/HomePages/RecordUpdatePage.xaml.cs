@@ -5,15 +5,27 @@ using ZMoney.Services;
 namespace ZMoney.Pages;
 
 [QueryProperty(nameof(DataId), "DataId")]
+[QueryProperty(nameof(IsFromHome), "IsFromHome")]
 public partial class RecordUpdatePage : ContentPage
 {
-    int id;
+    private int _id;
     public int DataId 
     {
-        get => id;
+        get => _id;
         set
         {
-            id = value;
+            _id = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isFromHome;
+    public bool IsFromHome
+    {
+        get => _isFromHome;
+        set
+        {
+            _isFromHome = value;
             OnPropertyChanged();
         }
     }
@@ -36,12 +48,6 @@ public partial class RecordUpdatePage : ContentPage
         GetPicker();
         _record.GetRecordByRecordModel(_dbManager.GetRecordById(DataId));
         navParam["Date"]= _record.RecordDay;
-    }
-
-    protected override bool OnBackButtonPressed()
-    {
-        Shell.Current.GoToAsync("Home", navParam);
-        return base.OnBackButtonPressed();
     }
 
     /// <summary>
@@ -81,7 +87,14 @@ public partial class RecordUpdatePage : ContentPage
 
     private void BackBTN_Clicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("..", navParam);
+        if (_isFromHome == true)
+        {
+            Shell.Current.GoToAsync("Home", navParam);
+        }
+        else
+        {
+            Shell.Current.GoToAsync("..");
+        }
     }
 
     private void SaveButton_Clicked(object sender, EventArgs e)
