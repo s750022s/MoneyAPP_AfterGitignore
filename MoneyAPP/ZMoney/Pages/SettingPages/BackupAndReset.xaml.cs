@@ -1,7 +1,9 @@
-using Syncfusion.XlsIO;
+using OfficeOpenXml;
+using System.ComponentModel;
 using System.IO.Compression;
+using System.Reflection;
+using ZMoney.Models;
 using ZMoney.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace ZMoney.Pages;
@@ -128,35 +130,61 @@ public partial class BackupAndReset : ContentPage
 
     private async void ExportExcel_Clicked(object sender, EventArgs e) 
     {
-        using (ExcelEngine excelEngine = new ExcelEngine())
+        var reports = _dbManager.GetAllRecordByIsDelete().OrderByDescending(x => x.RecordDateTime);
+        string date = DateTime.Today.ToString("yyyy-MM-dd");
+        string filePath = FileAccessHelper.GetLocalFilePath(string.Format("Export-{0}.xlsx", date));
+        if (File.Exists(filePath))
         {
-            // 初始化 Excel 應用程式
-            Syncfusion.XlsIO.IApplication application = excelEngine.Excel;
-            // 設定預設 Excel 版本為 Xlsx
-            application.DefaultVersion = ExcelVersion.Xlsx;
-            // 建立新的工作簿
-            IWorkbook workbook = application.Workbooks.Create(1);
+            File.Delete(filePath);
+        }
+        var excel = ExportExcel(reports, filePath);
+        await Share.Default.RequestAsync(new ShareFileRequest
+        {
+            Title = "共享檔案",
+            File = new ShareFile(FileAccessHelper.GetLocalFilePath(excel.FullName))
+        });
+        _logger.Log("匯出Excel");
+    }
+
+    private FileInfo ExportExcel(IOrderedEnumerable<ExcelModels> data, string filePath)
+    {
+        var output = new FileInfo(FileAccessHelper.GetLocalFilePath(filePath));
+
+        ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        using (ExcelPackage workbook = new ExcelPackage(output))
+        {
             // 取得工作簿中的第一個工作表
-            IWorksheet worksheet = workbook.Worksheets[0];
+            ExcelWorksheet sheet = workbook.Workbook.Worksheets.Add("記帳歷史");
 
-            var reports = _dbManager.GetAllRecordByIsDelete().OrderByDescending(x => x.RecordDateTime);
-            worksheet.ImportData(reports, 2, 1, false);
+            // 用反射拿出Model裡的 DisplayName 的屬性
+            var properties = typeof(ExcelModels).GetProperties()
+                .Where(prop => prop.IsDefined(typeof(DisplayNameAttribute)));
 
+            //定義表格大小及起始行
+            var rows = data.Count() + 1;
+            var cols = properties.Count();
 
-
-            //儲存檔案
-            string date = DateTime.Today.ToString("yyyy-MM-dd");
-            string filePath = FileAccessHelper.GetLocalFilePath(string.Format("Export-{0}.xlsx", date));
-
-            Stream excelStream = File.Create(filePath);
-            workbook.SaveAs(excelStream);
-            excelStream.Dispose();
-            await Share.Default.RequestAsync(new ShareFileRequest
+            if (rows > 0 && cols > 0) 
             {
-                Title = "共享檔案",
-                File = new ShareFile(FileAccessHelper.GetLocalFilePath(filePath))
-            });
-            _logger.Log("匯出Excel");
+                sheet.Cells[1, 1].LoadFromCollection(data, true); // 寫入資料
+
+                // 儲存格格式
+                var colNumber = 1;
+                foreach (var prop in properties) 
+                {
+                    // 時間處理，如果沒指定儲存格格式會變成 通用格式，就會以 int＝時間戳 的方式顯示
+                    if (prop.PropertyType.Equals(typeof(DateTime)) ||
+                       prop.PropertyType.Equals(typeof(DateTime?)))
+                    {
+                        sheet.Cells[2, colNumber, rows, colNumber].Style.Numberformat.Format = "yyyy/mm/dd hh:mm tt";
+                    }
+                    colNumber += 1;
+                }
+            }
+
+            workbook.Save();
+            return output;
+
         }
     }
 
