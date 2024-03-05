@@ -5,9 +5,19 @@ namespace ZMoney.Services
     public interface IDbService
     {
         /// <summary>
+        /// 開啟資料庫
+        /// </summary>
+        void Open();
+
+        /// <summary>
         /// 檢查連線
         /// </summary>
         void Init();
+
+        /// <summary>
+        /// 關閉資料庫
+        /// </summary>
+        void Close();
 
 
         //取得資料

@@ -78,12 +78,13 @@ namespace ZMoney.Services
         /// <param name="startDate">起始日</param>
         /// <param name="endDate">截止日</param>
         /// <returns>分組總額List</returns>
-        public List<TotalAndPercentFromGroup> GetToatlFromAccountGroup(DateTime startDate, DateTime endDate)
+        public List<TotalAndPercentFromGroup> GetToatlFromAccountGroup(DateTime startDate, DateTime endDate, bool isExpenses)
         {
             //取得[有紀錄]的帳戶分組及總額
             var recordGroups = from recordWhere in (from record in _dbService.GetRecords()
                                                     where (record.RecordDateTime.Date >= startDate)
                                                        && (record.RecordDateTime.Date <= endDate)
+                                                       && (record.IsExpenses == isExpenses)
                                                        && (record.IsDelete == false)
                                                     select record)
                                join account in _dbService.GetAccounts()

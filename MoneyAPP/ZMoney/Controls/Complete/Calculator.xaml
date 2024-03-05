@@ -11,10 +11,10 @@
             <!--  公式區  -->
             <Border
                 x:Name="Count_Border"
+                Padding="0,0,20,0"
                 BackgroundColor="#FFF2CC"
                 Stroke="transparent"
                 StrokeThickness="0"
-                Padding="0,0,20,0"
                 WidthRequest="390">
 
                 <Label
@@ -30,6 +30,7 @@
             <!--  結果區  -->
             <Label
                 x:Name="equal_LB"
+                Padding="0,0,20,0"
                 BackgroundColor="#FFF2CC"
                 FontSize="25"
                 HeightRequest="30"

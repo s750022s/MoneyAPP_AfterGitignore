@@ -28,7 +28,7 @@ public partial class Calculator : ContentView
         public double Total { get; set; }
     }
     public delegate void OKButtonClickedEventHandler(object sender, OKButtonClickedEventArgs e);
-    public event OKButtonClickedEventHandler OKButtonClicked;
+    public event OKButtonClickedEventHandler? OKButtonClicked;
 
 
     /// <summary>
@@ -97,7 +97,7 @@ public partial class Calculator : ContentView
             case "←":
                 if (formulas.Count < 3)
                 {
-                    throw new ArgumentException("已無法刪除，請直接使用C清除功能");
+                    Shell.Current.DisplayAlert("已無法刪除，請直接使用C清除功能","","OK");
                     
                 }
                 if (stagingData == "")
@@ -114,7 +114,7 @@ public partial class Calculator : ContentView
             case "OK":
                 if (total % 1 != 0)
                 {
-                    throw new ArgumentException("數值非整數，請手動輸入最後結果");
+                    Shell.Current.DisplayAlert("數值非整數，請手動輸入最後結果", "", "OK");
                 }
                 else if (total < 0) 
                 {
@@ -168,7 +168,7 @@ public partial class Calculator : ContentView
             //長度超出畫面跳出提醒
             if (Count_LB.Measure(Width, Height).Request.Width > Count_Border.WidthRequest)
             {
-                throw new ArgumentException("長度超過顯示範圍部分不顯示");
+                Shell.Current.DisplayAlert("長度超過顯示範圍部分不顯示", "", "OK");
             }
         }
     }

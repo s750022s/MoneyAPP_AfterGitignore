@@ -19,7 +19,7 @@
         /// <summary>
         /// 路徑指派
         /// </summary>
-        private static string LogPath 
+        public string LogPath 
             {
                 get
                 {

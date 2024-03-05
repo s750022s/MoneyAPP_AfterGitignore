@@ -130,7 +130,7 @@
 
             <!--  (3,1)金額編輯  -->
             <Entry
-                x:Name="Amount_Editor"
+                x:Name="AmountOfMoney"
                 Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"

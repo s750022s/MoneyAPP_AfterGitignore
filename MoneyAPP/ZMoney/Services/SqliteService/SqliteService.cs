@@ -12,14 +12,19 @@ namespace ZMoney.Services
         {
             _dbPath = dbPath;
             _logger = localFileLogger;
+            Open();
+
+        }
+
+        public void Open() 
+        {
             if (File.Exists(_dbPath) == false)
             {
                 SQLiteDbInitializationData();
                 return;
             }
-            
-            _connection = new SQLiteConnection(_dbPath);
 
+            _connection = new SQLiteConnection(_dbPath);
         }
 
         /// <summary>
@@ -70,7 +75,17 @@ namespace ZMoney.Services
         public void Init()
         {
             if (_connection != null) return;
-            throw new Exception("資料庫連線失敗。");
+            Open();
+            _logger.Log("資料庫連線失敗。");
+        }
+
+        public void Close() 
+        {
+            if (_connection != null) 
+            {
+                _connection.Close();
+                _connection.Dispose();
+            }
         }
 
         public IEnumerable<CategoryModel> GetCategories()

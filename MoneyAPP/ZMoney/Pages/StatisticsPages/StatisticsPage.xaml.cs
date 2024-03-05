@@ -85,11 +85,11 @@ public partial class StatisticsPage : ContentPage
 
         if (IsCategory == true)
         {
-            DatasCollectionView.ItemsSource = _dbManager.GetToatlFromCategoryGroup(start, end);
+            DatasCollectionView.ItemsSource = _dbManager.GetToatlFromCategoryGroup(start, end, GetExpense.IsChecked);
         }
         else 
         {
-            DatasCollectionView.ItemsSource = _dbManager.GetToatlFromAccountGroup(start, end);
+            DatasCollectionView.ItemsSource = _dbManager.GetToatlFromAccountGroup(start, end, GetExpense.IsChecked);
         }
 
 

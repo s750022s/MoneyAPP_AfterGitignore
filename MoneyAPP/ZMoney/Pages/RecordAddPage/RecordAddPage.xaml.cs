@@ -20,6 +20,8 @@ public partial class RecordAddPage : ContentPage
         base.OnAppearing();
         GetPicker();
         _record.AddDefault();
+
+        Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
     /// <summary>
@@ -57,6 +59,14 @@ public partial class RecordAddPage : ContentPage
     {
         Calculator.IsVisible = false;
         TabBar.IsVisible = true;
+    }
+
+    /// <summary>
+    /// 計算機OK鍵回傳
+    /// </summary>
+    private void OnOKButtonClicked(object sender, Calculator.OKButtonClickedEventArgs e)
+    {
+        AmountOfMoney.Text = e.Total.ToString();
     }
 
     private void SaveButton_Clicked(object sender, EventArgs e)

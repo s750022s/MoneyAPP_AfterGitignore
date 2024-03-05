@@ -1,4 +1,5 @@
 ﻿
+using System;
 using ZMoney.Models;
 
 namespace ZMoney.Services
@@ -8,7 +9,7 @@ namespace ZMoney.Services
     /// </summary>
     public partial class DbManager
     {
-        //前情提要 private IDbService _dbManager;
+        //前情提要 private IDbService _dbService;
 
         /// <summary>
         /// 增加Record表的一筆資料
@@ -139,17 +140,30 @@ namespace ZMoney.Services
             return totalArray;
         }
 
-        
-        //public DateTime GetRecordFirstday()
-        //{
-        //    var firstday = _dbManager.GetRecords()
-        //                   .OrderBy(record => record.RecordDateTime)
-        //                   .FirstOrDefault();
-        //    if (firstday == null)
-        //    {
-        //        return default(DateTime);
-        //    }
-        //    return firstday.RecordDateTime;
-        //}
+        public List<ExcelModels> GetAllRecordByIsDelete() 
+        {
+            var allRecord = from record in _dbService.GetRecords()
+                            join category in _dbService.GetCategories() on record.CategoryId equals category.Id
+                            where record.IsDelete == false
+                            select new
+                            {
+                                datetime = record.RecordDateTime,
+                                revenueOrExpenses = record.IsExpenses ? "支出" : "收入",
+                                accountId = record.AccountId,
+                                categoryName = category.Name,
+                                description = record.Description,
+                                amountOfMoney = record.AmountOfMoney
+                            } into recordWithCategoryName
+                            join account in _dbService.GetAccounts() on recordWithCategoryName.accountId equals account.Id
+                            select new ExcelModels(
+                                recordWithCategoryName.datetime,
+                                recordWithCategoryName.revenueOrExpenses,
+                                account.Name,
+                                recordWithCategoryName.categoryName,
+                                recordWithCategoryName.description,
+                                recordWithCategoryName.amountOfMoney
+                                );
+            return allRecord.ToList();
+        }
     }
 }

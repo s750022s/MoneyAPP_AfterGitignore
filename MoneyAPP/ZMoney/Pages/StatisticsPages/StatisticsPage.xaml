@@ -45,15 +45,10 @@
                 </VisualStateManager.VisualStateGroups>
             </Grid>
         </ControlTemplate>
-
-        <!--  套用樣式  -->
-        <Style TargetType="RadioButton">
-            <Setter Property="ControlTemplate" Value="{StaticResource RadioButtonTemplate}" />
-        </Style>
     </ContentPage.Resources>
 
     <!--  UI內容  -->
-    <Grid RowDefinitions="0.8*,5*,2*">
+    <Grid RowDefinitions="0.5*,5*,1.5*">
         <!--  選單設計：點選對應選單，下方切換對應內容  -->
         <!--  不能使用RadioButton.Group.GroupName，否則預設會是最後一項  -->
         <StackLayout
@@ -65,19 +60,22 @@
                 x:Name="CategoryButton"
                 CheckedChanged="RadioButton_Clicked"
                 Content="類別統計"
-                GroupName="MenuGroup" />
+                GroupName="MenuGroup"
+                ControlTemplate="{StaticResource RadioButtonTemplate}" />
 
             <RadioButton
                 x:Name="AccountButton"
                 CheckedChanged="RadioButton_Clicked"
                 Content="帳戶統計"
-                GroupName="MenuGroup" />
+                GroupName="MenuGroup"
+                ControlTemplate="{StaticResource RadioButtonTemplate}" />
 
             <RadioButton
                 x:Name="AccountStatusButton"
                 CheckedChanged="RadioButton_Clicked"
                 Content="帳戶當前狀態"
-                GroupName="MenuGroup" />
+                GroupName="MenuGroup"
+                ControlTemplate="{StaticResource RadioButtonTemplate}" />
         </StackLayout>
 
         <!--  帳戶與類別  -->
@@ -85,8 +83,8 @@
             x:Name="CategoryOrAccount"
             Grid.Row="1"
             Margin="7,0,7,0"
-            RowDefinitions="0.5*,0.8*,0.8*,*,4*"
-            RowSpacing="5"
+            RowDefinitions="0.5*,0.8*,0.8*,0.8*,*,4*"
+            RowSpacing="3"
             VerticalOptions="Start">
             <Label Style="{StaticResource titleText}" Text="搜尋範圍" />
             <HorizontalStackLayout Grid.Row="1">
@@ -104,16 +102,37 @@
                     MaximumDate="12/31/2100"
                     MinimumDate="01/01/2024" />
             </HorizontalStackLayout>
+            <HorizontalStackLayout Grid.Row="2">
+                <Label
+                    FontSize="25"
+                    Style="{StaticResource titleText}"
+                    Text="查詢種類" />
+
+                <RadioButton
+                    x:Name="GetRevenues"
+                    Content="收入"
+                    FontSize="22"
+                    GroupName="RevenuesOrExpenses"
+                    Style="{StaticResource radioButton}"/>
+
+                <RadioButton
+                    x:Name="GetExpense"
+                    Content="支出"
+                    FontSize="22"
+                    GroupName="RevenuesOrExpenses"
+                    IsChecked="True"
+                    Style="{StaticResource radioButton}" />
+            </HorizontalStackLayout>
             <Button
-                Grid.Row="2"
-                BackgroundColor="#584842"
-                BorderColor="#584842"
-                Clicked="Button_Clicked"
-                FontSize="20"
-                Text="搜尋" />
+                    Grid.Row="3"
+                    BackgroundColor="#584842"
+                    BorderColor="#584842"
+                    Clicked="Button_Clicked"
+                    FontSize="20"
+                    Text="搜尋" />
             <Border
                 x:Name="Info_Border"
-                Grid.Row="3"
+                Grid.Row="4"
                 Padding="7"
                 Stroke="#584842"
                 StrokeShape="RoundRectangle 10,10,10,10">
@@ -167,7 +186,7 @@
             </Border>
             <CollectionView
                 x:Name="DatasCollectionView"
-                Grid.Row="4"
+                Grid.Row="5"
                 ItemsSource="{Binding GroupdataModels}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
@@ -341,7 +360,7 @@
         </Grid>
 
         <!--  自訂菜單  -->
-        <controls:CustomTabBar Grid.Row="2" />
+        <controls:CustomTabBar Grid.Row="2" VerticalOptions="End"/>
     </Grid>
 
 

@@ -48,6 +48,8 @@ public partial class RecordUpdatePage : ContentPage
         GetPicker();
         _record.GetRecordByRecordModel(_dbManager.GetRecordById(DataId));
         navParam["Date"]= _record.RecordDay;
+
+        Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
     /// <summary>
@@ -84,6 +86,15 @@ public partial class RecordUpdatePage : ContentPage
         Calculator.IsVisible = false;
         Creamy_butt_Image.IsVisible = true;
     }
+
+    /// <summary>
+    /// 計算機OK鍵回傳
+    /// </summary>
+    private void OnOKButtonClicked(object sender, Calculator.OKButtonClickedEventArgs e)
+    {
+        AmountOfMoney.Text = e.Total.ToString();
+    }
+
 
     private void BackBTN_Clicked(object sender, EventArgs e)
     {

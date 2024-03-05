@@ -37,9 +37,8 @@
             Title="匯出Excel"
             Grid.Row="5"
             Grid.ColumnSpan="2"
-            Description="根據說明匯出Excel。"
-            IsEnabled="False"
-            IsVisible="False" />
+            Clicked="ExportExcel_Clicked"
+            Description="根據說明匯出Excel。" />
 
         <controls:SettingBorder
             Title="恢復初始設定"
