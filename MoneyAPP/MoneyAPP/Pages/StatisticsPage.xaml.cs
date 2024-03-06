@@ -1,10 +1,19 @@
+using MoneyAPP.Controls;
 namespace MoneyAPP.Pages;
 
 public partial class StatisticsPage : ContentPage
 {
-	public StatisticsPage()
+    private StatisticsPage_Categorys _control;
+    public StatisticsPage()
 	{
 		InitializeComponent();
+        _control = CategorysView;
+    }
+
+    protected override void OnAppearing() 
+    {
+        base.OnAppearing();
+        _control.SetDataInPage();
     }
 
     /// <summary>

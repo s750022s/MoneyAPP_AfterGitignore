@@ -37,4 +37,9 @@ public partial class SettingsPage : ContentPage
         Shell.Current.CurrentItem.CurrentItem.Items.Add(new SettingsPage_SystemInfo());
         Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
     }
+
+    private void Backup_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
 }

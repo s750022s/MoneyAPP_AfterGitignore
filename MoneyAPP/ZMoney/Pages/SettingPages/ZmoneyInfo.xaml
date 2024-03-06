@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZMoney.Pages.ZmoneyInfo"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Style="{StaticResource mainPageStyle}">
+    <VerticalStackLayout >
+        <!--  返回上一頁  -->
+        <ImageButton
+            Margin="10,20,0,20"
+            Clicked="BackBTN_Clicked"
+            HeightRequest="25"
+            HorizontalOptions="Start"
+            Source="arrow_left.png" />
+
+        <!--  資訊框  -->
+        <Border
+            x:Name="Info_Border"
+            Margin="15,8,15,8"
+            Padding="0,15,0,15"
+            Stroke="#584842"
+            Background="#FEFDF6"
+            StrokeShape="RoundRectangle 10,10,10,10">
+
+            <Grid ColumnDefinitions="*,*">
+
+                <!--  插圖  -->
+                <Image
+                    x:Name="chick_cream_Image"
+                    HeightRequest="80"
+                    Source="chick_cream.png" />
+
+                <!--  總資料筆數  -->
+                <VerticalStackLayout Grid.Column="1">
+                    <Label FontSize="20" Text="總資料筆數" />
+                    <Label
+                        x:Name="Count_LB"
+                        FontSize="30"
+                        Text="0筆"
+                        />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!--  其他資訊  -->
+        <Grid
+            Margin="10,0,10,0"
+            ColumnDefinitions="70,180,100"
+            ColumnSpacing="7"
+            RowDefinitions="*,*,1.9*,*,*,*,2*"
+            RowSpacing="20">
+
+            <!--  應用程式版本  -->
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                HeightRequest="40"
+                Source="foot.png" />
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                FontSize="28"
+                Text="應用程式版本" />
+
+            <Label
+                x:Name="CurrentVersion"
+                Grid.Row="0"
+                Grid.Column="2"
+                FontSize="28"
+                Text="0.0.0" />
+
+
+            <!--  更新內容  -->
+            <Image
+                Grid.Row="1"
+                Grid.Column="0"
+                HeightRequest="40"
+                Source="foot.png" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                FontSize="28"
+                Text="更新內容" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="20,-15,20,0"
+                FontSize="23"
+                Text="全新的記帳程式，為銀髮族設計的大字體及簡單的操作，更多的功能正在開發中，敬請期待。" />
+
+            <!--  聲明  -->
+            <Image
+                Grid.Row="3"
+                Grid.Column="0"
+                HeightRequest="40"
+                Source="foot.png" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                FontSize="28"
+                Text="聲明" />
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="20,-15,20,0"
+                FontSize="23"
+                Text="圖片來自網路(未經授權)，&#10;因此禁止商業使用。" />
+
+            <!--  開發團隊  -->
+            <Image
+                Grid.Row="5"
+                Grid.Column="0"
+                HeightRequest="40"
+                Source="foot.png" />
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                FontSize="28"
+                Text="開發團隊" />
+
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="20,-15,20,0"
+                FontSize="23"
+                Text="開發工程師：Yuning Zheng &#10;圖片繪師：&#10;Sandy Pig(doujin.com)" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

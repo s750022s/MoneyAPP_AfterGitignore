@@ -1,5 +1,7 @@
 ﻿using SQLite;
 using MoneyAPP.Models;
+using System.Xml.Linq;
+using static SQLite.SQLite3;
 
 
 namespace MoneyAPP.Services
@@ -242,21 +244,29 @@ namespace MoneyAPP.Services
         /// <param name="account">要更新的完整資料</param>
         public void UpdateAccount(AccountModel account)
         {
-            int result = 0;
             Init();
-            try
+            var rawData = _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == account.AccountID);
+            if (rawData != null) 
             {
-                result += _connection.Update(new AccountModel
-                {
-                    AccountID = account.AccountID,
-                    Name = account.Name,
-                    Sequence = account.Sequence
-                });
-                StatusMessage = string.Format("{0} 筆已修改 (Name: {1})", result, account.Name);
-                return;
-
+                rawData.Name = account.Name;
+                rawData.Sequence = account.Sequence;
             }
-            catch (Exception ex) { Console.WriteLine(ex); return; }
+            _connection.Update(rawData);
+        }
+
+        /// <summary>
+        /// 修改帳戶當前狀態
+        /// </summary>
+        /// <param name="account">要更新的完整資料</param>
+        public void UpdateCurrentStatus(int id, int difference)
+        {
+            Init();
+            var rawData = _connection.Table<AccountModel>().FirstOrDefault(a => a.AccountID == id);
+            if (rawData != null)
+            {
+                rawData.CurrentStatus += difference;
+            }
+            _connection.Update(rawData);
         }
 
         /// <summary>
@@ -315,7 +325,109 @@ namespace MoneyAPP.Services
             return firstday.RecordDay;
         }
 
+        public GroupdataInfo GetTotalByMonth(DateTime start,DateTime end) 
+        {
+            Init();
+            GroupdataInfo info = new GroupdataInfo();
+            var recordGroup = from record in _connection.Table<RecordModel>()
+                    where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
+                    group record by record.IsExpenses into recordGroupByIsExpenses
+                    select new 
+                    {
+                        recordGroupByIsExpenses.Key,
+                        total = recordGroupByIsExpenses.Sum(x => x.Amount)
+                    };
 
+            foreach (var record in recordGroup) 
+            {
+                var result = record.Key == true ? info.TotalExpense = record.total : info.TotalIncome = record.total;
+            }
+            info.Total = info.TotalExpense+info.TotalIncome;
+            return info;
+        }
+
+        public List<GroupdataModel> GetCategoryTotal(DateTime start, DateTime end)
+        {
+            Init();
+            var recordGroups = from recordWhere in (from record in _connection.Table<RecordModel>()
+                                                    where (record.RecordDay >= start) && (record.RecordDay <= end) && (record.IsDelete == false)
+                                                    select record)
+                               join category in _connection.Table<CategoryModel>()
+                               on recordWhere.CategoryID equals category.CategoryID
+                               select new
+                               {
+                                   name = category.Name,
+                                   id = recordWhere.CategoryID,
+                                   amount = recordWhere.Amount
+                               } into recordwithname
+                               group recordwithname by recordwithname.name into categorygroup
+                               select new
+                               {
+                                   name = categorygroup.Key,
+                                   id = categorygroup.First().id,
+                                   categoryTotal = categorygroup.Sum(x => x.amount)
+                               };
+            var totalAmount = recordGroups.Sum(x => x.categoryTotal);
+            var categoryJoinRecord = from categoryTotal in recordGroups
+                          select new
+                          {
+                              Name = categoryTotal.name,
+                              ID = categoryTotal.id,
+                              GroupTatalAmount = categoryTotal.categoryTotal,
+                              Percent = categoryTotal.categoryTotal / (totalAmount * 1.00)
+                          } into result
+                          orderby result.Percent descending
+                          select new GroupdataModel
+                          {
+                              Name = result.Name,
+                              ID = result.ID,
+                              GroupTatalAmount = result.GroupTatalAmount,
+                              Percent = result.Percent
+                          };
+
+            var categoryExcept_ID = (from category in _connection.Table<CategoryModel>()
+                                  where category.Sequence > -1
+                                  select category.CategoryID).Except(categoryJoinRecord.Select(x => x.ID));
+            var categoryExcept = from categoryExceptID in categoryExcept_ID
+                                 join category in _connection.Table<CategoryModel>()
+                                 on categoryExceptID equals category.CategoryID
+                                 select new GroupdataModel
+                                 {
+                                     Name = category.Name,
+                                     ID = category.CategoryID,
+                                     GroupTatalAmount = 0,
+                                     Percent = 0.0
+                                 };
+            var results = categoryJoinRecord.Concat(categoryExcept);
+
+            return results.ToList();
+
+        }
+
+        public List<DataByCategory> GetDataByCategory(DateTime start, DateTime end,int categoryId) 
+        {
+            Init();
+            var dataByCategory = from record in _connection.Table<RecordModel>()
+                                 where (record.RecordDay >= start) && (record.RecordDay <= end)
+                                    && (record.IsDelete == false) && (record.CategoryID == categoryId)
+                                 orderby record.RecordDay descending, record.RecordTime descending
+                                 select new DataByCategory
+                                 {
+                                     RecordID = record.RecordID,
+                                     RecordDate = record.RecordDay,
+                                     RecordTime = record.RecordTime,
+                                     Item = record.Item,
+                                     Amount = record.Amount,
+                                     RecordTime_str = ""
+                                 };
+            return dataByCategory.ToList();
+        }
+
+   
+
+        public void UpdateAccountStatus(int id, int newvalue) 
+        {
+        }
 
 
         /// <summary>

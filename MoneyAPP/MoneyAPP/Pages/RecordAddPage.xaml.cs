@@ -58,6 +58,7 @@ public partial class RecordAddPage : ContentPage
         Account.ItemsSource = App.CachedAccounts;
         Account.ItemDisplayBinding = new Binding("Name");
         Account.SelectedIndex = 0;
+        Account.Unfocus();
     }
 
 
@@ -76,6 +77,8 @@ public partial class RecordAddPage : ContentPage
         {
             RecordModel recordModel = _record.SetRecordToRecordModel();
             App.ServiceRepo.AddRecord(recordModel);
+            App.ServiceRepo.UpdateCurrentStatus(recordModel.AccountID, recordModel.Amount);
+            App.CachedAccounts = App.ServiceRepo.GetAccountOrderBySequence();
             Shell.Current.CurrentItem.CurrentItem.Items.Add((ShellContent)new HomePage(recordModel.RecordDay));
             Shell.Current.CurrentItem.CurrentItem.Items.RemoveAt(0);
         }

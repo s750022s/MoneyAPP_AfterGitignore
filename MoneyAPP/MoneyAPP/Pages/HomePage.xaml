@@ -1,48 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:control="clr-namespace:MoneyAPP.Controls"
-             x:Class="MoneyAPP.Pages.HomePage"
-             BackgroundImageSource="backgroud.png">
+<ContentPage
+    x:Class="MoneyAPP.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:MoneyAPP.Controls"
+    BackgroundImageSource="backgroud.png">
 
-    <VerticalStackLayout VerticalOptions="End" >
-        <!--頁面圖示：貓咪蛋塔-->
-        <Image x:Name="Gemini_cat_Image"
-               Source="gemini_cat.png"
-               HeightRequest="150" />
-        
-        <FlexLayout Direction="Row" 
-                    JustifyContent="SpaceBetween"
-                    Margin="10,0,10,0">
+    <VerticalStackLayout VerticalOptions="End">
+        <!--  頁面圖示：貓咪蛋塔  -->
+        <Image
+            x:Name="Gemini_cat_Image"
+            HeightRequest="150"
+            Source="gemini_cat.png" />
 
-            <!--日期選擇器：MM/dd-->
-            <DatePicker x:Name="RecordDate_DatePicker"
-                        Format="MM/dd"
-                        MinimumDate="01/11/2023"
-                        MaximumDate="12/31/2100" 
-                        FontSize="50"
-                        FontAttributes="Bold"
-                        HeightRequest="80"
-                        HorizontalOptions="Start"
-                        TextColor="#634a40"
-                        DateSelected="RecordDate_DateSelected"/>
+        <FlexLayout
+            Margin="10,0,10,0"
+            Direction="Row"
+            JustifyContent="SpaceBetween">
 
-            <!--自動計算當日總金額-->
-            <Label     x:Name="TotalAmount_LB"
-                       FontSize="45"
-                       Text=""
-                       HorizontalOptions="End"
-                       TextColor="#634a40"/>
+            <!--  日期選擇器：MM/dd  -->
+            <DatePicker
+                x:Name="RecordDate_DatePicker"
+                DateSelected="RecordDate_DateSelected"
+                FontAttributes="Bold"
+                FontSize="50"
+                Format="MM/dd"
+                HeightRequest="80"
+                HorizontalOptions="Start"
+                MaximumDate="12/31/2100"
+                MinimumDate="01/11/2023"
+                TextColor="#634a40" />
+
+            <!--  自動計算當日總金額  -->
+            <Label
+                x:Name="TotalAmount_LB"
+                FontSize="45"
+                HorizontalOptions="End"
+                Text=""
+                TextColor="#634a40" />
         </FlexLayout>
 
-        <!--自訂Table：讀取/control/RecordTable設定-->
+        <!--  自訂Table：讀取/control/RecordTable設定  -->
         <VerticalStackLayout>
-            <control:RecordTable x:Name="RecordTable" HeightRequest="430"/>
+            <control:RecordTable x:Name="RecordTable" HeightRequest="430" />
         </VerticalStackLayout>
 
-        <!--自訂TabBar,讀取/control/CustomTabBar設定-->
+        <!--  自訂TabBar,讀取/control/CustomTabBar設定  -->
         <VerticalStackLayout HeightRequest="100">
-            <control:CustomTabBar/>
+            <control:CustomTabBar />
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

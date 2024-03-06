@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZMoney.Pages.RecordUpdatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ZMoney.Controls"
+    xmlns:services="[services ]clr-namespace:ZMoney.Services"
+    xmlns:viewModel="clr-namespace:ZMoney.ViewModels"
+    Style="{StaticResource mainPageStyle}">
+
+
+    <ContentPage.BindingContext>
+        <viewModel:RecordBindingModel />
+    </ContentPage.BindingContext>
+
+
+    <Grid Grid.Row="1" RowDefinitions="*,5*,*,*,3.5*">
+
+        <!--  返回按鈕  -->
+        <ImageButton
+            x:Name="BackBTN"
+            Grid.Row="0"
+            Margin="7,20,0,0"
+            Clicked="BackBTN_Clicked"
+            HeightRequest="25"
+            HorizontalOptions="Start"
+            Source="arrow_left.png" />
+
+        <!--  記錄編輯表格  -->
+        <Grid
+            Grid.Row="1"
+            Margin="10,0,10,10"
+            ColumnDefinitions="*, 2*, 1.8*"
+            RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+
+            <!--  (0,0) 日期Title  -->
+            <Label
+                x:Name="RecordDay_Title"
+                Style="{StaticResource titleText}"
+                Text="日期" />
+
+            <!--  (0,1) 日期選擇器  -->
+            <DatePicker
+                x:Name="RecordDay"
+                Grid.Column="1"
+                Date="{Binding RecordDay, Mode=TwoWay}"
+                FontSize="25"
+                Format="yyyy/MM/dd"
+                MaximumDate="12/31/2100"
+                MinimumDate="01/11/2023" />
+
+            <!--  (0,2) 時間選擇器 00:00 AM  -->
+            <TimePicker
+                x:Name="RecordTime"
+                Grid.Column="2"
+                FontSize="25"
+                Format="hh:mm tt"
+                Time="{Binding RecordTime, Mode=TwoWay}" />
+
+            <!--  (1,0) 收入選項  -->
+            <RadioButton
+                x:Name="Revenues"
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="收入"
+                FontSize="25"
+                GroupName="RevenuesOrExpenses"
+                IsChecked="{Binding IsIncome, Mode=TwoWay}"
+                Style="{StaticResource radioButton}" />
+
+
+            <!--  (1,1) 支出選項  -->
+            <RadioButton
+                x:Name="Expense"
+                Grid.Row="1"
+                Grid.Column="2"
+                Content="支出"
+                FontSize="25"
+                GroupName="RevenuesOrExpenses"
+                IsChecked="{Binding IsExpense, Mode=TwoWay}"
+                Style="{StaticResource radioButton}" />
+
+
+            <!--  (4,0) 帳戶Title  -->
+            <Label
+                x:Name="Account_Title"
+                Grid.Row="4"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="帳戶" />
+
+            <!--  (4,1) 帳戶選單  -->
+            <Picker
+                x:Name="Account"
+                Title="選擇帳戶"
+                Grid.Row="4"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                SelectedIndex="{Binding AccountIndex, Mode=TwoWay}" />
+
+
+
+            <!--  (5,0) 類別Title  -->
+            <Label
+                x:Name="Category_Title"
+                Grid.Row="5"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="類別" />
+
+            <!--  (5,1) 類別選單  -->
+            <Picker
+                x:Name="Category"
+                Title="選擇種類"
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                SelectedIndex="{Binding CategoryIndex, Mode=TwoWay}" />
+
+
+            <!--  (2,0) 項目Title  -->
+            <Label
+                x:Name="Description_Title"
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="項目" />
+
+
+            <!--  (2,1) 項目編輯器  -->
+            <Editor
+                x:Name="Description"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                Text="{Binding Description, Mode=TwoWay}" />
+
+
+            <!--  (3,0) 金額Title  -->
+            <Label
+                x:Name="AmountOfMoney_Title"
+                Grid.Row="3"
+                Grid.Column="0"
+                Style="{StaticResource titleText}"
+                Text="NT$" />
+
+            <!--  (3,1) 金額編輯器，限定數字鍵盤  -->
+            <Entry
+                x:Name="AmountOfMoney"
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Focused="OnEntryFocused"
+                FontSize="25"
+                Keyboard="Numeric"
+                Text="{Binding StrAmountOfMoney, Mode=TwoWay}"
+                Unfocused="OnEntryUnfocused" />
+
+        </Grid>
+
+        <!--  儲存和刪除按鈕  -->
+        <HorizontalStackLayout
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            Spacing="25">
+
+            <Button
+                x:Name="Save_BTN"
+                Clicked="SaveButton_Clicked"
+                ImageSource="check.png"
+                Style="{StaticResource checkButten}"
+                Text="儲存" />
+
+            <Button
+                x:Name="Delete_BTN"
+                Clicked="DeleteButton_Clicked"
+                ImageSource="trash.png"
+                Style="{StaticResource checkButten}"
+                Text="刪除" />
+
+        </HorizontalStackLayout>
+
+        <!--  圖片  -->
+        <Image
+            x:Name="Creamy_butt_Image"
+            Grid.Row="4"
+            HeightRequest="180"
+            HorizontalOptions="End"
+            Source="creamy_butt.png" />
+
+        <!--  計算機控制項  -->
+        <VerticalStackLayout Grid.Row="4">
+            <controls:Calculator
+                x:Name="Calculator"
+                HorizontalOptions="Center"
+                IsVisible="False" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

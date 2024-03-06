@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ZMoney.Controls.SettingBorder"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="this">
+    <Border
+        Padding="8"
+        BackgroundColor="#FEFDF6"
+        BindingContext="{x:Reference this}"
+        Stroke="#584842"
+        StrokeShape="RoundRectangle 5,5,5,5">
+        <StackLayout Spacing="7">
+            <Grid ColumnDefinitions="*,4*,*">
+                <Image
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="foot.png" />
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="{Binding Title}"
+                    TextColor="#512007" />
+                <Image
+                    Grid.Column="2"
+                    HorizontalOptions="End"
+                    Source="angle_right.png" />
+            </Grid>
+            <BoxView
+                HeightRequest="2"
+                HorizontalOptions="Fill"
+                Color="#584842" />
+            <Label FontSize="20" Text="{Binding Description}" />
+        </StackLayout>
+    </Border>
+</ContentView>

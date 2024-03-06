@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZMoney.Pages.BackupAndReset"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ZMoney.Controls"
+    Style="{StaticResource mainPageStyle}">
+    <Grid
+        ColumnDefinitions="*,2*"
+        RowDefinitions="0.5*,*,*,*,0.8*,0.8*,*"
+        RowSpacing="10">
+        <!--  返回按鈕  -->
+        <ImageButton
+            x:Name="BackBTN"
+            Grid.Row="0"
+            Margin="7,20,0,0"
+            Clicked="BackBTN_Clicked"
+            HeightRequest="25"
+            HorizontalOptions="Start"
+            Source="arrow_left.png" />
+
+        <controls:SettingBorder
+            Title="建立備份檔"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Clicked="Button_Clicked"
+            Description="建立包含選項資料、記帳紀錄的備份檔，方便在各設備中轉移。" />
+
+        <controls:SettingBorder
+            Title="匯入備份檔"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Clicked="ImportBackupFile_Clicked"
+            Description="匯入備份檔來還原所有資料，還原時將覆蓋手機中現有的資料。" />
+
+        <controls:SettingBorder
+            Title="匯出Excel"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Clicked="ExportExcel_Clicked"
+            Description="根據說明匯出Excel。" />
+
+        <controls:SettingBorder
+            Title="恢復初始設定"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Clicked="Restore_Clicked"
+            Description="清除APP中所有儲存資料，回到初始狀態。該動作無法回溯！" />
+
+        <controls:SettingBorder
+            Title="匯出log紀錄"
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Clicked="Log_Clicked"
+            Description="匯出log資料，維護人員使用。" />
+
+        <!--  插圖  -->
+        <Image
+            x:Name="bakingdog_Image"
+            Grid.Row="6"
+            Grid.Column="1"
+            HeightRequest="180"
+            Source="bakingdog.png" />
+    </Grid>
+</ContentPage>
