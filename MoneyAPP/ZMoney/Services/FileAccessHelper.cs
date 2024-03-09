@@ -27,12 +27,12 @@ public class FileAccessHelper
 {
     public static string GetLocalFilePath(string filename)
     {
-        #if ANDROID
+#if ANDROID
         {
             // 在 Android 上使用 Android.App.Application.Context.GetExternalFilesDir
             return System.IO.Path.Combine(Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath, filename);
         }
-        #endif
+#endif
         {
             return System.IO.Path.Combine(FileSystem.AppDataDirectory, filename);
         }

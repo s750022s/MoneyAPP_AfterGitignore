@@ -7,6 +7,7 @@
     Title="ZMoney"
     Shell.FlyoutBehavior="Disabled">
 
+    <!--  根目錄設定  -->
     <ShellContent
         Title="MainPage"
         ContentTemplate="{DataTemplate local:HomePage}"

@@ -1,6 +1,4 @@
-﻿
-using System;
-using ZMoney.Models;
+﻿using ZMoney.Models;
 
 namespace ZMoney.Services
 {
@@ -12,7 +10,7 @@ namespace ZMoney.Services
         //前情提要 private IDbService _dbService;
 
         /// <summary>
-        /// 增加Record表的一筆資料
+        /// 增加Record表的一筆資料。
         /// </summary>
         /// <param name="record">Record資料Model</param>
         public void AddRecord(RecordModel record)
@@ -21,7 +19,7 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 修改Record表的一筆資料
+        /// 修改Record表的一筆資料。
         /// </summary>
         /// <param name="record">Record資料Model</param>
         public void UpdateRecord(RecordModel record)
@@ -30,19 +28,19 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 刪除Record表的一筆資料
+        /// 刪除Record表的一筆資料。
         /// </summary>
         /// <param name="id">要刪除的資料id</param>
         public void DeleteRecord(int id)
         {
             var record = GetRecordById(id);
             record.IsDelete = true;
-            _dbService.UpdateRecord(record,true);
+            _dbService.UpdateRecord(record, true);
         }
 
 
         /// <summary>
-        /// 按照Id取得單筆紀錄
+        /// 按照Id取得單筆紀錄。
         /// </summary>
         /// <param name="id">紀錄Id</param>
         /// <returns>單筆紀錄</returns>
@@ -55,7 +53,7 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 取得總資料筆數
+        /// 取得總資料筆數。
         /// </summary>
         /// <returns>總筆數</returns>
         public int GetAllRecordCount()
@@ -68,7 +66,7 @@ namespace ZMoney.Services
 
         /// <summary>
         /// 取得特定日期的不刪除紀錄;
-        /// IsDelete == false
+        /// IsDelete == false。
         /// </summary>
         /// <param name="recordday">要查詢的日期</param>
         /// <returns>首頁資料List</returns>
@@ -79,9 +77,9 @@ namespace ZMoney.Services
                                where record.RecordDateTime.Date == recordday.Date && record.IsDelete == false
                                orderby record.RecordDateTime.TimeOfDay descending
                                select new HomePageData(
-                                   record.Id, 
-                                   category.Name, 
-                                   record.Description == null ? "" : record.Description, 
+                                   record.Id,
+                                   category.Name,
+                                   record.Description == null ? "" : record.Description,
                                    record.AmountOfMoney
                                    );
             return homePageData.ToList();
@@ -140,7 +138,11 @@ namespace ZMoney.Services
             return totalArray;
         }
 
-        public List<ExcelModels> GetAllRecordByIsDelete() 
+        /// <summary>
+        /// 取得沒被刪除的所有紀錄;
+        /// 目的：匯出成Excel檔。
+        /// </summary>
+        public List<ExcelModels> GetAllRecordByIsDelete()
         {
             var allRecord = from record in _dbService.GetRecords()
                             join category in _dbService.GetCategories() on record.CategoryId equals category.Id
@@ -151,7 +153,7 @@ namespace ZMoney.Services
                                 revenueOrExpenses = record.IsExpenses ? "支出" : "收入",
                                 accountId = record.AccountId,
                                 categoryName = category.Name,
-                                description = record.Description,
+                                description = record.Description == null ? "" : record.Description,
                                 amountOfMoney = record.AmountOfMoney
                             } into recordWithCategoryName
                             join account in _dbService.GetAccounts() on recordWithCategoryName.accountId equals account.Id

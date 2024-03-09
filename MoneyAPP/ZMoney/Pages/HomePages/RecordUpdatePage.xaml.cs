@@ -112,7 +112,6 @@ public partial class RecordUpdatePage : ContentPage
     {
         try 
         {
-            _record.CheckEntry();
             var recordModel = _record.SetRecordToRecordModel();
             var originalRecord = _dbManager.GetRecordById(recordModel.Id);
             _dbManager.UpdateRecord(recordModel);

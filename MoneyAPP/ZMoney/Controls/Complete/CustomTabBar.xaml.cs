@@ -2,13 +2,21 @@ namespace ZMoney.Controls;
 
 public partial class CustomTabBar : ContentView
 {
+    /// <summary>
+    /// 自定義的TabBar
+    /// </summary>
 	public CustomTabBar()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 
-	public void ToPage_Clicked(object sender, EventArgs e) 
-	{
+    /// <summary>
+    /// 點擊產生換頁效果。
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+	public void ToPage_Clicked(object sender, EventArgs e)
+    {
         string route;
 
         //將物件sender轉為Button,方便後面拿屬性
@@ -17,7 +25,7 @@ public partial class CustomTabBar : ContentView
             TabBarButton button = (TabBarButton)sender;
             route = button.RouteBind;
         }
-        else 
+        else
         {
             TabBarImageButton button = (TabBarImageButton)sender;
             route = button.RouteBind;

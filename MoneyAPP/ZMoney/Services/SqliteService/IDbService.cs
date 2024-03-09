@@ -2,39 +2,72 @@
 
 namespace ZMoney.Services
 {
+    /// <summary>
+    /// 定義資料庫串接。
+    /// </summary>
     public interface IDbService
     {
         /// <summary>
-        /// 開啟資料庫
+        /// 定義開啟資料庫。
         /// </summary>
         void Open();
 
         /// <summary>
-        /// 檢查連線
+        /// 定義檢查連線。
         /// </summary>
         void Init();
 
         /// <summary>
-        /// 關閉資料庫
+        /// 定義關閉資料庫。
         /// </summary>
         void Close();
 
 
-        //取得資料
+        /// <summary>
+        /// 定義取得種類table資料。
+        /// </summary>
         IEnumerable<CategoryModel> GetCategories();
+
+        /// <summary>
+        /// 定義取得帳戶table資料。
+        /// </summary>
         IEnumerable<AccountModel> GetAccounts();
+
+        /// <summary>
+        /// 定義取得紀錄table資料。
+        /// </summary>
         IEnumerable<RecordModel> GetRecords();
 
-        //新增資料
+
+
+        /// <summary>
+        /// 定義新增種類table資料。
+        /// </summary>
         void AddCategory(CategoryModel category);
+
+        /// <summary>
+        /// 定義新增帳戶table資料。
+        /// </summary>
         void AddAccount(AccountModel account);
+
+        /// <summary>
+        /// 定義新增紀錄table資料。
+        /// </summary>
         void AddRecord(RecordModel record);
 
-        //修改資料
+        /// <summary>
+        /// 定義修改種類table資料。
+        /// </summary>
         void UpdateCategory(CategoryModel category, bool IsDelete = false);
+
+        /// <summary>
+        /// 定義修改帳戶table資料。
+        /// </summary>
         void UpdateAccount(AccountModel account, bool IsDelete = false);
+
+        /// <summary>
+        /// 定義修改紀錄table資料。
+        /// </summary>
         void UpdateRecord(RecordModel Record, bool IsDelete = false);
-
-
     }
 }

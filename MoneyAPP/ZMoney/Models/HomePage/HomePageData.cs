@@ -25,13 +25,12 @@
         /// </summary>
         public int AmountOfMoney { get; set; }
 
-        public HomePageData(int id, string categoryName, string description, int amountOfMoney) 
+        public HomePageData(int id, string categoryName, string description, int amountOfMoney)
         {
-           Id = id;
+            Id = id;
             CategoryName = categoryName;
             Description = description;
             AmountOfMoney = amountOfMoney;
         }
     }
-
 }

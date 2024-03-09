@@ -17,23 +17,21 @@ namespace ZMoney
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-
-            //依賴注入
+            ///資料庫路徑
             string dbPath = FileAccessHelper.GetLocalFilePath("ZMoney.db");
+
+            //===依賴注入===
+
+            //logger生成器
             builder.Services.AddSingleton<LocalFileLogger>();
-            builder.Services.AddSingleton<IDbService>(s =>
-            {
-                var logger = s.GetService<LocalFileLogger>();
-                return new SqliteService(dbPath, logger);
-            });
 
-            builder.Services.AddSingleton<DbManager>(s =>
-            {
-                var dbService = s.GetService<IDbService>();
-                return new DbManager(dbService);
-            });
+            //Sqlite串接Service
+            builder.Services.AddSingleton<IDbService>();
 
-            //有用到的page都需要註冊
+            //DB管理員；所有page都是透過DbManager存取資料庫。
+            builder.Services.AddSingleton<DbManager>();
+
+            //有用到DbManager的page都需要註冊。
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<RecordAddPage>();
             builder.Services.AddSingleton<RecordUpdatePage>();

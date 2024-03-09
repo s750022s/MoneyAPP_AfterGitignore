@@ -73,7 +73,6 @@ public partial class RecordAddPage : ContentPage
     {
         try
         {
-            _record.CheckEntry();
             var recordModel = _record.SetRecordToRecordModel();
             _dbManager.AddRecord(recordModel);
             _dbManager.UpdateCurrentTotal(recordModel.AccountId, recordModel.AmountOfMoney);

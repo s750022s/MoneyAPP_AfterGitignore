@@ -2,6 +2,9 @@
 
 namespace ZMoney.Models
 {
+    /// <summary>
+    /// 定義Excel資料。
+    /// </summary>
     public class ExcelModels
     {
         /// <summary>
@@ -14,7 +17,7 @@ namespace ZMoney.Models
         /// 支出或收入
         /// </summary>
         [DisplayName("收入/支出")]
-	    public string RevenueOrExpenses { get; set; } = "";
+        public string RevenueOrExpenses { get; set; } = "";
 
         /// <summary>
         /// 帳戶
@@ -42,12 +45,21 @@ namespace ZMoney.Models
         [DisplayName("紀錄金額")]
         public int AmountOfMoney { get; set; }
 
-        public ExcelModels(DateTime recordDateTime, 
-                        string revenueOrExpenses, 
-                        string account, 
-                        string category, 
-                        string description, 
-                        int amountOfMoney) 
+        /// <summary>
+        /// 建構子
+        /// </summary>
+        /// <param name="recordDateTime">記錄日期時間</param>
+        /// <param name="revenueOrExpenses">收入/支出</param>
+        /// <param name="account">帳戶名稱</param>
+        /// <param name="category">類別名稱</param>
+        /// <param name="description">紀錄項目</param>
+        /// <param name="amountOfMoney">紀錄金額</param>
+        public ExcelModels(DateTime recordDateTime,
+                            string revenueOrExpenses,
+                            string account,
+                            string category,
+                            string description,
+                            int amountOfMoney)
         {
             RecordDateTime = recordDateTime;
             RevenueOrExpenses = revenueOrExpenses;
@@ -55,8 +67,6 @@ namespace ZMoney.Models
             CategoryName = category;
             Description = description;
             AmountOfMoney = amountOfMoney;
-
         }
-
     }
 }

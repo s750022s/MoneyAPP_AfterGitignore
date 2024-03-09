@@ -35,9 +35,9 @@ public partial class Calculator : ContentView
     /// 建構計算機
     /// </summary>
     public Calculator()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 
     /// <summary>
     /// 計算機按鈕功能;
@@ -97,8 +97,8 @@ public partial class Calculator : ContentView
             case "←":
                 if (formulas.Count < 3)
                 {
-                    Shell.Current.DisplayAlert("已無法刪除，請直接使用C清除功能","","OK");
-                    
+                    Shell.Current.DisplayAlert("已無法刪除，請直接使用C清除功能", "", "OK");
+
                 }
                 if (stagingData == "")
                 {
@@ -116,9 +116,9 @@ public partial class Calculator : ContentView
                 {
                     Shell.Current.DisplayAlert("數值非整數，請手動輸入最後結果", "", "OK");
                 }
-                else if (total < 0) 
+                else if (total < 0)
                 {
-                    OKButtonClicked?.Invoke(this, new OKButtonClickedEventArgs { Total = total*-1 });
+                    OKButtonClicked?.Invoke(this, new OKButtonClickedEventArgs { Total = total * -1 });
                 }
                 else
                 {
@@ -160,11 +160,11 @@ public partial class Calculator : ContentView
             {
                 equal_LB.Text = "=" + ThousandSeparator(total.ToString());
             }
-            else 
+            else
             {
                 equal_LB.Text = "=" + total.ToString();
             }
-            
+
             //長度超出畫面跳出提醒
             if (Count_LB.Measure(Width, Height).Request.Width > Count_Border.WidthRequest)
             {
@@ -178,7 +178,7 @@ public partial class Calculator : ContentView
     /// </summary>
     public class Operator
     {
-        public Func<double, double, double> Operation { get; set; }
+        public Func<double, double, double> Operation { get; set; } = null!;
     }
 
 
@@ -226,7 +226,7 @@ public partial class Calculator : ContentView
             start = 3;
         }
         string show = number;
-        for (int i = start; i < number.Length+1; i += 4)
+        for (int i = start; i < number.Length + 1; i += 4)
         {
             string newShow = show.Insert(i, ",");
             show = newShow;

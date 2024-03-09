@@ -35,4 +35,9 @@
         <Setter Property="TextColor" Value="#584842" />
         <Setter Property="CornerRadius" Value="14" />
     </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="#000000" />
+    </Style>
+
 </ResourceDictionary>
