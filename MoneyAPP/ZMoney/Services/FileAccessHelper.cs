@@ -3,6 +3,8 @@ using Android.App;
 using Android.Content;
 #endif
 
+using Microsoft.Maui.Controls.PlatformConfiguration;
+
 namespace ZMoney.Services;
 
 /// <summary>
@@ -28,13 +30,15 @@ public class FileAccessHelper
     public static string GetLocalFilePath(string filename)
     {
 #if ANDROID
+        // 在 Android 上使用 Android.App.Application.Context.GetExternalFilesDir
+        var path = Android.App.Application.Context.GetExternalFilesDir(null)?.AbsolutePath;
+        if (path == null) 
         {
-            // 在 Android 上使用 Android.App.Application.Context.GetExternalFilesDir
-            return System.IO.Path.Combine(Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath, filename);
+            throw new Exception();
         }
+        return System.IO.Path.Combine(path, filename);
+#else
+        return System.IO.Path.Combine(FileSystem.AppDataDirectory, filename);
 #endif
-        {
-            return System.IO.Path.Combine(FileSystem.AppDataDirectory, filename);
-        }
     }
 }

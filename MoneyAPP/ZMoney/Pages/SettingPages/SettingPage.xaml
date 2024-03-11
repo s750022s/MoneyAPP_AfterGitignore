@@ -6,13 +6,18 @@
     xmlns:controls="clr-namespace:ZMoney.Controls"
     Style="{StaticResource mainPageStyle}">
 
+    <!--  設定主頁  -->
+
     <!--  UI  -->
     <Grid RowDefinitions="*,2*,*">
+
         <!--  圖片  -->
         <Image
             x:Name="chick_cream_Image"
             HeightRequest="150"
             Source="chick_cream.png" />
+
+        <!--  按鈕區，自訂Border  -->
         <VerticalStackLayout
             Grid.Row="1"
             Margin="7,0,7,0"
@@ -33,10 +38,9 @@
                 Clicked="SystemInfo_Clicked"
                 Description="關於APP的更新資訊、聲明、開發團隊資訊。" />
 
-
         </VerticalStackLayout>
+
         <!--  自訂菜單  -->
         <controls:CustomTabBar Grid.Row="2" />
-
     </Grid>
 </ContentPage>

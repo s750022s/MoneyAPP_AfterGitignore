@@ -4,13 +4,16 @@ using ZMoney.Controls;
 
 namespace ZMoney.Pages;
 
+/// <summary>
+/// 紀錄新增頁
+/// </summary>
 public partial class RecordAddPage : ContentPage
 {
     private RecordBindingModel _record;
     private DbManager _dbManager;
     public RecordAddPage(DbManager dbManager)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _record = (RecordBindingModel)BindingContext;
         _dbManager = dbManager;
     }
@@ -21,6 +24,7 @@ public partial class RecordAddPage : ContentPage
         GetPicker();
         _record.AddDefault();
 
+        //添加計算機OK鍵
         Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
@@ -69,6 +73,12 @@ public partial class RecordAddPage : ContentPage
         AmountOfMoney.Text = e.Total.ToString();
     }
 
+
+    /// <summary>
+    /// 儲存按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void SaveButton_Clicked(object sender, EventArgs e)
     {
         try
@@ -85,7 +95,7 @@ public partial class RecordAddPage : ContentPage
         {
             DisplayAlert(ex.Message, "", "OK");
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             LocalFileLogger logger = new LocalFileLogger();
             logger.Log("RecordUpdateError:" + ex);

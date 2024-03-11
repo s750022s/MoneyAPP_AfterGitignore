@@ -8,7 +8,9 @@
     xmlns:viewModel="clr-namespace:ZMoney.ViewModels"
     Style="{StaticResource mainPageStyle}">
 
+    <!--  紀錄修改頁  -->
 
+    <!--  綁定記錄編輯viewModel  -->
     <ContentPage.BindingContext>
         <viewModel:RecordBindingModel />
     </ContentPage.BindingContext>
@@ -20,11 +22,8 @@
         <ImageButton
             x:Name="BackBTN"
             Grid.Row="0"
-            Margin="7,20,0,0"
             Clicked="BackBTN_Clicked"
-            HeightRequest="25"
-            HorizontalOptions="Start"
-            Source="arrow_left.png" />
+            Style="{StaticResource backBTN}" />
 
         <!--  記錄編輯表格  -->
         <Grid

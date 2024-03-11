@@ -1,29 +1,42 @@
 using System.Collections.ObjectModel;
+using System.Globalization;
+using ZMoney.Controls;
 using ZMoney.Models;
 using ZMoney.Services;
-using ZMoney.Controls;
-using ZMoney.ViewModels;
-using System.Globalization;
 
 namespace ZMoney.Pages;
 
+/// <summary>
+/// 統計頁面
+/// </summary>
 public partial class StatisticsPage : ContentPage
 {
     private DbManager _dbManager;
+
+    /// <summary>
+    /// 是否為種類
+    /// </summary>
     private bool IsCategory;
+
+    /// <summary>
+    /// 起始日
+    /// </summary>
     private DateTime start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+
+    /// <summary>
+    /// 結束日
+    /// </summary>
     private DateTime end = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1);
 
 
     public StatisticsPage(DbManager dbManager)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _dbManager = dbManager;
         SharedMethod.CheckAppCached(_dbManager);
-
     }
 
-    protected override void OnAppearing() 
+    protected override void OnAppearing()
     {
         CategoryButton.IsChecked = true;
         StartDate.Date = start;
@@ -32,8 +45,14 @@ public partial class StatisticsPage : ContentPage
     }
 
 
-    private void RadioButton_Clicked(object sender, CheckedChangedEventArgs e) 
-	{
+    /// <summary>
+    /// 實作RadioButton對應的行動，用以切換顯示資料。
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void RadioButton_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        //鎖定RadioButton
         RadioButton radioButton = (RadioButton)sender;
 
         switch (radioButton.Content)
@@ -55,13 +74,17 @@ public partial class StatisticsPage : ContentPage
                 AccountCurrentTotal.IsVisible = radioButton.IsChecked;
                 AccountCurrentTotalCollectionView.ItemsSource = new ObservableCollection<AccountModel>(App.CachedAccounts);
                 break;
-           }
         }
+    }
 
 
     // 類別/帳戶統計區塊
 
-   
+    /// <summary>
+    /// 查詢按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Button_Clicked(object sender, EventArgs e)
     {
         if (EndDate.Date >= StartDate.Date)
@@ -70,13 +93,16 @@ public partial class StatisticsPage : ContentPage
             end = EndDate.Date;
             GetDateTotal();
         }
-        else 
+        else
         {
             DisplayAlert("結束範圍小於起始範圍，請重新查詢。", "", "OK");
         }
     }
 
-    private void GetDateTotal() 
+    /// <summary>
+    /// 取得總額資料
+    /// </summary>
+    private void GetDateTotal()
     {
         var info = _dbManager.GetTotalByIsExpenses(start, end);
         Total_Label.Text = "$" + info[2].ToString("N0");
@@ -87,15 +113,18 @@ public partial class StatisticsPage : ContentPage
         {
             DatasCollectionView.ItemsSource = _dbManager.GetToatlFromCategoryGroup(start, end, GetExpense.IsChecked);
         }
-        else 
+        else
         {
             DatasCollectionView.ItemsSource = _dbManager.GetToatlFromAccountGroup(start, end, GetExpense.IsChecked);
         }
-
-
-
     }
-    private void OnBorderTapped(object sender, TappedEventArgs e) 
+
+    /// <summary>
+    /// 點擊Border進入特定項目特定區間的紀錄清單
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OnBorderTapped(object sender, TappedEventArgs e)
     {
         try
         {
@@ -122,6 +151,10 @@ public partial class StatisticsPage : ContentPage
 
     // 當前帳戶總額區塊
     private int assetsTotal;
+
+    /// <summary>
+    /// 顯示總額
+    /// </summary>
     private void EyeClose_Clicked(object sender, EventArgs e)
     {
         eyeClose_ImageBTN.IsVisible = false;
@@ -129,6 +162,10 @@ public partial class StatisticsPage : ContentPage
         assetsTotal = App.CachedAccounts.Sum(x => x.CurrentTotal);
         Total_LB.Text = "$ " + assetsTotal.ToString("N0");
     }
+
+    /// <summary>
+    /// 隱藏總額
+    /// </summary>
     private void Eye_Clicked(object sender, EventArgs e)
     {
         eyeClose_ImageBTN.IsVisible = true;
@@ -136,6 +173,13 @@ public partial class StatisticsPage : ContentPage
         Total_LB.Text = "$ ------";
     }
 
+
+    /// <summary>
+    /// 檢查輸入資料的正確性
+    /// </summary>
+    /// <param name="currentTotalStr">輸入當前總額</param>
+    /// <returns>int版當前總額</returns>
+    /// <exception cref="ArgumentException"></exception>
     private int CheckInput(string currentTotalStr)
     {
         var currentTotalStr2 = currentTotalStr.Replace(",", "");
@@ -155,9 +199,14 @@ public partial class StatisticsPage : ContentPage
         catch (OverflowException)
         {
             throw new ArgumentException("想要輸入的金額已超過20億上限。");
-        } 
+        }
     }
 
+    /// <summary>
+    /// 編輯按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void PencilButton_Clicked(object sender, EventArgs e)
     {
         ImageButton pencilButton = (ImageButton)sender;
@@ -178,7 +227,16 @@ public partial class StatisticsPage : ContentPage
         pencilButton.IsVisible = false;
     }
 
+    /// <summary>
+    /// 原始數值，用以計算差額。
+    /// </summary>
     private int originalValue;
+
+    /// <summary>
+    /// 儲存按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CheckButton_Clicked(object sender, EventArgs e)
     {
         try
@@ -196,10 +254,13 @@ public partial class StatisticsPage : ContentPage
                 // 修改 Amount_Entry 的屬性
                 _dbManager.UpdateCurrentTotal(parentBorder.DataId, intTotal - originalValue);
                 SharedMethod.SetAppCached(_dbManager);
-                amountEntry.Text = App.CachedAccounts.First(x => x.Id == parentBorder.DataId).CurrentTotal.ToString("N0"); 
+                amountEntry.Text = App.CachedAccounts.First(x => x.Id == parentBorder.DataId).CurrentTotal.ToString("N0");
                 amountEntry.IsReadOnly = true;
-                int newVaule = eye_ImageBTN.IsVisible == true ? assetsTotal - originalValue + intTotal : assetsTotal;
-                Total_LB.Text = "$ " + newVaule.ToString("N0");
+                if (eye_ImageBTN.IsVisible == true) 
+                {
+                    int newVaule = assetsTotal - originalValue + intTotal;
+                    Total_LB.Text = "$ " + newVaule.ToString("N0");
+                }
             }
 
             ImageButton pencilButton = parentGrid.FindByName<ImageButton>("pencil_ImageBTN");
@@ -216,18 +277,23 @@ public partial class StatisticsPage : ContentPage
             logger.Log("RecordUpdateError:" + ex);
             DisplayAlert("出現異常錯誤，請重新嘗試", "無法排除請聯繫開發者", "OK");
         }
-    } 
+    }
 }
 
+
+/// <summary>
+/// 項目字數為6時，縮小文字已顯示全部。
+/// 不會大於7個字。
+/// </summary>
 public class StringLengthToBoolConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return (int)value > 5;
+        return value != null ? (int)value > 5 : null;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return !((int)value > 5);
+        return value != null ? !((int)value > 5) : null;
     }
 }

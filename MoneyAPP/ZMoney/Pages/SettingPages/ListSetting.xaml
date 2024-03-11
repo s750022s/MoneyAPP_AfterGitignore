@@ -7,6 +7,8 @@
     xmlns:viewModels="clr-namespace:ZMoney.ViewModels"
     Style="{StaticResource mainPageStyle}">
 
+    <!--  選單編輯頁  -->
+
     <!--  整體布局分 5Rows  -->
     <Grid
         Margin="7,0,7,0"
@@ -18,29 +20,24 @@
         <!--  返回按鈕  -->
         <ImageButton
             x:Name="BackBTN"
-            Grid.Row="0"
-            Margin="7,20,0,0"
             Clicked="BackBTN_Clicked"
-            HeightRequest="25"
-            HorizontalOptions="Start"
-            Source="arrow_left.png"
+            Style="{StaticResource backBTN}"
             VerticalOptions="StartAndExpand" />
 
+        <!--  類別/帳戶切換按鈕  -->
         <Button
             x:Name="MenuToggle_BTN"
-            BackgroundColor="Transparent"
-            BorderColor="#584842"
-            BorderWidth="1"
             Clicked="CategoryOrAccount_Clicked"
             ContentLayout="right,2"
             FontSize="30"
             HeightRequest="60"
             ImageSource="refresh.png"
+            Style="{StaticResource checkButten}"
             Text="類別"
-            TextColor="#584842"
             VerticalOptions="End"
             WidthRequest="150" />
 
+        <!--  插圖  -->
         <Image
             x:Name="teaSpoon_Image"
             Grid.Row="0"
@@ -69,11 +66,15 @@
                                 VerticalOptions="Center">
                                 <Grid>
                                     <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*">
+
+                                        <!--  順序代碼  -->
                                         <Label
                                             Grid.Column="3"
                                             HorizontalOptions="End"
                                             Text="{Binding Sequence}"
                                             TextColor="#FFFFFF">
+
+                                            <!--  增加鍵不顯示  -->
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding Id}"
@@ -84,6 +85,7 @@
                                             </Label.Triggers>
                                         </Label>
 
+                                        <!--  名稱  -->
                                         <Label
                                             Grid.Row="1"
                                             Grid.RowSpan="4"
@@ -96,6 +98,8 @@
                                             Text="{Binding Name}"
                                             TextColor="#FFF"
                                             VerticalOptions="Center">
+
+                                            <!--  增加鍵顯示+  -->
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding Id}"
@@ -145,7 +149,7 @@
             RowDefinitions="*,*,*"
             RowSpacing="7">
 
-            <!--  名稱欄位  -->
+            <!--  名稱Title  -->
             <Label
                 x:Name="NameTitle_LB"
                 Grid.Row="0"
@@ -154,6 +158,7 @@
                 Style="{StaticResource titleText}"
                 Text="名稱" />
 
+            <!--  名稱輸入欄  -->
             <Entry
                 x:Name="Name_Entry"
                 Grid.Row="0"
@@ -161,6 +166,7 @@
                 FontSize="32"
                 Text="" />
 
+            <!--  儲存按鈕  -->
             <Button
                 x:Name="Save_BTN"
                 Grid.Row="0"
@@ -169,7 +175,7 @@
                 Style="{StaticResource checkButten}"
                 Text="儲存" />
 
-
+            <!--  順序Title  -->
             <Label
                 x:Name="SequenceTitle_LB"
                 Grid.Row="1"
@@ -178,6 +184,7 @@
                 Style="{StaticResource titleText}"
                 Text="順序" />
 
+            <!--  順序輸入欄  -->
             <Entry
                 x:Name="Sequence_Entry"
                 Grid.Row="1"
@@ -186,15 +193,16 @@
                 Keyboard="Numeric"
                 Text="" />
 
+            <!--  儲存按鈕  -->
             <Button
                 x:Name="Delete_BTN"
                 Grid.Row="1"
                 Grid.Column="3"
                 Clicked="Delete_BTN_Clicked"
                 Style="{StaticResource checkButten}"
-                Text="刪除"
-                 />
+                Text="刪除" />
 
+            <!--  說明  -->
             <Label
                 x:Name="Directions_LB"
                 Grid.Row="2"
