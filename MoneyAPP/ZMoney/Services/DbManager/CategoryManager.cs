@@ -9,13 +9,13 @@ namespace ZMoney.Services
     {
         private IDbService _dbService;
 
-        public DbManager(IDbService dbService)
+        public DbManager(IDbService dbService) 
         {
             _dbService = dbService;
         }
 
         /// <summary>
-        /// 新增類別。
+        /// 新增類別
         /// </summary>
         /// <param name="category">要新增的完整資料</param>
         public void AddCategory(CategoryModel category)
@@ -24,16 +24,16 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 修改類別。
+        /// 修改類別
         /// </summary>
         /// <param name="category">要更新的完整資料</param>
-        public void UpdateCategory(CategoryModel category)
+        public void UpdateCategory(CategoryModel category) 
         {
             _dbService.UpdateCategory(category);
         }
 
         /// <summary>
-        /// 刪除類別。
+        /// 刪除類別
         /// </summary>
         /// <param name="id">要刪除的資料id</param>
         public void DeleteCategory(int id)
@@ -47,10 +47,10 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 取得以順序排序的"類別"清單，以製作類別選單。
+        /// 取得以順序排序的類別清單，以製作類別選單
         /// </summary>
         /// <returns>類別List</returns>
-        public List<CategoryModel> GetCategoryOrderBySequence()
+        public List<CategoryModel> GetCategoryOrderBySequence() 
         {
             var categories = from category in _dbService.GetCategories()
                              where category.Sequence > -1
@@ -60,14 +60,14 @@ namespace ZMoney.Services
         }
 
         /// <summary>
-        /// 取得指定日期區間的類別分組的總金額、百分比。
+        /// 取得指定日期區間的類別分組的總金額、百分比
         /// </summary>
         /// <param name="startDate">起始日</param>
         /// <param name="endDate">截止日</param>
         /// <returns>分組總額List</returns>
         public List<TotalAndPercentFromGroup> GetToatlFromCategoryGroup(DateTime startDate, DateTime endDate, bool isExpense)
         {
-            //取得[有紀錄]的類別分組及總額。
+            //取得[有紀錄]的類別分組及總額
             var recordGroups = from recordWhere in (from record in _dbService.GetRecords()
                                                     where (record.RecordDateTime.Date >= startDate)
                                                        && (record.RecordDateTime.Date <= endDate)
@@ -90,10 +90,10 @@ namespace ZMoney.Services
                                    categoryTotal = categoryGroup.Sum(x => x.amount)
                                };
 
-            //取得紀錄總金額。
+            //取得紀錄總金額
             var totalAmount = recordGroups.Sum(x => x.categoryTotal);
 
-            //計算[有紀錄]的百分比。
+            //計算[有紀錄]的百分比
             var categoryJoinRecord = from categoryTotal in recordGroups
                                      select new
                                      {
@@ -111,12 +111,12 @@ namespace ZMoney.Services
                                          Percent = result.percent
                                      };
 
-            //取得未被刪除的種類Id清單。
+            //取得未被刪除的種類Id清單
             var categoryExcept_ID = (from category in _dbService.GetCategories()
                                      where category.Sequence > -1
                                      select category.Id).Except(categoryJoinRecord.Select(x => x.Id));
 
-            //種類Id清單中，剩餘種類代入預設值。
+            //種類Id清單中，剩餘種類代入預設值
             var categoryExcept = from categoryExceptID in categoryExcept_ID
                                  join category in _dbService.GetCategories()
                                  on categoryExceptID equals category.Id
@@ -127,7 +127,7 @@ namespace ZMoney.Services
                                      GroupTatalAmount = 0,
                                      Percent = 0.0
                                  };
-            //串接List。
+            //串接List
             var results = categoryJoinRecord.Concat(categoryExcept);
 
             return results.ToList();

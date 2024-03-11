@@ -8,13 +8,16 @@ using ZMoney.Services;
 
 namespace ZMoney.Pages;
 
+/// <summary>
+/// 匯出匯入與重置
+/// </summary>
 public partial class BackupAndReset : ContentPage
 {
     private LocalFileLogger _logger;
     private DbManager _dbManager;
     public BackupAndReset(LocalFileLogger logger, DbManager dbManager)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _logger = logger;
         _dbManager = dbManager;
     }
@@ -35,7 +38,7 @@ public partial class BackupAndReset : ContentPage
         string date = DateTime.Today.ToString("yyyy-MM-dd");
         string newFileName = string.Format("ZMoney-{0}.db", date);
         File.Copy(
-            FileAccessHelper.GetLocalFilePath("ZMoney.db"), 
+            FileAccessHelper.GetLocalFilePath("ZMoney.db"),
             FileAccessHelper.GetLocalFilePath(newFileName));
         await Share.Default.RequestAsync(new ShareFileRequest
         {
@@ -51,7 +54,7 @@ public partial class BackupAndReset : ContentPage
     private async void ImportBackupFile_Clicked(object sender, EventArgs e)
     {
         var ans = await DisplayAlert("匯入備份檔將會覆蓋手機中現有資料，確定要匯入嗎?", "", "匯入", "取消");
-        if (ans == true) 
+        if (ans == true)
         {
             try
             {
@@ -60,7 +63,7 @@ public partial class BackupAndReset : ContentPage
                 _dbManager.Open();
                 await DisplayAlert("已匯入完成", "", "OK");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 _logger.Log("匯入失敗:" + ex.ToString());
                 await DisplayAlert("匯入失敗", "", "OK");
@@ -68,7 +71,12 @@ public partial class BackupAndReset : ContentPage
         }
     }
 
-    private async Task PickAndShow(PickOptions options) 
+    /// <summary>
+    /// 顯示選取檔案畫面
+    /// </summary>
+    /// <param name="options">選取檔案設定</param>
+    /// <returns></returns>
+    private async Task PickAndShow(PickOptions options)
     {
         var result = await FilePicker.Default.PickAsync(options);
         if (result != null)
@@ -84,7 +92,7 @@ public partial class BackupAndReset : ContentPage
     }
 
     /// <summary>
-    /// 還於初始設定，刪除DB檔
+    /// 還原初始設定，刪除DB檔
     /// </summary>
     private async void Restore_Clicked(object sender, EventArgs e)
     {
@@ -101,7 +109,7 @@ public partial class BackupAndReset : ContentPage
                     _logger.Log("還原資料庫。");
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 var a = DisplayAlert("還原失敗", "失敗原因：找不到設定資料", "OK");
                 _logger.Log("還原資料庫失敗:" + ex);
@@ -114,21 +122,35 @@ public partial class BackupAndReset : ContentPage
     /// </summary>
     private async void Log_Clicked(object sender, EventArgs e)
     {
-        var zipFilePath = Path.Join(Directory.GetParent(_logger.LogPath).FullName, "Log.zip");
-        if (File.Exists(zipFilePath))
+        var path = Directory.GetParent(_logger.LogPath);
+        string zipFilePath;
+        if (path != null)
         {
-            File.Delete(zipFilePath);
+            zipFilePath = Path.Join(path.FullName, "Log.zip");
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+            ZipFile.CreateFromDirectory(_logger.LogPath, zipFilePath);
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = "共享檔案",
+                File = new ShareFile(FileAccessHelper.GetLocalFilePath(zipFilePath))
+            });
+            _logger.Log("匯出Log壓縮檔");
         }
-        ZipFile.CreateFromDirectory(_logger.LogPath, zipFilePath);
-        await Share.Default.RequestAsync(new ShareFileRequest
+        else 
         {
-            Title = "共享檔案",
-            File = new ShareFile(FileAccessHelper.GetLocalFilePath(zipFilePath))
-        });
-        _logger.Log("匯出Log壓縮檔");
+            await DisplayAlert("沒有log資料夾", "請重啟APP", "OK");
+        }
     }
 
-    private async void ExportExcel_Clicked(object sender, EventArgs e) 
+    /// <summary>
+    /// 匯出Excel檔
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void ExportExcel_Clicked(object sender, EventArgs e)
     {
         var reports = _dbManager.GetAllRecordByIsDelete().OrderByDescending(x => x.RecordDateTime);
         string date = DateTime.Today.ToString("yyyy-MM-dd");
@@ -146,6 +168,9 @@ public partial class BackupAndReset : ContentPage
         _logger.Log("匯出Excel");
     }
 
+    /// <summary>
+    /// 轉換Excel
+    /// </summary>
     private FileInfo ExportExcel(IOrderedEnumerable<ExcelModels> data, string filePath)
     {
         var output = new FileInfo(FileAccessHelper.GetLocalFilePath(filePath));
@@ -164,13 +189,13 @@ public partial class BackupAndReset : ContentPage
             var rows = data.Count() + 1;
             var cols = properties.Count();
 
-            if (rows > 0 && cols > 0) 
+            if (rows > 0 && cols > 0)
             {
                 sheet.Cells[1, 1].LoadFromCollection(data, true); // 寫入資料
 
                 // 儲存格格式
                 var colNumber = 1;
-                foreach (var prop in properties) 
+                foreach (var prop in properties)
                 {
                     // 時間處理，如果沒指定儲存格格式會變成 通用格式，就會以 int＝時間戳 的方式顯示
                     if (prop.PropertyType.Equals(typeof(DateTime)) ||

@@ -8,19 +8,12 @@ namespace ZMoney.ViewModels
     /// </summary>
     public class RecordBindingModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// 屬性變更事件，實作INotifyPropertyChanged。
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        /// <summary>
-        /// 屬性變更通知
-        /// </summary>
-        /// <param name="propertyName">更新屬性名稱</param>
+        public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
 
         /// <summary>
         /// 紀錄Id
@@ -33,14 +26,14 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 紀錄輸入的日期，綁定日期選擇器
         /// </summary>
-        public DateTime RecordDay
+        public DateTime RecordDay 
         {
             get => _recordDay;
-            set
+            set 
             {
                 _recordDay = value;
                 OnPropertyChanged(nameof(RecordDay));
-            }
+            } 
         }
 
         private TimeSpan _recordTime;
@@ -48,22 +41,22 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 紀錄輸入的時間，綁定時間選擇器
         /// </summary>
-	    public TimeSpan RecordTime
-        {
+	    public TimeSpan RecordTime {
             get => _recordTime;
-            set
+            set 
             {
                 _recordTime = value;
                 OnPropertyChanged(nameof(RecordTime));
-            }
+            } 
         }
+
 
         private bool _isIncome;
 
         /// <summary>
         /// 是否為收入，綁定Income的IsChecked
         /// </summary>
-        public bool IsIncome
+        public bool IsIncome 
         {
             get => _isIncome;
             set
@@ -78,7 +71,7 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 是否為支出，綁定Expense的IsChecked
         /// </summary>
-	    public bool IsExpense
+	    public bool IsExpense 
         {
             get => _isExpense;
             set
@@ -93,7 +86,7 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 帳戶選單位置，等同於Sequence，需進行比對找出ID
         /// </summary>
-        public int AccountIndex
+        public int AccountIndex 
         {
             get => _accountIndex;
             set
@@ -108,7 +101,7 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 類別選單位置，等同於Sequence，需進行比對找出ID
         /// </summary>
-        public int CategoryIndex
+        public int CategoryIndex 
         {
             get => _categoryIndex;
             set
@@ -119,11 +112,10 @@ namespace ZMoney.ViewModels
         }
 
         private string _description = "";
-
         /// <summary>
         /// 紀錄項目
         /// </summary>
-        public string Description
+        public string Description 
         {
             get => _description;
             set
@@ -138,15 +130,14 @@ namespace ZMoney.ViewModels
         /// <summary>
         /// 紀錄金額
         /// </summary>
-        public string StrAmountOfMoney
-        {
+        public string StrAmountOfMoney {
             get => _strAmountOfMoney;
             set
             {
                 _strAmountOfMoney = value;
                 OnPropertyChanged(nameof(StrAmountOfMoney));
             }
-        }
+        } 
 
         /// <summary>
         /// 新增時的預設值
@@ -164,10 +155,6 @@ namespace ZMoney.ViewModels
             StrAmountOfMoney = "";
         }
 
-        /// <summary>
-        /// 取得的DB資料整理成對應欄位並通知UI
-        /// </summary>
-        /// <param name="record">紀錄SQLModel</param>
         public void GetRecordByRecordModel(RecordModel record)
         {
             Id = record.Id;
@@ -175,26 +162,19 @@ namespace ZMoney.ViewModels
             RecordTime = record.RecordDateTime.TimeOfDay;
             IsExpense = record.IsExpenses;
             IsIncome = !record.IsExpenses;
-            AccountIndex = App.CachedAccounts.FirstOrDefault(x => record.AccountId == x.Id)?.Sequence ?? 0;
-            CategoryIndex = App.CachedCategorys.FirstOrDefault(x => record.CategoryId == x.Id)?.Sequence ?? 0;
-            Description = record.Description ?? string.Empty;
+            AccountIndex = App.CachedAccounts.FirstOrDefault(x => record.AccountId == x.Id).Sequence;
+            CategoryIndex = App.CachedCategorys.FirstOrDefault(x => record.CategoryId == x.Id).Sequence;
+            Description = record.Description;
             StrAmountOfMoney = (record.IsExpenses ? record.AmountOfMoney * -1 : record.AmountOfMoney).ToString("N0");
         }
 
-        /// <summary>
-        /// 檢查欄位資訊是否符合標準。
-        /// </summary>
-        /// <exception cref="ArgumentException"></exception>
         public void CheckEntry()
         {
-            //說明
             if (Description.Length > 30)
             {
                 throw new ArgumentException("為了方便辨認，請不要超過30個字");
             }
 
-
-            //金額
             if (StrAmountOfMoney == "")
             {
                 throw new ArgumentException("金額請不要空白");
@@ -204,7 +184,6 @@ namespace ZMoney.ViewModels
                 throw new ArgumentException("金額請填正數，支出將自動換算");
             }
 
-            //轉換成數字
             try
             {
                 if (!int.TryParse(StrAmountOfMoney.Replace(",", ""), out int result))
@@ -218,13 +197,9 @@ namespace ZMoney.ViewModels
             }
         }
 
-        /// <summary>
-        /// UI資料檢查後轉換成RecordModel，方便更新資料庫。
-        /// </summary>
-        /// <returns>紀錄SQLModel</returns>
+
         public RecordModel SetRecordToRecordModel()
         {
-            CheckEntry();
             int.TryParse(StrAmountOfMoney.Replace(",", ""), out int result);
 
             RecordModel record = new RecordModel
@@ -232,9 +207,9 @@ namespace ZMoney.ViewModels
                 Id = Id,
                 RecordDateTime = RecordDay + RecordTime, //需要檢查是否可行
                 IsExpenses = IsExpense,
-                AccountId = App.CachedAccounts.FirstOrDefault(x => AccountIndex == x.Sequence)?.Id ?? 0,
-                CategoryId = App.CachedCategorys.FirstOrDefault(x => CategoryIndex == x.Sequence)?.Id ?? 0,
-                Description = Description == "" ? null : Description,
+                AccountId = App.CachedAccounts.FirstOrDefault(x => AccountIndex == x.Sequence).Id,
+                CategoryId = App.CachedCategorys.FirstOrDefault(x => CategoryIndex == x.Sequence).Id,
+                Description = Description,
                 AmountOfMoney = IsExpense ? result * -1 : result,
                 IsDelete = false
             };

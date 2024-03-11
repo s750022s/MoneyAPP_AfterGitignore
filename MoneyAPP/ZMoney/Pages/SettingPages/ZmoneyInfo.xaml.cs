@@ -1,6 +1,9 @@
 using ZMoney.Services;
 namespace ZMoney.Pages;
 
+/// <summary>
+/// APP¸ê°T
+/// </summary>
 public partial class ZmoneyInfo : ContentPage
 {
     private DbManager _dbManager;

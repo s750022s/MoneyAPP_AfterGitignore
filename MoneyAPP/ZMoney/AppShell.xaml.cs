@@ -2,9 +2,6 @@
 
 namespace ZMoney
 {
-    /// <summary>
-    /// 設定導覽規則；本專案使用shell下的[註冊詳細數據頁面路由]，不會產生TabBar。
-    /// </summary>
     public partial class AppShell : Shell
     {
         public AppShell()
@@ -13,12 +10,9 @@ namespace ZMoney
             RouterSetting();
         }
 
-        /// <summary>
-        /// 註冊詳細數據頁面路由。
-        /// </summary>
-        private void RouterSetting()
+        private void RouterSetting() 
         {
-            //===主線頁面(客製TabBar)===
+            //===主線頁面(TabBar)===
 
             //首頁
             Routing.RegisterRoute("Home", typeof(HomePage));
@@ -34,7 +28,7 @@ namespace ZMoney
 
 
 
-            //===支線頁面(有Back鍵)===
+            //===支線頁面(Back鍵)===
 
             //首頁-紀錄更新頁
             Routing.RegisterRoute("Home/RecordUpdate", typeof(RecordUpdatePage));

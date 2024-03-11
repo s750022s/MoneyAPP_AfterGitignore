@@ -4,10 +4,18 @@ using ZMoney.Services;
 
 namespace ZMoney.Pages;
 
+/// <summary>
+/// 紀錄修改頁；接收參數DataId及是否來自首頁。
+/// 來自首頁:回首頁的記錄日期，否則回統計頁。
+/// </summary>
 [QueryProperty(nameof(DataId), "DataId")]
 [QueryProperty(nameof(IsFromHome), "IsFromHome")]
 public partial class RecordUpdatePage : ContentPage
 {
+
+    /// <summary>
+    /// 紀錄Id
+    /// </summary>
     private int _id;
     public int DataId 
     {
@@ -19,6 +27,9 @@ public partial class RecordUpdatePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// 是否來自首頁
+    /// </summary>
     private bool _isFromHome;
     public bool IsFromHome
     {
@@ -32,6 +43,10 @@ public partial class RecordUpdatePage : ContentPage
 
     private RecordBindingModel _record;
     private DbManager _dbManager;
+
+    /// <summary>
+    /// 頁面參數搜集器
+    /// </summary>
     public Dictionary<string, object> navParam = [];
 
 
@@ -49,6 +64,7 @@ public partial class RecordUpdatePage : ContentPage
         _record.GetRecordByRecordModel(_dbManager.GetRecordById(DataId));
         navParam["Date"]= _record.RecordDay;
 
+        //添加計算機OK鍵功能
         Calculator.OKButtonClicked += OnOKButtonClicked;
     }
 
@@ -96,6 +112,11 @@ public partial class RecordUpdatePage : ContentPage
     }
 
 
+    /// <summary>
+    /// 返回鍵
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackBTN_Clicked(object sender, EventArgs e)
     {
         if (_isFromHome == true)
@@ -108,6 +129,12 @@ public partial class RecordUpdatePage : ContentPage
         }
     }
 
+
+    /// <summary>
+    /// 儲存按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void SaveButton_Clicked(object sender, EventArgs e)
     {
         try 
@@ -144,7 +171,6 @@ public partial class RecordUpdatePage : ContentPage
     /// 刪除按鈕;
     /// IsDelete = true
     /// </summary>
-
     private async void DeleteButton_Clicked(object sender, EventArgs e) 
     {
         var ans = await DisplayAlert("確定要刪除嗎?", "修改將不儲存，並無法恢復該資料", "刪除", "取消");
@@ -155,13 +181,13 @@ public partial class RecordUpdatePage : ContentPage
                 var recordModel = _dbManager.GetRecordById(DataId);
                 _dbManager.DeleteRecord(DataId);
                 _dbManager.UpdateCurrentTotal(recordModel.AccountId, 0 - recordModel.AmountOfMoney);
-                Shell.Current.GoToAsync($"Home", navParam);
+                await Shell.Current.GoToAsync($"Home", navParam);
             }
             catch (Exception ex)
             {
                 LocalFileLogger logger = new LocalFileLogger();
                 logger.Log("RecordUpdateError:" + ex);
-                DisplayAlert("出現異常錯誤，請重新嘗試", "無法排除請聯繫開發者", "OK");
+                await DisplayAlert("出現異常錯誤，請重新嘗試", "無法排除請聯繫開發者", "OK");
             }
         }
     }

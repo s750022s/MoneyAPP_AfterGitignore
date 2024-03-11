@@ -1,39 +1,34 @@
 ﻿using SQLite;
 using ZMoney.Models;
-
 namespace ZMoney.Services
 {
-    /// <summary>
-    /// 實作資料庫串接。
-    /// </summary>
-    public class SqliteService : IDbService
+    public class SqliteService:IDbService
     {
         private SQLiteConnection _connection = null!;
         private LocalFileLogger _logger;
         private string _dbPath;
 
-        public SqliteService(string dbPath, LocalFileLogger localFileLogger)
+        public SqliteService(string dbPath, LocalFileLogger localFileLogger) 
         {
             _dbPath = dbPath;
             _logger = localFileLogger;
             Open();
+
         }
 
-        /// <summary>
-        /// 實作開啟資料庫。
-        /// </summary>
-        public void Open()
+        public void Open() 
         {
             if (File.Exists(_dbPath) == false)
             {
                 SQLiteDbInitializationData();
                 return;
             }
+
             _connection = new SQLiteConnection(_dbPath);
         }
 
         /// <summary>
-        /// 創建預設值。
+        /// 創建預設值
         /// </summary>
         private void SQLiteDbInitializationData()
         {
@@ -50,7 +45,7 @@ namespace ZMoney.Services
                 {
                     "早餐","午餐","晚餐","飲料",
                     "生活用品","衣飾","交通","醫療",
-                    "娛樂","薪資","其他"
+                    "娛樂","其他"
                 };
 
                 for (int i = 0; i < categoriesInitializationData.Count; i++)
@@ -59,18 +54,18 @@ namespace ZMoney.Services
                 }
             }
 
+
             //創建Table_account
             _connection.CreateTable<AccountModel>();
             if (_connection.Table<AccountModel>().Count() == 0)
             {
-                List<string> accountInitializationData = new List<string>() { "現金" };
+                List<string> accountInitializationData = new List<string>() { "現金", "信用卡", "銀行帳戶" };
                 for (int i = 0; i < accountInitializationData.Count; i++)
                 {
                     _connection.Insert(new AccountModel { Name = accountInitializationData[i], Sequence = i, CurrentTotal = 0 });
                 }
             }
 
-            //寫入log
             _logger.Log("初始化資料庫。");
         }
 
@@ -84,39 +79,27 @@ namespace ZMoney.Services
             _logger.Log("資料庫連線失敗。");
         }
 
-        /// <summary>
-        /// 實作關閉資料庫。
-        /// </summary>
-        public void Close()
+        public void Close() 
         {
-            if (_connection != null)
+            if (_connection != null) 
             {
                 _connection.Close();
                 _connection.Dispose();
             }
         }
 
-        /// <summary>
-        /// 實作取得種類table資料。
-        /// </summary>
         public IEnumerable<CategoryModel> GetCategories()
         {
             Init();
             return _connection.Table<CategoryModel>();
         }
 
-        /// <summary>
-        /// 實作取得帳戶table資料。
-        /// </summary>
         public IEnumerable<AccountModel> GetAccounts()
         {
             Init();
             return _connection.Table<AccountModel>();
         }
 
-        /// <summary>
-        /// 實作取得紀錄table資料。
-        /// </summary>
         public IEnumerable<RecordModel> GetRecords()
         {
             Init();
@@ -124,9 +107,7 @@ namespace ZMoney.Services
         }
 
 
-        /// <summary>
-        /// 實作新增種類table資料。
-        /// </summary>
+
         public void AddCategory(CategoryModel category)
         {
             Init();
@@ -134,9 +115,6 @@ namespace ZMoney.Services
             _logger.Log(string.Format("The category of name:{0} added.", category.Name));
         }
 
-        /// <summary>
-        /// 實作新增帳戶table資料。
-        /// </summary>
         public void AddAccount(AccountModel account)
         {
             Init();
@@ -144,9 +122,6 @@ namespace ZMoney.Services
             _logger.Log(string.Format("The account of name:{0} added.", account.Name));
         }
 
-        /// <summary>
-        /// 實作新增紀錄table資料。
-        /// </summary>
         public void AddRecord(RecordModel record)
         {
             Init();
@@ -155,9 +130,6 @@ namespace ZMoney.Services
         }
 
 
-        /// <summary>
-        /// 實作修改種類table資料。
-        /// </summary>
         public void UpdateCategory(CategoryModel category, bool IsDelete = false)
         {
             Init();
@@ -166,9 +138,6 @@ namespace ZMoney.Services
             _logger.Log(string.Format("The category of name:{0} {1}.", category.Name, action));
         }
 
-        /// <summary>
-        /// 實作修改帳戶table資料。
-        /// </summary>
         public void UpdateAccount(AccountModel account, bool IsDelete = false)
         {
             Init();
@@ -177,9 +146,6 @@ namespace ZMoney.Services
             _logger.Log(string.Format("The account of name:{0} {1}.", account.Name, action));
         }
 
-        /// <summary>
-        /// 實作修改紀錄table資料。
-        /// </summary>
         public void UpdateRecord(RecordModel record, bool IsDelete = false)
         {
             Init();

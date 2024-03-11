@@ -5,20 +5,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ZMoney.Controls"
     Style="{StaticResource mainPageStyle}">
+
+    <!--  匯出匯入與重置頁  -->
     <Grid
         ColumnDefinitions="*,2*"
         RowDefinitions="0.5*,*,*,*,0.8*,0.8*,*"
         RowSpacing="10">
+
         <!--  返回按鈕  -->
         <ImageButton
             x:Name="BackBTN"
             Grid.Row="0"
-            Margin="7,20,0,0"
             Clicked="BackBTN_Clicked"
-            HeightRequest="25"
-            HorizontalOptions="Start"
-            Source="arrow_left.png" />
+            Style="{StaticResource backBTN}" />
 
+        <!--  按鈕選項  -->
         <controls:SettingBorder
             Title="建立備份檔"
             Grid.Row="1"

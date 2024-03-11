@@ -2,19 +2,33 @@ using ZMoney.Controls;
 using ZMoney.Services;
 using ZMoney.ViewModels;
 
-
 namespace ZMoney.Pages;
 
+/// <summary>
+/// 選單編輯
+/// </summary>
 public partial class ListSetting : ContentPage
 {
     private DbManager _dbManager;
+    
+    /// <summary>
+    /// 來源:帳戶或類別。
+    /// </summary>
     private ListBaseClass behavior;
+
+    /// <summary>
+    /// 是否是類別。
+    /// </summary>
     private bool IsCategory = true;
+
+    /// <summary>
+    /// 暫存Id
+    /// </summary>
     private int cacheID;
 
     public ListSetting(DbManager dbManager)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _dbManager = dbManager;
         behavior = new CategroyChildClass(_dbManager);
     }
@@ -34,10 +48,15 @@ public partial class ListSetting : ContentPage
         Shell.Current.GoToAsync("..");
     }
 
+    /// <summary>
+    /// 切換種類或帳戶
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CategoryOrAccount_Clicked(object sender, EventArgs e)
     {
         IsCategory = !IsCategory;
-        if (IsCategory) 
+        if (IsCategory)
         {
             behavior = new CategroyChildClass(_dbManager);
             MenuToggle_BTN.Text = "種類";
@@ -53,13 +72,12 @@ public partial class ListSetting : ContentPage
         }
     }
 
-
     /// <summary>
     /// 點擊Border，會跳出該Border的資料
     /// </summary>
     private void OnBorderTapped(object sender, TappedEventArgs e)
     {
-        CustomBorder customBorder =(CustomBorder) sender;
+        CustomBorder customBorder = (CustomBorder)sender;
         Revise_Grid.IsVisible = true;
         Blank_BoxView.IsVisible = false;
         cacheID = customBorder.DataId;
@@ -70,31 +88,36 @@ public partial class ListSetting : ContentPage
             Sequence_Entry.Text = "0";
             return;
         }
-        Name_Entry.Text = behavior.GetContent(cacheID , out string sequenceStr);
+        Name_Entry.Text = behavior.GetContent(cacheID, out string sequenceStr);
         Sequence_Entry.Text = sequenceStr;
     }
 
-    private void Save_BTN_Clicked(object sender, EventArgs e) 
+    /// <summary>
+    /// 儲存按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Save_BTN_Clicked(object sender, EventArgs e)
     {
         try
         {
-            if (cacheID == 999) 
+            if (cacheID == 999)
             {
                 behavior.AddSave(Name_Entry.Text, Sequence_Entry.Text);
             }
-            else 
+            else
             {
                 behavior.UpdateSave(Name_Entry.Text, Sequence_Entry.Text, cacheID);
             }
             DatasCollectionView.ItemsSource = behavior.SetPageData();
             Revise_Grid.IsVisible = false;
         }
-        catch (ArgumentException ex) 
+        catch (ArgumentException ex)
         {
             DisplayAlert(ex.ToString(), "", "OK");
         }
 
-        catch(Exception ex) 
+        catch (Exception ex)
         {
             LocalFileLogger logger = new LocalFileLogger();
             logger.Log("RecordUpdateError:" + ex);
@@ -102,7 +125,12 @@ public partial class ListSetting : ContentPage
         }
     }
 
-    private async void Delete_BTN_Clicked(object sender, EventArgs e) 
+    /// <summary>
+    /// 刪除按鈕
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void Delete_BTN_Clicked(object sender, EventArgs e)
     {
         try
         {
@@ -114,11 +142,11 @@ public partial class ListSetting : ContentPage
                 Revise_Grid.IsVisible = false;
             }
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             LocalFileLogger logger = new LocalFileLogger();
             logger.Log("RecordUpdateError:" + ex);
-            DisplayAlert("出現異常錯誤，請重新嘗試", "無法排除請聯繫開發者", "OK");
+            await DisplayAlert("出現異常錯誤，請重新嘗試", "無法排除請聯繫開發者", "OK");
         }
     }
 

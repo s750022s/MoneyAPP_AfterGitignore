@@ -1,43 +1,45 @@
-using ZMoney.Models;
 using ZMoney.Controls;
+using ZMoney.Models;
 using ZMoney.Services;
 
 namespace ZMoney.Pages;
 
-[QueryProperty(nameof(When),"Date")]
+/// <summary>
+/// 钡Μ把计When砞﹚ネΘら戳
+/// </summary>
+[QueryProperty(nameof(When), "Date")]
 public partial class HomePage : ContentPage
 {
+    /// <summary>
+    /// Shell把计When砞﹚ネΘら戳
+    /// </summary>
     private DateTime when = DateTime.Today;
-    public DateTime When 
+    public DateTime When
     {
         get => when;
-        set 
+        set
         {
             if (value != DateTime.MinValue)
             {
                 when = value;
             }
-            else 
+            else
             {
                 when = DateTime.Today;
             }
             OnPropertyChanged();
         }
     }
-
     private DbManager _dbManager;
-
-
-
     public HomePage(DbManager dbManager)
     {
         InitializeComponent();
         _dbManager = dbManager;
     }
 
-    protected override void OnAppearing() 
+    protected override void OnAppearing()
     {
-        var data = GetOnedayData(when,out int totalAmount);
+        var data = GetOnedayData(when, out int totalAmount);
         RecordDate_DatePicker.Date = when;
         TotalAmount_LB.Text = totalAmount.ToString("N0");
         DatasCollectionView.ItemsSource = data;
@@ -49,7 +51,7 @@ public partial class HomePage : ContentPage
     private void OnBorderTapped(object sender, TappedEventArgs e)
     {
         CustomBorder customBorder = (CustomBorder)sender;
-        var navParam = new Dictionary<string, Object>() { { "DataId", customBorder.DataId },{ "IsFromHome", true } };
+        var navParam = new Dictionary<string, Object>() { { "DataId", customBorder.DataId }, { "IsFromHome", true } };
         Shell.Current.GoToAsync("Home/RecordUpdate", navParam);
     }
 
@@ -64,6 +66,12 @@ public partial class HomePage : ContentPage
     }
 
 
+    /// <summary>
+    /// 眔ぱ魁
+    /// </summary>
+    /// <param name="recordDay">琩高ら戳</param>
+    /// <param name="totalAmount">out 羆肂</param>
+    /// <returns></returns>
     private List<HomePageData> GetOnedayData(DateTime recordDay, out int totalAmount)
     {
         var data = _dbManager.GetHomePageData(recordDay);
@@ -76,7 +84,5 @@ public partial class HomePage : ContentPage
         }
         return data;
     }
-
-
 }
 

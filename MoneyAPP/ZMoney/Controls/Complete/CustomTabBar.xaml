@@ -5,22 +5,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ZMoney.Controls">
 
+    <!--  客製化TabBar  -->
     <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="90,120">
 
+        <!--  下方文字按鈕  -->
+
+        <!--  歷史紀錄  -->
         <controls:TabBarButton
             x:Name="History_Tab"
             Grid.Row="1"
             Grid.Column="0"
-            Padding="0,0,0,-30"
             BackgroundColor="#D3C6BD"
             Clicked="ToPage_Clicked"
-            CornerRadius="0"
-            FontSize="22"
-            LineBreakMode="CharacterWrap"
             RouteBind="Home"
-            Text="歷史&#10;紀錄"
-            TextColor="#000000" />
+            Style="{StaticResource tabBarButton}"
+            Text="歷史&#10;紀錄" />
 
+        <!--  新增紀錄  -->
         <controls:TabBarButton
             x:Name="Record_Tab"
             Grid.Row="1"
@@ -28,25 +29,22 @@
             Padding="0,0,0,20"
             BackgroundColor="#FEFDF6"
             Clicked="ToPage_Clicked"
-            FontSize="22"
-            LineBreakMode="CharacterWrap"
             RouteBind="RecordAdd"
-            Text="新增&#10;紀錄"
-            TextColor="#000000" />
+            Style="{StaticResource tabBarButton}"
+            Text="新增&#10;紀錄" />
 
+        <!--  年月統計  -->
         <controls:TabBarButton
             x:Name="Statistic_Tab"
             Grid.Row="1"
             Grid.Column="2"
-            Padding="0,0,0,-30"
             BackgroundColor="#E9D6CD"
             Clicked="ToPage_Clicked"
-            FontSize="22"
-            LineBreakMode="CharacterWrap"
             RouteBind="Statistics"
-            Text="年月&#10;統計"
-            TextColor="#000000" />
+            Style="{StaticResource tabBarButton}"
+            Text="年月&#10;統計" />
 
+        <!--  APP設定  -->
         <controls:TabBarButton
             x:Name="Setting_Tab"
             Grid.Row="1"
@@ -54,13 +52,14 @@
             Padding="0,0,0,20"
             BackgroundColor="#FEFDF6"
             Clicked="ToPage_Clicked"
-            FontSize="22"
-            LineBreakMode="CharacterWrap"
             RouteBind="Setting"
-            Text="APP&#10;設定"
-            TextColor="#000000" />
+            Style="{StaticResource tabBarButton}"
+            Text="APP&#10;設定" />
 
 
+        <!--  上方圖片按鈕  -->
+
+        <!--  歷史紀錄  -->
         <controls:TabBarImageButton
             x:Name="History_Image"
             Margin="0,90,0,0"
@@ -70,6 +69,7 @@
             Source="gemini_cat.png"
             WidthRequest="90" />
 
+        <!--  新增紀錄  -->
         <controls:TabBarImageButton
             x:Name="Record_Image"
             Grid.Row="0"
@@ -81,6 +81,7 @@
             Source="cat_eggtower.png"
             WidthRequest="90" />
 
+        <!--  年月統計  -->
         <controls:TabBarImageButton
             x:Name="Statistic_Image"
             Grid.Row="0"
@@ -92,6 +93,7 @@
             Source="hotdog.png"
             WidthRequest="90" />
 
+        <!--  APP設定  -->
         <controls:TabBarImageButton
             x:Name="Setting_Image"
             Grid.Row="0"

@@ -11,7 +11,7 @@ namespace ZMoney.Models
         /// <summary>
         /// 帳戶ID，PKey，會自動帶入不重複的值
         /// </summary>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement] 
         public int Id { get; set; }
 
         /// <summary>

@@ -40,4 +40,20 @@
         <Setter Property="TextColor" Value="#000000" />
     </Style>
 
+    <Style x:Key="tabBarButton" TargetType="controls:TabBarButton">
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="Padding" Value="0,0,0,-30" />
+        <Setter Property="LineBreakMode" Value="CharacterWrap" />
+        <Setter Property="TextColor" Value="#000000" />
+    </Style>
+
+    <Style x:Key="backBTN" TargetType="ImageButton">
+        <Setter Property="Margin" Value="7,20,0,0" />
+        <Setter Property="HeightRequest" Value="25" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="Source" Value="arrow_left.png" />
+    </Style>
+
+
 </ResourceDictionary>

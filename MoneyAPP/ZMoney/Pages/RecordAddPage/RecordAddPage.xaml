@@ -6,6 +6,10 @@
     xmlns:controls="clr-namespace:ZMoney.Controls"
     xmlns:viewModels="clr-namespace:ZMoney.ViewModels"
     Style="{StaticResource mainPageStyle}">
+
+    <!--  紀錄新增頁  -->
+
+    <!--  綁定記錄編輯viewModel  -->
     <ContentPage.BindingContext>
         <viewModels:RecordBindingModel />
     </ContentPage.BindingContext>
@@ -17,6 +21,7 @@
             HeightRequest="150"
             Source="cat_eggtower.png" />
 
+        <!--  記錄編輯表格  -->
         <Grid
             Margin="10,0,10,10"
             ColumnDefinitions="*, 2*, 1.8*"
@@ -82,8 +87,6 @@
                 Grid.ColumnSpan="2"
                 FontSize="25"
                 SelectedIndex="{Binding AccountIndex, Mode=TwoWay}" />
-
-
 
             <!--  (5,0)類別標題  -->
             <Label

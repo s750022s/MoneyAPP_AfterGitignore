@@ -6,17 +6,19 @@
     xmlns:controls="clr-namespace:ZMoney.Controls"
     Style="{StaticResource mainPageStyle}">
 
+    <!--  統計清單第二頁，每一類別或帳戶的區間紀錄  -->
+
     <Grid RowDefinitions="*,9*" RowSpacing="5">
         <HorizontalStackLayout Grid.Row="0" Spacing="10">
+
             <!--  返回按鈕  -->
             <ImageButton
                 x:Name="BackBTN"
                 Margin="0,20,0,20"
                 Clicked="BackButton_Clicked"
-                HeightRequest="25"
-                HorizontalOptions="Start"
-                Source="arrow_left.png" />
+                Style="{StaticResource backBTN}" />
 
+            <!--  帳戶或類別名稱  -->
             <Label
                 x:Name="CategoryName_Label"
                 FontAttributes="Bold"
@@ -25,10 +27,13 @@
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
 
+        <!--  資料清單  -->
         <CollectionView
             x:Name="DatasCollectionView"
             Grid.Row="1"
             ItemsSource="{Binding DataByCategory}">
+
+            <!--  一行一列，間隔2  -->
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
@@ -39,13 +44,13 @@
                         <controls:CustomBorder
                             x:Name="Record_Border"
                             Padding="15,12,15,0"
-                            BackgroundColor="#584842"
                             DataId="{Binding Id}"
                             HeightRequest="85"
-                            StrokeShape="RoundRectangle 17,17,17,17"
-                            StrokeThickness="0"
+                            Style="{StaticResource customBorder}"
                             VerticalOptions="CenterAndExpand">
                             <VerticalStackLayout>
+
+                                <!--  內容格式  -->
                                 <FlexLayout
                                     Direction="Row"
                                     HeightRequest="29"
@@ -101,6 +106,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <!--  如果沒有資料  -->
         <Border
             x:Name="NoRecord"
             Grid.Row="1"
