@@ -24,14 +24,14 @@ namespace ZMoney
             builder.Services.AddSingleton<IDbService>(s =>
             {
                 var logger = s.GetService<LocalFileLogger>();
+                if (logger == null)
+                {
+                    throw new Exception();
+                }
                 return new SqliteService(dbPath, logger);
             });
 
-            builder.Services.AddSingleton<DbManager>(s =>
-            {
-                var dbService = s.GetService<IDbService>();
-                return new DbManager(dbService);
-            });
+            builder.Services.AddSingleton<DbManager>();
 
             //有用到的page都需要註冊
             builder.Services.AddSingleton<HomePage>();
