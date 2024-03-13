@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyAPP", "MoneyAPP\MoneyAPP.csproj", "{A590AC17-3229-4812-AC5F-780CA19A7481}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZMoney", "ZMoney\ZMoney.csproj", "{1F3EE283-9C53-4270-B10F-1C21996B76F1}"
 EndProject
 Global
@@ -13,12 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A590AC17-3229-4812-AC5F-780CA19A7481}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{1F3EE283-9C53-4270-B10F-1C21996B76F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F3EE283-9C53-4270-B10F-1C21996B76F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3EE283-9C53-4270-B10F-1C21996B76F1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

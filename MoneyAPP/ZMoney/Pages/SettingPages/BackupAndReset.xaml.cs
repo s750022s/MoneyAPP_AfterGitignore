@@ -1,5 +1,9 @@
+using Excely.EPPlus.LGPL.Shaders;
+using Excely.TableFactories;
+using Excely.Workflows;
 using OfficeOpenXml;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO.Compression;
 using System.Reflection;
 using ZMoney.Models;
@@ -175,43 +179,29 @@ public partial class BackupAndReset : ContentPage
     {
         var output = new FileInfo(FileAccessHelper.GetLocalFilePath(filePath));
 
-        ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-        using (ExcelPackage workbook = new ExcelPackage(output))
+        var exportOptions = new ClassListTableFactoryOptions<ExcelModels>
         {
-            // 取得工作簿中的第一個工作表
-            ExcelWorksheet sheet = workbook.Workbook.Worksheets.Add("記帳歷史");
-
-            // 用反射拿出Model裡的 DisplayName 的屬性
-            var properties = typeof(ExcelModels).GetProperties()
-                .Where(prop => prop.IsDefined(typeof(DisplayNameAttribute)));
-
-            //定義表格大小及起始行
-            var rows = data.Count() + 1;
-            var cols = properties.Count();
-
-            if (rows > 0 && cols > 0)
+            PropertyNamePolicy = property =>
             {
-                sheet.Cells[1, 1].LoadFromCollection(data, true); // 寫入資料
-
-                // 儲存格格式
-                var colNumber = 1;
-                foreach (var prop in properties)
-                {
-                    // 時間處理，如果沒指定儲存格格式會變成 通用格式，就會以 int＝時間戳 的方式顯示
-                    if (prop.PropertyType.Equals(typeof(DateTime)) ||
-                       prop.PropertyType.Equals(typeof(DateTime?)))
-                    {
-                        sheet.Cells[2, colNumber, rows, colNumber].Style.Numberformat.Format = "yyyy/mm/dd hh:mm tt";
-                    }
-                    colNumber += 1;
-                }
+                var displayNameAttribute = property.GetCustomAttribute<DisplayNameAttribute>();
+                return displayNameAttribute?.DisplayName ?? property.Name;
+            },
+            CustomValuePolicy = (property, obj) => property.Name switch
+            {
+                nameof(ExcelModels.RecordDateTime) => obj.RecordDateTime.ToString("yyyy/MM/dd hh:mm tt"),
+                nameof(ExcelModels.AmountOfMoney) => obj.AmountOfMoney.ToString("N0"),
+                _ => ClassListTableFactoryOptions<ExcelModels>.DefaultCustomValuePolicy(property, obj)
             }
+        };
+        var exporter = ExcelyExporter.FromClassList<ExcelModels>(options: exportOptions);
+        using var excel = exporter.ToExcel(data);
+        var worksheet = excel.Workbook.Worksheets.First();
+        var cellFittingShader = new CellFittingShader();
+        cellFittingShader.Excute(worksheet);
+        excel.SaveAs(output);
+        return output;
 
-            workbook.Save();
-            return output;
-
-        }
     }
-
-
 }
+
+
