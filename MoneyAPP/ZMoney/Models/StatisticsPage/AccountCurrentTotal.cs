@@ -2,8 +2,9 @@
 
 namespace ZMoney.Models
 {
-    public class AccountCurrentTotal
+    public class AccountCurrentTotal: INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public int Id { get; set; }
         public string Name { get; set; }
         public int CurrentTotal { get; set; }

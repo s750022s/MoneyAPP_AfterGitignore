@@ -8,7 +8,7 @@ namespace ZMoney.ViewModels
     /// </summary>
     public class RecordBindingModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -162,9 +162,9 @@ namespace ZMoney.ViewModels
             RecordTime = record.RecordDateTime.TimeOfDay;
             IsExpense = record.IsExpenses;
             IsIncome = !record.IsExpenses;
-            AccountIndex = App.CachedAccounts.Where(x => record.AccountId == x.Id).Select(x => x.Sequence).FirstOrDefault();
-            CategoryIndex = App.CachedCategorys.Where(x => record.CategoryId == x.Id).Select(x => x.Sequence).FirstOrDefault();
-            Description = record.Description != null ? record.Description : "";
+            AccountIndex = App.CachedAccounts.FirstOrDefault(x => record.AccountId == x.Id).Sequence;
+            CategoryIndex = App.CachedCategorys.FirstOrDefault(x => record.CategoryId == x.Id).Sequence;
+            Description = record.Description;
             StrAmountOfMoney = (record.IsExpenses ? record.AmountOfMoney * -1 : record.AmountOfMoney).ToString("N0");
         }
 
@@ -207,8 +207,8 @@ namespace ZMoney.ViewModels
                 Id = Id,
                 RecordDateTime = RecordDay + RecordTime, //需要檢查是否可行
                 IsExpenses = IsExpense,
-                AccountId = App.CachedAccounts.Where(x => AccountIndex == x.Sequence).Select(x => x.Id).FirstOrDefault(),
-                CategoryId = App.CachedCategorys.Where(x => CategoryIndex == x.Sequence).Select(x => x.Id).FirstOrDefault(),
+                AccountId = App.CachedAccounts.FirstOrDefault(x => AccountIndex == x.Sequence).Id,
+                CategoryId = App.CachedCategorys.FirstOrDefault(x => CategoryIndex == x.Sequence).Id,
                 Description = Description,
                 AmountOfMoney = IsExpense ? result * -1 : result,
                 IsDelete = false
